@@ -110,4 +110,11 @@ public final class Constants {
     public static final double kArmOffsetRads = 0.5;
   }
   
+  public static final int SOLENOID_KFORWARD = 1;
+  public static final int SOLENOID_KREVERSE = 2;
+
+  // XBox Controller
+  public static final int DRIVER_XBOX_CONTROLLER_PORT = 0;
+  public static final int CODRIVER_XBOX_CONTROLLER_PORT = 0;
+
 }
