@@ -8,7 +8,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.ClawCloseCommand;
+import frc.robot.commands.ClawOpenCommand;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 
 /**
@@ -18,16 +22,19 @@ import frc.robot.subsystems.ExampleSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+    private final ClawSubsystem clawSubsystem = new ClawSubsystem();
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 
   private final ExampleCommand autoCommand =
       new ExampleCommand("ExampleCommand", this.exampleSubsystem);
   private PowerDistribution pdp = new PowerDistribution();
-
+  CommandXboxController codriverController = new CommandXboxController(0);
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
+  
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -39,6 +46,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    codriverController.leftBumper().onTrue(new ClawOpenCommand(clawSubsystem));
+    codriverController.rightBumper().onTrue(new ClawCloseCommand(clawSubsystem));
     // Add bindings here
   }
 
