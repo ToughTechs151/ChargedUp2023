@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.AutoConstants;
@@ -39,6 +40,9 @@ import java.util.List;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+  private PowerDistribution pdp = new PowerDistribution();
+  
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
@@ -149,5 +153,14 @@ public class RobotContainer {
 
     // Run path following command, then stop at the end.
     return mecanumControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
+  }
+
+  /**
+   * Use this to get the PDP for data logging.
+   *
+   * @return The PowerDistribution module.
+   */
+  public PowerDistribution getPdp() {
+    return this.pdp;
   }
 }

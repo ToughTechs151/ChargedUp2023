@@ -12,6 +12,10 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true,
+    "**/FRC_2*.wpilog": true,
+    "**/FRC_2*.csv": true,
+    "**/datalogtool*.json":true,
+    "**/simgui*.json":true,
     "**/*~": true
   },
   "java.test.config": [
@@ -25,5 +29,22 @@
       }
     },
   ],
-  "java.test.defaultConfig": "WPIlibUnitTests"
+  "java.checkstyle.configuration": "/google_checks.xml",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.test.defaultConfig": "WPIlibUnitTests",
+   // Set cSpell to Hint so spelling doesn't show up in problems list.
+   "cSpell.diagnosticLevel": "Hint",
+   "cSpell.customDictionaries": {
+     "custom-dictionary-workspace": {
+       "name": "custom-dictionary-workspace",
+       "path": "${workspaceFolder}/.vscode/custom-dictionary-workspace.txt",
+       "addWords": true,
+       "scope": "workspace"
+     }
+   },
+  "workbench.colorCustomizations": {
+    // With cSpell level set to hint, change hints to be more obvious.
+    "editorHint.foreground": "#ff0000",
+    "editorHint.border": "#ff0000"
+  }
 }

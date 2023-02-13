@@ -18,7 +18,17 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  private Constants() {
+    throw new IllegalStateException("Utility class: Constants");
+  }
+
   public static final class DriveConstants {
+
+    private DriveConstants() {
+      throw new IllegalStateException("Utility class: Drive Constants");
+    }
+
     public static final int kFrontLeftMotorPort = 0;
     public static final int kRearLeftMotorPort = 1;
     public static final int kFrontRightMotorPort = 2;
@@ -67,10 +77,20 @@ public final class Constants {
   }
 
   public static final class OIConstants {
+
+    private OIConstants() {
+      throw new IllegalStateException("Utility class: OIconstants");
+    }
+
     public static final int kDriverControllerPort = 0;
   }
 
   public static final class AutoConstants {
+
+    private AutoConstants() {
+      throw new IllegalStateException("Utility class: AutoConstants");
+    }
+
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
@@ -88,6 +108,11 @@ public final class Constants {
 
   
   public static final class ArmConstants {
+
+    private ArmConstants() {
+      throw new IllegalStateException("Utility class: ArmConstants");
+    }
+
     public static final int kMotorPort = 2;
 
     public static final double kP = 1;
@@ -116,5 +141,17 @@ public final class Constants {
   // XBox Controller
   public static final int DRIVER_XBOX_CONTROLLER_PORT = 0;
   public static final int CODRIVER_XBOX_CONTROLLER_PORT = 0;
+
+  // Run time options
+
+  // Set to true to log Joystick data. To false otherwise.
+  public static final boolean LOG_JOYSTICK_DATA = true;
+
+  // Set to true to send telemetry data to Live Window. To false
+  // to disable it.
+  public static final boolean LW_TELEMETRY_ENABLE = false;
+
+  // Set to true to log loop timing data. To false to disable.
+  public static final boolean LOOP_TIMING_LOG = true;
 
 }

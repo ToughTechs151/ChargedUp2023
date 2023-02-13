@@ -4,9 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.sim.RobotModel;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,15 +22,26 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private DataLogging datalog;
+
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
+    // Initialize the data logging.
+    datalog = DataLogging.getInstance();
+
+    // Print our splash screen info.
+    Splash.printAllStatusFiles();
+
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    datalog.dataLogRobotContainerInit(m_robotContainer);
   }
 
   /**
@@ -44,36 +58,58 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    // must be at the end of robotPeriodic
+    datalog.periodic();
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    if (isSimulation() && simModel != null) {
+      simModel.reset();
+    }
+
+    // Add code for entering disabled mode.
+    CommandScheduler.getInstance().cancelAll();
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    datalog.startLoopTime();
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
+    if (m_robotContainer == null) {
+      DriverStation.reportError("autonomousInit called with null robotContainer", false);
+    } else {
+      // Cancel any commands already running.
+      CommandScheduler.getInstance().cancelAll();
 
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+      m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+      /*
+       * String autoSelected = SmartDashboard.getString("Auto Selector",
+       * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+       * = new MyAutoCommand(); break; case "Default Auto": default:
+       * autonomousCommand = new ExampleCommand(); break; }
+       */
+
+      // schedule the autonomous command (example)
+      if (m_autonomousCommand != null) {
+        m_autonomousCommand.schedule();
+      }
     }
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    datalog.startLoopTime();
+  }
 
   @Override
   public void teleopInit() {
@@ -88,15 +124,43 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    datalog.startLoopTime();
+  }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    teleopInit();
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    teleopPeriodic();
+  }
+
+  // Simple robot plant model for simulation purposes
+  RobotModel simModel;
+
+  /** This function is called once when the robot is first started up. */
+  @Override
+  public void simulationInit() {
+    // Add code to run when the robot is initialized during simulations.
+    simModel = new RobotModel(this);
+  }
+
+  /** This function is called periodically whilst in simulation. */
+  @Override
+  public void simulationPeriodic() {
+    // Add code to run repeatedly during simulations.
+    if (isSimulation() && simModel != null) {
+      simModel.update();
+    }
+  }
+
+  public RobotContainer getRobotContainer() {
+    return m_robotContainer;
+  }
 }
