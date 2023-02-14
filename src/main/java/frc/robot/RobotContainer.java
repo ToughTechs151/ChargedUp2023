@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.OIconstants;
 import frc.robot.commands.ArmDownCommand;
 import frc.robot.commands.ArmUpCommand;
 import frc.robot.commands.ClawCloseCommand;
@@ -51,7 +51,7 @@ public class RobotContainer {
   private final ArmPIDSubsystem armSubsystem = new ArmPIDSubsystem();
 
   // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.DRIVER_CONTROLLER_PORT);
+  XboxController m_driverController = new XboxController(OIconstants.DRIVER_CONTROLLER_PORT);
 
   private CommandXboxController codriverController =
       new CommandXboxController(Constants.CODRIVER_XBOX_CONTROLLER_PORT);

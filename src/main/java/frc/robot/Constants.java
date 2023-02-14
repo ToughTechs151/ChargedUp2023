@@ -76,9 +76,9 @@ public final class Constants {
     public static final double REAR_RIGHT_VEL = 0.5;
   }
 
-  public static final class OIConstants {
+  public static final class OIconstants {
 
-    private OIConstants() {
+    private OIconstants() {
       throw new IllegalStateException("Utility class: OIconstants");
     }
 
