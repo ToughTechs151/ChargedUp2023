@@ -19,7 +19,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
  */
 public final class Constants {
   public static final class DriveConstants {
-    public static final int kFrontLeftMotorPort = 0;
+    public static final int kFrontLeftMotorPort = 4;
     public static final int kRearLeftMotorPort = 1;
     public static final int kFrontRightMotorPort = 2;
     public static final int kRearRightMotorPort = 3;
@@ -88,7 +88,7 @@ public final class Constants {
 
   
   public static final class ArmConstants {
-    public static final int kMotorPort = 2;
+    public static final int kMotorPort = 5;
 
     public static final double kP = 1;
 
