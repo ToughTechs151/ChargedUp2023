@@ -13,10 +13,11 @@ import frc.robot.subsystems.ArmPIDSubsystem;
 public class ArmUpCommand extends InstantCommand {
 
   private ArmPIDSubsystem armSubsystem;
+
   public ArmUpCommand(ArmPIDSubsystem arm) {
-      // Use addRequirements() here to declare subsystem dependencies.
-      addRequirements(arm);
-      armSubsystem = arm;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(arm);
+    armSubsystem = arm;
   }
 
   // Called when the command is initially scheduled.
