@@ -105,10 +105,16 @@ public final class Constants {
     public static final int kEncoderPPR = 256;
     public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
 
+  
+
     // The offset of the arm from the horizontal in its neutral position,
     // measured from the horizontal
     public static final double kArmOffsetRads = 0.5;
   }
+
+   // Camera ID
+   public static final int CAMERA_0 = 0;
+   public static final int CAMERA_1 = 1;
   
   public static final int SOLENOID_KFORWARD = 1;
   public static final int SOLENOID_KREVERSE = 2;
