@@ -15,6 +15,12 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.MecanumControllerCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -25,12 +31,6 @@ import frc.robot.commands.ClawOpenCommand;
 import frc.robot.subsystems.ArmPIDSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.MecanumControllerCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
 
 /*
@@ -42,7 +42,7 @@ import java.util.List;
 public class RobotContainer {
 
   private PowerDistribution pdp = new PowerDistribution();
-  
+
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
@@ -87,15 +87,13 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kRightBumper.value)
         .onTrue(new InstantCommand(() -> m_robotDrive.setMaxOutput(0.5)))
         .onFalse(new InstantCommand(() -> m_robotDrive.setMaxOutput(1)));
-        codriverController.leftBumper().onTrue(new ClawOpenCommand(clawSubsystem));
-        codriverController.rightBumper().onTrue(new ClawCloseCommand(clawSubsystem));
+    codriverController.leftBumper().onTrue(new ClawOpenCommand(clawSubsystem));
+    codriverController.rightBumper().onTrue(new ClawCloseCommand(clawSubsystem));
 
-    new JoystickButton(m_driverController, Button.kA.value)
-        .onTrue(new ArmUpCommand(armSubsystem));
+    new JoystickButton(m_driverController, Button.kA.value).onTrue(new ArmUpCommand(armSubsystem));
 
     new JoystickButton(m_driverController, Button.kB.value)
         .onTrue(new ArmDownCommand(armSubsystem));
-
   }
 
   /**

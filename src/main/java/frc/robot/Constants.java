@@ -106,7 +106,6 @@ public final class Constants {
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 
-  
   public static final class ArmConstants {
 
     private ArmConstants() {
@@ -134,7 +133,7 @@ public final class Constants {
     // measured from the horizontal
     public static final double kArmOffsetRads = 0.5;
   }
-  
+
   public static final int SOLENOID_KFORWARD = 1;
   public static final int SOLENOID_KREVERSE = 2;
 
@@ -153,5 +152,4 @@ public final class Constants {
 
   // Set to true to log loop timing data. To false to disable.
   public static final boolean LOOP_TIMING_LOG = true;
-
 }
