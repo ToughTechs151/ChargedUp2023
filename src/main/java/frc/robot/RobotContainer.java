@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.AutoConstants;
@@ -45,6 +46,7 @@ public class RobotContainer {
   private final ClawSubsystem clawSubsystem = new ClawSubsystem();
 
   private final ArmPIDSubsystem armSubsystem = new ArmPIDSubsystem();
+  private PowerDistribution pdp = new PowerDistribution();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -149,5 +151,13 @@ public class RobotContainer {
 
     // Run path following command, then stop at the end.
     return mecanumControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
+  }
+    /**
+   * Use this to get the PDP for data logging.
+   *
+   * @return The PowerDistribution module.
+   */
+  public PowerDistribution getPdp() {
+    return this.pdp;
   }
 }
