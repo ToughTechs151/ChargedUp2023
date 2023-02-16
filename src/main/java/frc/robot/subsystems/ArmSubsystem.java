@@ -9,24 +9,23 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class ClawSubsystem extends SubsystemBase {
-  private final DoubleSolenoid doubleSolenoid =
-      new DoubleSolenoid(
-          PneumaticsModuleType.CTREPCM, Constants.CLAW_SOLENOID_KFORWARD, Constants.CLAW_SOLENOID_KREVERSE);
+public class ArmSubsystem extends SubsystemBase {
+  private final DoubleSolenoid doubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.ARM_SOLENOID_KFORWARD, Constants.ARM_SOLENOID_KREVERSE);
 
-  /** Creates a new ClawSubsystem. */
-  public ClawSubsystem() {}
+  /** Creates a new ArmSubsystem. */
+  public ArmSubsystem() {}
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
 
-  public void open() {
-    doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+  public void back(){
+    doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
-  public void close() {
-    doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+  public void forward(){
+    doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+    
   }
 }

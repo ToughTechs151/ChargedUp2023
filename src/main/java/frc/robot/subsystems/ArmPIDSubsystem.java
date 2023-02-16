@@ -10,8 +10,11 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
+import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 
 /** A robot arm subsystem that moves with a motion profile. */
@@ -52,16 +55,5 @@ public class ArmPIDSubsystem extends ProfiledPIDSubsystem {
     SmartDashboard.putNumber("armPosition", m_encoder.getPosition());
     System.out.println(m_encoder.getPosition());
     return m_encoder.getPosition() + ArmConstants.kArmOffsetRads;
-  }
-
-  
-  public void up(){
-    //need to write this method
-
-  }
-
-  public void down(){
-    //need to write this method
-
   }
 }

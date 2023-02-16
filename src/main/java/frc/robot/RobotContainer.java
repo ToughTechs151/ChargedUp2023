@@ -18,10 +18,13 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ArmDownCommand;
+import frc.robot.commands.ArmExtendCommand;
+import frc.robot.commands.ArmRetractCommand;
 import frc.robot.commands.ArmUpCommand;
 import frc.robot.commands.ClawCloseCommand;
 import frc.robot.commands.ClawOpenCommand;
 import frc.robot.subsystems.ArmPIDSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +48,8 @@ public class RobotContainer {
   private final ClawSubsystem clawSubsystem = new ClawSubsystem();
 
   private final ArmPIDSubsystem armSubsystem = new ArmPIDSubsystem();
+
+  private final ArmSubsystem armSystem = new ArmSubsystem();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -85,12 +90,18 @@ public class RobotContainer {
         .onFalse(new InstantCommand(() -> m_robotDrive.setMaxOutput(1)));
         codriverController.leftBumper().onTrue(new ClawOpenCommand(clawSubsystem));
         codriverController.rightBumper().onTrue(new ClawCloseCommand(clawSubsystem));
+        codriverController.leftTrigger().onTrue(new ArmExtendCommand(armSystem));
+        codriverController.rightTrigger().onTrue(new ArmRetractCommand(armSystem));
+
 
     new JoystickButton(m_driverController, Button.kA.value)
         .onTrue(new ArmUpCommand(armSubsystem));
 
     new JoystickButton(m_driverController, Button.kB.value)
         .onTrue(new ArmDownCommand(armSubsystem));
+
+        
+
 
   }
 

@@ -116,8 +116,10 @@ public final class Constants {
    public static final int CAMERA_0 = 0;
    public static final int CAMERA_1 = 1;
   
-  public static final int SOLENOID_KFORWARD = 1;
-  public static final int SOLENOID_KREVERSE = 2;
+  public static final int ARM_SOLENOID_KFORWARD = 0;
+  public static final int ARM_SOLENOID_KREVERSE = 1;
+  public static final int CLAW_SOLENOID_KFORWARD = 2;
+  public static final int CLAW_SOLENOID_KREVERSE = 3;
 
   // XBox Controller
   public static final int DRIVER_XBOX_CONTROLLER_PORT = 0;
