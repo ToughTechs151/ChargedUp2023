@@ -12,7 +12,7 @@ import frc.robot.Constants;
 public class ClawSubsystem extends SubsystemBase {
   private final DoubleSolenoid doubleSolenoid =
       new DoubleSolenoid(
-          PneumaticsModuleType.CTREPCM,
+          PneumaticsModuleType.CTREPCM, Constants.CLAW_SOLENOID_KFORWARD, Constants.CLAW_SOLENOID_KREVERSE);
           Constants.SOLENOID_FORWARD_CHANNEL,
           Constants.SOLENOID_REVERSE_CHANNEL);
 

@@ -134,8 +134,10 @@ public final class Constants {
   public static final int CAMERA_0 = 0;
   public static final int CAMERA_1 = 1;
 
-  public static final int SOLENOID_FORWARD_CHANNEL = 1;
-  public static final int SOLENOID_REVERSE_CHANNEL = 2;
+  public static final int ARM_SOLENOID_KFORWARD = 0;
+  public static final int ARM_SOLENOID_KREVERSE = 1;
+  public static final int CLAW_SOLENOID_KFORWARD = 2;
+  public static final int CLAW_SOLENOID_KREVERSE = 3;
 
   // Run time options
 
