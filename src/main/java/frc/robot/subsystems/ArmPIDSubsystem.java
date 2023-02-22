@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 import frc.robot.Constants.ArmConstants;
 
 /** A robot arm subsystem that moves with a motion profile. */
-public class ArmPIDSubsystem extends ProfiledPIDSubsystem {
+public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   private final CANSparkMax m_motor =
       new CANSparkMax(ArmConstants.kMotorPort, MotorType.kBrushless);
   private final RelativeEncoder m_encoder = m_motor.getEncoder();
@@ -25,7 +25,7 @@ public class ArmPIDSubsystem extends ProfiledPIDSubsystem {
           ArmConstants.kVVoltSecondPerRad, ArmConstants.kAVoltSecondSquaredPerRad);
 
   /** Create a new ArmSubsystem. */
-  public ArmPIDSubsystem() {
+  public ArmPidSubsystem() {
     super(
         new ProfiledPIDController(
             ArmConstants.kP,
