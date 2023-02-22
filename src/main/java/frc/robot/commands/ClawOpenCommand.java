@@ -13,6 +13,10 @@ import frc.robot.subsystems.ClawSubsystem;
 public class ClawOpenCommand extends InstantCommand {
   private ClawSubsystem clawSubsystem;
 
+  /**
+   * Command to open the claw.
+   * @param claw ClawSubsystem
+   */
   public ClawOpenCommand(ClawSubsystem claw) {
     addRequirements(claw);
     clawSubsystem = claw;
