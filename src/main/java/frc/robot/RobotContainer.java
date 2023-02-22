@@ -90,7 +90,6 @@ public class RobotContainer {
 
 
     new JoystickButton(this.driverController, Button.kA.value)
-        .onTrue(new ArmUpCommand(armSubsystem));
 
     new JoystickButton(this.driverController, Button.kB.value)
         .onTrue(new ArmDownCommand(armSubsystem));
