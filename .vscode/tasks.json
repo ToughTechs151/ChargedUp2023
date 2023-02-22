@@ -1,0 +1,42 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Formatter Spotless Apply",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["spotlessApply"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Javadoc Generate",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["javadoc"],
+            "problemMatcher": []
+        },      
+        {
+            "label": "Check all",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["check"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Open file",
+            "type": "shell",
+            "command": "ii",
+            "args": ["${file}"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Spotbugs bug finder",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": ["spotbugsMain"],
+            "problemMatcher": []
+        }
+    ]
+}
