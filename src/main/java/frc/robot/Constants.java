@@ -18,12 +18,17 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final class DriveConstants {
+
+  private Constants() {
+    throw new IllegalStateException("Utility class");
+  }
+  
+    public static final class DriveConstants {
     public static final int kFrontLeftMotorPort = 4;
     public static final int kRearLeftMotorPort = 1;
     public static final int kFrontRightMotorPort = 2;
     public static final int kRearRightMotorPort = 3;
-
+  
     public static final int[] kFrontLeftEncoderPorts = new int[] {0, 1};
     public static final int[] kRearLeftEncoderPorts = new int[] {2, 3};
     public static final int[] kFrontRightEncoderPorts = new int[] {4, 5};
@@ -86,7 +91,7 @@ public final class Constants {
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 
-  
+
   public static final class ArmConstants {
     public static final int kMotorPort = 5;
 
@@ -122,5 +127,17 @@ public final class Constants {
   // XBox Controller
   public static final int DRIVER_XBOX_CONTROLLER_PORT = 0;
   public static final int CODRIVER_XBOX_CONTROLLER_PORT = 0;
+
+    // Run time options
+
+  // Set to true to log Joystick data. To false otherwise.
+  public static final boolean LOG_JOYSTICK_DATA = true;
+
+  // Set to true to send telemetry data to Live Window. To false
+  // to disable it.
+  public static final boolean LW_TELEMETRY_ENABLE = false;
+
+  // Set to true to log loop timing data. To false to disable.
+  public static final boolean LOOP_TIMING_LOG = true;
 
 }
