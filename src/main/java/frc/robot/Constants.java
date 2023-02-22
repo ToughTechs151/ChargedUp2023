@@ -22,13 +22,13 @@ public final class Constants {
   private Constants() {
     throw new IllegalStateException("Utility class");
   }
-  
-    public static final class DriveConstants {
+
+  public static final class DriveConstants {
     public static final int kFrontLeftMotorPort = 4;
     public static final int kRearLeftMotorPort = 1;
     public static final int kFrontRightMotorPort = 2;
     public static final int kRearRightMotorPort = 3;
-  
+
     public static final int[] kFrontLeftEncoderPorts = new int[] {0, 1};
     public static final int[] kRearLeftEncoderPorts = new int[] {2, 3};
     public static final int[] kFrontRightEncoderPorts = new int[] {4, 5};
@@ -91,7 +91,6 @@ public final class Constants {
             kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
 
-
   public static final class ArmConstants {
     public static final int kMotorPort = 5;
 
@@ -110,17 +109,15 @@ public final class Constants {
     public static final int kEncoderPPR = 256;
     public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
 
-  
-
     // The offset of the arm from the horizontal in its neutral position,
     // measured from the horizontal
     public static final double kArmOffsetRads = 0.5;
   }
 
-   // Camera ID
-   public static final int CAMERA_0 = 0;
-   public static final int CAMERA_1 = 1;
-  
+  // Camera ID
+  public static final int CAMERA_0 = 0;
+  public static final int CAMERA_1 = 1;
+
   public static final int SOLENOID_KFORWARD = 1;
   public static final int SOLENOID_KREVERSE = 2;
 
@@ -128,7 +125,7 @@ public final class Constants {
   public static final int DRIVER_XBOX_CONTROLLER_PORT = 0;
   public static final int CODRIVER_XBOX_CONTROLLER_PORT = 0;
 
-    // Run time options
+  // Run time options
 
   // Set to true to log Joystick data. To false otherwise.
   public static final boolean LOG_JOYSTICK_DATA = true;
@@ -139,5 +136,4 @@ public final class Constants {
 
   // Set to true to log loop timing data. To false to disable.
   public static final boolean LOOP_TIMING_LOG = true;
-
 }
