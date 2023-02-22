@@ -15,6 +15,7 @@ public class ClawOpenCommand extends InstantCommand {
 
   /**
    * Command to open the claw.
+   *
    * @param claw ClawSubsystem
    */
   public ClawOpenCommand(ClawSubsystem claw) {

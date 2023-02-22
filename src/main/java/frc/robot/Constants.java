@@ -20,10 +20,15 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 public final class Constants {
 
   private Constants() {
-    throw new IllegalStateException("Utility class");
+    throw new IllegalStateException("Constants Utility class");
   }
 
   public static final class DriveConstants {
+
+    private DriveConstants() {
+      throw new IllegalStateException("DriveConstants Utility class");
+    }
+
     public static final int kFrontLeftMotorPort = 4;
     public static final int kRearLeftMotorPort = 1;
     public static final int kFrontRightMotorPort = 2;
@@ -72,10 +77,20 @@ public final class Constants {
   }
 
   public static final class OIConstants {
+
+    private OIConstants() {
+      throw new IllegalStateException("OIConstants Utility class");
+    }
+
     public static final int kDriverControllerPort = 0;
   }
 
   public static final class AutoConstants {
+
+    private AutoConstants() {
+      throw new IllegalStateException("AutoConstants Utility class");
+    }
+
     public static final double kMaxSpeedMetersPerSecond = 3;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
@@ -92,6 +107,11 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
+
+    private ArmConstants() {
+      throw new IllegalStateException("ArmConstants Utility class");
+    }
+
     public static final int kMotorPort = 5;
 
     public static final double kP = 1;

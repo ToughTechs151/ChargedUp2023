@@ -16,6 +16,7 @@ public class ArmUpCommand extends InstantCommand {
 
   /**
    * Command to raise the arm up.
+   *
    * @param arm ArmPIDSubsystem
    */
   public ArmUpCommand(ArmPIDSubsystem arm) {
