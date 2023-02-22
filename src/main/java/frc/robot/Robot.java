@@ -102,7 +102,7 @@ public class Robot extends TimedRobot {
 
       this.autonomousCommand = this.robotContainer.getAutonomousCommand();
 
-      // schedule the autonomous command (example)
+      // schedule the autonomous command
       if (this.autonomousCommand != null) {
         this.autonomousCommand.schedule();
       }
