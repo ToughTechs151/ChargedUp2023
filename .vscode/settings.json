@@ -74,5 +74,13 @@
     "**/.ttgradle/**"
   ],
   "taskExplorer.enableExplorerView": false,
-  "taskExplorer.enableSideBar": true
+  "taskExplorer.enableSideBar": true,
+  "markdownlint.lintWorkspaceGlobs": [
+    "**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,workbook}",
+    "!**/bower_components",
+    "!**/node_modules",
+    "!**/vendor",
+    "!**/.git",
+    "!WPILib-License.md"
+  ]
 }
