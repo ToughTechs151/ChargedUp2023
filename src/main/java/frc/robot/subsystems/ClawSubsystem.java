@@ -15,7 +15,9 @@ public class ClawSubsystem extends SubsystemBase {
           PneumaticsModuleType.CTREPCM, Constants.SOLENOID_KFORWARD, Constants.SOLENOID_KREVERSE);
 
   /** Creates a new ClawSubsystem. */
-  public ClawSubsystem() {}
+  public ClawSubsystem() {
+    /* Default constructor */
+  }
 
   @Override
   public void periodic() {

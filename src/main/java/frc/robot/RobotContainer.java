@@ -17,7 +17,7 @@ import frc.robot.commands.ArmDownCommand;
 import frc.robot.commands.ArmUpCommand;
 import frc.robot.commands.ClawCloseCommand;
 import frc.robot.commands.ClawOpenCommand;
-import frc.robot.subsystems.ArmPIDSubsystem;
+import frc.robot.subsystems.ArmPidSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 
@@ -32,14 +32,14 @@ public class RobotContainer {
   private PowerDistribution pdp = new PowerDistribution();
 
   // The robot's subsystems
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final DriveSubsystem robotDrive = new DriveSubsystem();
 
   private final ClawSubsystem clawSubsystem = new ClawSubsystem();
 
-  private final ArmPIDSubsystem armSubsystem = new ArmPIDSubsystem();
+  private final ArmPidSubsystem armSubsystem = new ArmPidSubsystem();
 
   // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  XboxController driverController = new XboxController(OIConstants.kDriverControllerPort);
 
   private CommandXboxController codriverController =
       new CommandXboxController(Constants.CODRIVER_XBOX_CONTROLLER_PORT);
@@ -52,17 +52,17 @@ public class RobotContainer {
 
     // Configure default commands
     // Set the default drive command to split-stick arcade drive
-    m_robotDrive.setDefaultCommand(
+    this.robotDrive.setDefaultCommand(
         // A split-stick arcade command, with forward/backward controlled by the left
         // hand, and turning controlled by the right.
         new RunCommand(
             () ->
-                m_robotDrive.drive(
-                    -m_driverController.getLeftY(),
-                    m_driverController.getLeftX(),
-                    m_driverController.getRightX(),
+                this.robotDrive.drive(
+                    -this.driverController.getLeftY(),
+                    this.driverController.getLeftX(),
+                    this.driverController.getRightX(),
                     false),
-            m_robotDrive));
+            this.robotDrive));
   }
 
   /**
@@ -73,15 +73,16 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Drive at half speed when the right bumper is held
-    new JoystickButton(m_driverController, Button.kRightBumper.value)
-        .onTrue(new InstantCommand(() -> m_robotDrive.setMaxOutput(0.5)))
-        .onFalse(new InstantCommand(() -> m_robotDrive.setMaxOutput(1)));
+    new JoystickButton(this.driverController, Button.kRightBumper.value)
+        .onTrue(new InstantCommand(() -> this.robotDrive.setMaxOutput(0.5)))
+        .onFalse(new InstantCommand(() -> this.robotDrive.setMaxOutput(1)));
     codriverController.leftBumper().onTrue(new ClawOpenCommand(clawSubsystem));
     codriverController.rightBumper().onTrue(new ClawCloseCommand(clawSubsystem));
 
-    new JoystickButton(m_driverController, Button.kA.value).onTrue(new ArmUpCommand(armSubsystem));
+    new JoystickButton(this.driverController, Button.kA.value)
+        .onTrue(new ArmUpCommand(armSubsystem));
 
-    new JoystickButton(m_driverController, Button.kB.value)
+    new JoystickButton(this.driverController, Button.kB.value)
         .onTrue(new ArmDownCommand(armSubsystem));
   }
 
@@ -92,59 +93,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return null;
-
-    // // Create config for trajectory
-    // TrajectoryConfig config =
-    //     new TrajectoryConfig(
-    //             AutoConstants.kMaxSpeedMetersPerSecond,
-    //             AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-    //         // Add kinematics to ensure max speed is actually obeyed
-    //         .setKinematics(DriveConstants.kDriveKinematics);
-
-    // // An example trajectory to follow.  All units in meters.
-    // Trajectory exampleTrajectory =
-    //     TrajectoryGenerator.generateTrajectory(
-    //         // Start at the origin facing the +X direction
-    //         new Pose2d(0, 0, new Rotation2d(0)),
-    //         // Pass through these two interior waypoints, making an 's' curve path
-    //         List.of(new Translation2d(0, 0), new Translation2d(0, 0)),
-    //         // End 3 meters straight ahead of where we started, facing forward
-    //         new Pose2d(3, 0, new Rotation2d(0)),
-    //         config);
-
-    // MecanumControllerCommand mecanumControllerCommand =
-    //     new MecanumControllerCommand(
-    //         exampleTrajectory,
-    //         m_robotDrive::getPose,
-    //         DriveConstants.kFeedForward,
-    //         DriveConstants.kDriveKinematics,
-
-    //         // Position controllers
-    //         new PIDController(AutoConstants.kPXController, 0, 0),
-    //         new PIDController(AutoConstants.kPYController, 0, 0),
-    //         new ProfiledPIDController(
-    //             AutoConstants.kPThetaController, 0, 0,
-    // AutoConstants.kThetaControllerConstraints),
-
-    //         // Needed for normalizing wheel speeds
-    //         AutoConstants.kMaxSpeedMetersPerSecond,
-
-    //         // Velocity PID's
-    //         new PIDController(DriveConstants.kPFrontLeftVel, 0, 0),
-    //         new PIDController(DriveConstants.kPRearLeftVel, 0, 0),
-    //         new PIDController(DriveConstants.kPFrontRightVel, 0, 0),
-    //         new PIDController(DriveConstants.kPRearRightVel, 0, 0),
-    //         m_robotDrive::getCurrentWheelSpeeds,
-    //         m_robotDrive::setDriveMotorControllersVolts, // Consumer for the output motor
-    // voltages
-    //         m_robotDrive);
-
-    // // Reset odometry to the starting pose of the trajectory.
-    // m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
-
-    // // Run path following command, then stop at the end.
-    // return mecanumControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
-
   }
 
   /**
