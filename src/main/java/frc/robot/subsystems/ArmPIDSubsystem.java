@@ -54,14 +54,13 @@ public class ArmPIDSubsystem extends ProfiledPIDSubsystem {
     return m_encoder.getPosition() + ArmConstants.kArmOffsetRads;
   }
 
-  
-  public void up(){
-    //need to write this method
+  public void up() {
+    // need to write this method
 
   }
 
-  public void down(){
-    //need to write this method
+  public void down() {
+    // need to write this method
 
   }
 }
