@@ -28,6 +28,11 @@ public final class Constants {
       throw new IllegalStateException("DriveConstants Utility class");
     }
 
+
+    private DriveConstants() {
+      throw new IllegalStateException("DriveConstants Utility class");
+    }
+
     public static final int FRONT_LEFT_MOTOR_PORT = 4;
     public static final int REAR_LEFT_MOTOR_PORT = 1;
     public static final int FRONT_RIGHT_MOTOR_PORT = 2;
@@ -91,6 +96,11 @@ public final class Constants {
       throw new IllegalStateException("AutoConstants Utility class");
     }
 
+
+    private AutoConstants() {
+      throw new IllegalStateException("AutoConstants Utility class");
+    }
+
     // public static final double MAX_SPEED_METERS_PER_SECOND = 3
     // public static final double MAX_ACCELERATION_METERS_PER_SECOND_SQUARED = 3
     public static final double MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = Math.PI;
@@ -107,6 +117,11 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
+
+    private ArmConstants() {
+      throw new IllegalStateException("ArmConstants Utility class");
+    }
+
     public static final int kMotorPort = 5;
 
     public static final double kP = 1;
