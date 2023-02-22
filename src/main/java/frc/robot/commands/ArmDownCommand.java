@@ -12,6 +12,7 @@ import frc.robot.subsystems.ArmPIDSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ArmDownCommand extends InstantCommand {
   private ArmPIDSubsystem armSubsystem;
+
   public ArmDownCommand(ArmPIDSubsystem arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
