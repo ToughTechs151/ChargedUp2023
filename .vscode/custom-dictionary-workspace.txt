@@ -1,3 +1,4 @@
+ADXRS
 Autofetch
 bracketpair
 buildtime
@@ -24,3 +25,5 @@ teleop
 teleoperated
 WPILIB
 wpilibj
+xaxis
+yaxis

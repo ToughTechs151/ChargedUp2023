@@ -5,21 +5,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.ArmPIDSubsystem;
+import frc.robot.subsystems.ArmPidSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ArmUpCommand extends InstantCommand {
 
-  private ArmPIDSubsystem armSubsystem;
+  private ArmPidSubsystem armSubsystem;
 
   /**
    * Command to raise the arm up.
    *
-   * @param arm ArmPIDSubsystem
+   * @param arm ArmPidSubsystem
    */
-  public ArmUpCommand(ArmPIDSubsystem arm) {
+  public ArmUpCommand(ArmPidSubsystem arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
     armSubsystem = arm;
