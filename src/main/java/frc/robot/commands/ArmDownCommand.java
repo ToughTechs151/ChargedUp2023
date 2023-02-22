@@ -14,7 +14,8 @@ public class ArmDownCommand extends InstantCommand {
   private ArmPIDSubsystem armSubsystem;
 
   /**
-   * Command to move the Arm down. 
+   * Command to move the Arm down.
+   *
    * @param arm ArmPIDSubsystem
    */
   public ArmDownCommand(ArmPIDSubsystem arm) {

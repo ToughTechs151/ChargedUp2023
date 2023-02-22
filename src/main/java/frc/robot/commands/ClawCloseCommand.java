@@ -15,6 +15,7 @@ public class ClawCloseCommand extends InstantCommand {
 
   /**
    * Command to close the claw.
+   *
    * @param claw ClawSubsystem
    */
   public ClawCloseCommand(ClawSubsystem claw) {
