@@ -2,13 +2,17 @@ Autofetch
 bracketpair
 buildtime
 Checkstyle
+codriver
 datalog
 datalogging
 deployhost
 deploytime
+Feedforward
 Intellicode
 Jayamanne
+mecanum
 myname
+odometry
 Robo
 sendables
 Sepline
@@ -19,3 +23,4 @@ statusfile
 teleop
 teleoperated
 WPILIB
+wpilibj

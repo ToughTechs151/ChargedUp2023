@@ -116,10 +116,10 @@ public class RobotContainer {
     //     new MecanumControllerCommand(
     //         exampleTrajectory,
     //         m_robotDrive::getPose,
-    //         DriveConstants.kFeedforward,
+    //         DriveConstants.kFeedForward,
     //         DriveConstants.kDriveKinematics,
 
-    //         // Position contollers
+    //         // Position controllers
     //         new PIDController(AutoConstants.kPXController, 0, 0),
     //         new PIDController(AutoConstants.kPYController, 0, 0),
     //         new ProfiledPIDController(
