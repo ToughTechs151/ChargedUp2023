@@ -13,6 +13,10 @@ import frc.robot.subsystems.ArmPIDSubsystem;
 public class ArmDownCommand extends InstantCommand {
   private ArmPIDSubsystem armSubsystem;
 
+  /**
+   * Command to move the Arm down. 
+   * @param arm ArmPIDSubsystem
+   */
   public ArmDownCommand(ArmPIDSubsystem arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
