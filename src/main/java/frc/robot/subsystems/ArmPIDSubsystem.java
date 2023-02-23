@@ -17,26 +17,26 @@ import frc.robot.Constants.ArmConstants;
 /** A robot arm subsystem that moves with a motion profile. */
 public class ArmPIDSubsystem extends ProfiledPIDSubsystem {
   private final CANSparkMax motor =
-      new CANSparkMax(ArmConstants.kMotorPort, MotorType.kBrushless);
+      new CANSparkMax(ArmConstants.MOTOR_PORT, MotorType.kBrushless);
   private final RelativeEncoder encoder = this.motor.getEncoder();
   private final ArmFeedforward feedforward =
   new ArmFeedforward(
-          ArmConstants.kSVolts, ArmConstants.kGVolts,
-          ArmConstants.kVVoltSecondPerRad, ArmConstants.kAVoltSecondSquaredPerRad);
+          ArmConstants.KS_VOLTS, ArmConstants.KG_VOLTS,
+          ArmConstants.KV_VOLT_SECOND_PER_RAD, ArmConstants.KA_VOLT_SECOND_SQUARED_PER_RAD);
 
   /** Create a new ArmSubsystem. */
   public ArmPIDSubsystem() {
     super(
         new ProfiledPIDController(
-            ArmConstants.kP,
+            ArmConstants.KP,
             0,
             0,
             new TrapezoidProfile.Constraints(
-                ArmConstants.kMaxVelocityRadPerSecond,
-                ArmConstants.kMaxAccelerationRadPerSecSquared)),
+                ArmConstants.MAX_VELOCITY_RAD_PER_SECOND,
+                ArmConstants.MAX_ACCELERATION_RAD_PER_SEC_SQUARED)),
         0);
     // Start arm at rest in neutral position
-    setGoal(ArmConstants.kArmOffsetRads);
+    setGoal(ArmConstants.ARM_OFF_SET_RADS);
   }
 
   @Override
@@ -51,7 +51,7 @@ public class ArmPIDSubsystem extends ProfiledPIDSubsystem {
   public double getMeasurement() {
     SmartDashboard.putNumber("armPosition", this.encoder.getPosition());
     System.out.println(this.encoder.getPosition());
-    return this.encoder.getPosition() + ArmConstants.kArmOffsetRads;
+    return this.encoder.getPosition() + ArmConstants.ARM_OFF_SET_RADS;
   }
 
   public void up() {

@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.OIconstants;
 import frc.robot.commands.ArmDownCommand;
 import frc.robot.commands.ArmUpCommand;
 import frc.robot.commands.ClawCloseCommand;
@@ -51,7 +51,7 @@ public class RobotContainer {
   private final ArmPIDSubsystem armSubsystem = new ArmPIDSubsystem();
 
   // The driver's controller
-  XboxController driverController = new XboxController(OIConstants.kDriverControllerPort);
+  XboxController driverController = new XboxController(OIconstants.kDriverControllerPort);
 
   private CommandXboxController codriverController =
       new CommandXboxController(Constants.CODRIVER_XBOX_CONTROLLER_PORT);
@@ -106,8 +106,8 @@ public class RobotContainer {
     // Create config for trajectory
     TrajectoryConfig config =
         new TrajectoryConfig(
-                AutoConstants.kMaxSpeedMetersPerSecond,
-                AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+                AutoConstants.MAX_SPEED_METERS_PER_SECOND,
+                AutoConstants.MAX_ACCELERATION_METERS_PER_SECOND_SQUARED)
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(DriveConstants.kDriveKinematics);
 
@@ -130,23 +130,22 @@ public class RobotContainer {
             DriveConstants.kDriveKinematics,
 
             // Position contollers
-            new PIDController(AutoConstants.kPXController, 0, 0),
-            new PIDController(AutoConstants.kPYController, 0, 0),
+            new PIDController(AutoConstants.KPX_CONTROLLER, 0, 0),
+            new PIDController(AutoConstants.KPY_CONTROLLER, 0, 0),
             new ProfiledPIDController(
-                AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints),
+                AutoConstants.THETA_CONTROLLER, 0, 0, AutoConstants.kThetaControllerConstraints),
 
             // Needed for normalizing wheel speeds
-            AutoConstants.kMaxSpeedMetersPerSecond,
+            AutoConstants.MAX_SPEED_METERS_PER_SECOND,
 
             // Velocity PID's
-            new PIDController(DriveConstants.kPFrontLeftVel, 0, 0),
-            new PIDController(DriveConstants.kPRearLeftVel, 0, 0),
-            new PIDController(DriveConstants.kPFrontRightVel, 0, 0),
-            new PIDController(DriveConstants.kPRearRightVel, 0, 0),
-            this.robotDrive::getCurrentWheelSpeeds,
-            this.robotDrive
-                ::setDriveMotorControllersVolts, // Consumer for the output motor voltages
-            this.robotDrive);
+            new PIDController(DriveConstants.FRONT_LEFT_VEL, 0, 0),
+            new PIDController(DriveConstants.REAR_LEFT_VEL, 0, 0),
+            new PIDController(DriveConstants.FRONT_RIGHT_VEL, 0, 0),
+            new PIDController(DriveConstants.REAR_RIGHT_VEL, 0, 0),
+            m_robotDrive::getCurrentWheelSpeeds,
+            m_robotDrive::setDriveMotorControllersVolts, // Consumer for the output motor voltages
+            m_robotDrive);
 
     // Reset odometry to the starting pose of the trajectory.
     this.robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
