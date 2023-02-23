@@ -16,11 +16,10 @@ import frc.robot.Constants.ArmConstants;
 
 /** A robot arm subsystem that moves with a motion profile. */
 public class ArmPIDSubsystem extends ProfiledPIDSubsystem {
-  private final CANSparkMax motor =
-      new CANSparkMax(ArmConstants.MOTOR_PORT, MotorType.kBrushless);
+  private final CANSparkMax motor = new CANSparkMax(ArmConstants.MOTOR_PORT, MotorType.kBrushless);
   private final RelativeEncoder encoder = this.motor.getEncoder();
   private final ArmFeedforward feedforward =
-  new ArmFeedforward(
+      new ArmFeedforward(
           ArmConstants.KS_VOLTS, ArmConstants.KG_VOLTS,
           ArmConstants.KV_VOLT_SECOND_PER_RAD, ArmConstants.KA_VOLT_SECOND_SQUARED_PER_RAD);
 

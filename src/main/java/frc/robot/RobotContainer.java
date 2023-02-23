@@ -143,9 +143,10 @@ public class RobotContainer {
             new PIDController(DriveConstants.REAR_LEFT_VEL, 0, 0),
             new PIDController(DriveConstants.FRONT_RIGHT_VEL, 0, 0),
             new PIDController(DriveConstants.REAR_RIGHT_VEL, 0, 0),
-            m_robotDrive::getCurrentWheelSpeeds,
-            m_robotDrive::setDriveMotorControllersVolts, // Consumer for the output motor voltages
-            m_robotDrive);
+            this.robotDrive::getCurrentWheelSpeeds,
+            this.robotDrive
+                ::setDriveMotorControllersVolts, // Consumer for the output motor voltages
+            this.robotDrive);
 
     // Reset odometry to the starting pose of the trajectory.
     this.robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
