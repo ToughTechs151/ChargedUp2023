@@ -16,11 +16,11 @@ import frc.robot.Constants.ArmConstants;
 
 /** A robot arm subsystem that moves with a motion profile. */
 public class ArmPIDSubsystem extends ProfiledPIDSubsystem {
-  private final CANSparkMax m_motor =
+  private final CANSparkMax motor =
       new CANSparkMax(ArmConstants.kMotorPort, MotorType.kBrushless);
-  private final RelativeEncoder m_encoder = m_motor.getEncoder();
-  private final ArmFeedforward m_feedforward =
-      new ArmFeedforward(
+  private final RelativeEncoder encoder = this.motor.getEncoder();
+  private final ArmFeedforward feedforward =
+  new ArmFeedforward(
           ArmConstants.kSVolts, ArmConstants.kGVolts,
           ArmConstants.kVVoltSecondPerRad, ArmConstants.kAVoltSecondSquaredPerRad);
 
@@ -44,14 +44,14 @@ public class ArmPIDSubsystem extends ProfiledPIDSubsystem {
     // Calculate the feedforward from the setpoint
     // double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
     // Add the feedforward to the PID output to get the motor output
-    m_motor.setVoltage(output);
+    this.motor.setVoltage(output);
   }
 
   @Override
   public double getMeasurement() {
-    SmartDashboard.putNumber("armPosition", m_encoder.getPosition());
-    System.out.println(m_encoder.getPosition());
-    return m_encoder.getPosition() + ArmConstants.kArmOffsetRads;
+    SmartDashboard.putNumber("armPosition", this.encoder.getPosition());
+    System.out.println(this.encoder.getPosition());
+    return this.encoder.getPosition() + ArmConstants.kArmOffsetRads;
   }
 
   public void up() {
