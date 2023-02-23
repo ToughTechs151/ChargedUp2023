@@ -51,7 +51,7 @@ public class RobotContainer {
   private final ArmPIDSubsystem armSubsystem = new ArmPIDSubsystem();
 
   // The driver's controller
-  XboxController driverController = new XboxController(OIconstants.kDriverControllerPort);
+  XboxController driverController = new XboxController(OIconstants.DRIVER_CONTROLLER_PORT);
 
   private CommandXboxController codriverController =
       new CommandXboxController(Constants.CODRIVER_XBOX_CONTROLLER_PORT);
