@@ -34,7 +34,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   }
 
   @Override
-  public void useOutput(double output, TrapezoidProfile.State setpoint) {
+  public void useOutput(double output, TrapezoidProfile.State setPoint) {
     this.motor.setVoltage(output);
   }
 
