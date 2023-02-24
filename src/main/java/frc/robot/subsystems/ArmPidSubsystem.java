@@ -19,7 +19,7 @@ import frc.robot.Constants.ArmConstants;
 
 /** A robot arm subsystem that moves with a motion profile. */
 public class ArmPidSubsystem extends ProfiledPIDSubsystem {
-  private final CANSparkMax motor =
+  private final CANSparkMax motor = new CANSparkMax(ArmConstants.MOTOR_PORT, MotorType.kBrushless);
       new CANSparkMax(ArmConstants.kMotorPort, MotorType.kBrushless);
   private final RelativeEncoder encoder = this.motor.getEncoder();
 
@@ -27,12 +27,12 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   public ArmPidSubsystem() {
     super(
         new ProfiledPIDController(
-            ArmConstants.kP,
+            ArmConstants.PCONSTANT,
             ArmConstants.kI,
             0,
             new TrapezoidProfile.Constraints(
-                ArmConstants.kMaxVelocityRadPerSecond,
-                ArmConstants.kMaxAccelerationRadPerSecSquared)),
+                ArmConstants.MAX_VELOCITY_RAD_PER_SECOND,
+                ArmConstants.MAX_ACCELERATION_RAD_PER_SEC_SQUARED)),
         0);
 
     m_motor.setIdleMode(IdleMode.kBrake);
@@ -50,6 +50,6 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   @Override
   public double getMeasurement() {
     SmartDashboard.putNumber("armPosition", this.encoder.getPosition());
-    return this.encoder.getPosition() + ArmConstants.kArmOffsetRads;
+    return this.encoder.getPosition() + ArmConstants.ARM_OFFSET_RADS;
   }
 }
