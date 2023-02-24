@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import java.util.List;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -34,10 +35,10 @@ public final class Constants {
     public static final int kFrontRightMotorPort = 2;
     public static final int kRearRightMotorPort = 3;
 
-    public static final int[] kFrontLeftEncoderPorts = new int[] {0, 1};
-    public static final int[] kRearLeftEncoderPorts = new int[] {2, 3};
-    public static final int[] kFrontRightEncoderPorts = new int[] {4, 5};
-    public static final int[] kRearRightEncoderPorts = new int[] {6, 7};
+    public static final List<Integer> kFrontLeftEncoderPorts = List.of(0, 1);
+    public static final List<Integer> kRearLeftEncoderPorts = List.of(2, 3);
+    public static final List<Integer> kFrontRightEncoderPorts = List.of(4, 5);
+    public static final List<Integer> kRearRightEncoderPorts = List.of(6, 7);
 
     public static final boolean kFrontLeftEncoderReversed = false;
     public static final boolean kRearLeftEncoderReversed = true;
@@ -125,7 +126,7 @@ public final class Constants {
     public static final double kMaxVelocityRadPerSecond = 3;
     public static final double kMaxAccelerationRadPerSecSquared = 10;
 
-    public static final int[] kEncoderPorts = new int[] {4, 5};
+    public static final List<Integer> kEncoderPorts = List.of(4, 5);
     public static final int kEncoderPPR = 256;
     public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
 
