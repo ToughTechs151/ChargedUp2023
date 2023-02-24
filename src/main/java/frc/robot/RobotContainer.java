@@ -42,7 +42,7 @@ public class RobotContainer {
   XboxController driverController = new XboxController(OIconstants.DRIVER_CONTROLLER_PORT);
 
   private CommandXboxController codriverController =
-      new CommandXboxController(Constants.CODRIVER_XBOX_CONTROLLER_PORT);
+      new CommandXboxController(Constants.OIconstants.CODRIVER_CONTROLLER_PORT);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -92,6 +92,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    /* Return null if there is no autonomous command to run. */
     return null;
   }
 

@@ -1,9 +1,11 @@
 ADXRS
 Autofetch
 bracketpair
+Brushless
 buildtime
 Checkstyle
 codriver
+CTREPCM
 datalog
 datalogging
 deployhost
@@ -14,6 +16,7 @@ Jayamanne
 mecanum
 myname
 odometry
+PCONSTANT
 Robo
 sendables
 Sepline
