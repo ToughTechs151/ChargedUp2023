@@ -22,13 +22,13 @@ import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
   private final CANSparkMax frontLeft =
-      new CANSparkMax(DriveConstants.kFrontLeftMotorPort, MotorType.kBrushless);
+      new CANSparkMax(DriveConstants.FRONT_LEFT_MOTOR_PORT, MotorType.kBrushless);
   private final CANSparkMax rearLeft =
-      new CANSparkMax(DriveConstants.kRearLeftMotorPort, MotorType.kBrushless);
+      new CANSparkMax(DriveConstants.REAR_LEFT_MOTOR_PORT, MotorType.kBrushless);
   private final CANSparkMax frontRight =
-      new CANSparkMax(DriveConstants.kFrontRightMotorPort, MotorType.kBrushless);
+      new CANSparkMax(DriveConstants.FRONT_RIGHT_MOTOR_PORT, MotorType.kBrushless);
   private final CANSparkMax rearRight =
-      new CANSparkMax(DriveConstants.kRearRightMotorPort, MotorType.kBrushless);
+      new CANSparkMax(DriveConstants.REAR_RIGHT_MOTOR_PORT, MotorType.kBrushless);
 
   private final MecanumDrive drive =
       new MecanumDrive(this.frontLeft, this.rearLeft, this.frontRight, this.rearRight);
@@ -51,7 +51,7 @@ public class DriveSubsystem extends SubsystemBase {
   // Odometry class for tracking robot pose
   MecanumDriveOdometry odometry =
       new MecanumDriveOdometry(
-          DriveConstants.kDriveKinematics,
+          DriveConstants.DRIVE_KINEMATICS,
           this.gyro.getRotation2d(),
           new MecanumDriveWheelPositions());
 
@@ -69,10 +69,10 @@ public class DriveSubsystem extends SubsystemBase {
     this.rearRight.setIdleMode(IdleMode.kCoast);
 
     // Sets the distance per pulse for the encoders
-    this.frontLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderDistancePerPulse);
-    this.rearLeftEncoder.setPositionConversionFactor(DriveConstants.kEncoderDistancePerPulse);
-    this.frontRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderDistancePerPulse);
-    this.rearRightEncoder.setPositionConversionFactor(DriveConstants.kEncoderDistancePerPulse);
+    this.frontLeftEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
+    this.rearLeftEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
+    this.frontRightEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
+    this.rearRightEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
