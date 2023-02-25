@@ -117,32 +117,28 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
+    public static final int kMotorPort = 5;
 
-    private ArmConstants() {
-      throw new IllegalStateException("ArmConstants Utility class");
-    }
-
-    public static final int MOTOR_PORT = 5;
-
-    public static final double PCONSTANT = 1;
+    public static final double kP = 1;
+    public static final double kI = 0;
     public static final double kI = 0;
 
-    // // These are fake gains; in actuality these must be determined individually for each robot
-    // public static final double S VOLTS = 1
-    // public static final double G VOLTS = 1
-    // public static final double V VOLT_SECOND_PER_RAD = 0.5
-    // public static final double A VOLT_SECOND_SQUARED_PER_RAD = 0.1
+    // These are fake gains; in actuality these must be determined individually for each robot
+    public static final double kSVolts = 1;
+    public static final double kGVolts = 1;
+    public static final double kVVoltSecondPerRad = 0.5;
+    public static final double kAVoltSecondSquaredPerRad = 0.1;
 
-    public static final double MAX_VELOCITY_RAD_PER_SECOND = 3;
-    public static final double MAX_ACCELERATION_RAD_PER_SEC_SQUARED = 10;
+    public static final double kMaxVelocityRadPerSecond = 3;
+    public static final double kMaxAccelerationRadPerSecSquared = 10;
 
-    // public static final List<Integer> ENCODER_PORTS = List.of(4, 5)
-    // public static final int ENCODER_PPR = 256
-    // public static final double ENCODER_DISTANCE_PER_PULSE = 2.0 * Math.PI / ENCODER_PPR
+    public static final int[] kEncoderPorts = new int[] {4, 5};
+    public static final int kEncoderPPR = 256;
+    public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
 
     // The offset of the arm from the horizontal in its neutral position,
     // measured from the horizontal
-    public static final double ARM_OFFSET_RADS = 0.5;
+    public static final double kArmOffsetRads = 0.5;
   }
 
   // Camera ID

@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -19,20 +20,24 @@ import frc.robot.Constants.ArmConstants;
 
 /** A robot arm subsystem that moves with a motion profile. */
 public class ArmPidSubsystem extends ProfiledPIDSubsystem {
-  private final CANSparkMax motor = new CANSparkMax(ArmConstants.MOTOR_PORT, MotorType.kBrushless);
+  private final CANSparkMax m_motor =
       new CANSparkMax(ArmConstants.kMotorPort, MotorType.kBrushless);
-  private final RelativeEncoder encoder = this.motor.getEncoder();
+  private final RelativeEncoder m_encoder = m_motor.getEncoder();
+  private final ArmFeedforward m_feedforward =
+      new ArmFeedforward(
+          ArmConstants.kSVolts, ArmConstants.kGVolts,
+          ArmConstants.kVVoltSecondPerRad, ArmConstants.kAVoltSecondSquaredPerRad);
 
   /** Create a new ArmSubsystem. */
   public ArmPidSubsystem() {
     super(
         new ProfiledPIDController(
-            ArmConstants.PCONSTANT,
+            ArmConstants.kP,
             ArmConstants.kI,
             0,
             new TrapezoidProfile.Constraints(
-                ArmConstants.MAX_VELOCITY_RAD_PER_SECOND,
-                ArmConstants.MAX_ACCELERATION_RAD_PER_SEC_SQUARED)),
+                ArmConstants.kMaxVelocityRadPerSecond,
+                ArmConstants.kMaxAccelerationRadPerSecSquared)),
         0);
 
     m_motor.setIdleMode(IdleMode.kBrake);
@@ -42,14 +47,17 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   }
 
   @Override
-  public void useOutput(double output, TrapezoidProfile.State setPoint) {
-    this.motor.setVoltage(output);
+  public void useOutput(double output, TrapezoidProfile.State setpoint) {
+    // Calculate the feedforward from the setpoint
+    // double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
+    // Add the feedforward to the PID output to get the motor output
     SmartDashboard.putNumber("voltage", output);
+    m_motor.setVoltage(output);
   }
 
   @Override
   public double getMeasurement() {
-    SmartDashboard.putNumber("armPosition", this.encoder.getPosition());
-    return this.encoder.getPosition() + ArmConstants.ARM_OFFSET_RADS;
+    SmartDashboard.putNumber("armPosition", m_encoder.getPosition());
+    return m_encoder.getPosition() + ArmConstants.kArmOffsetRads;
   }
 }
