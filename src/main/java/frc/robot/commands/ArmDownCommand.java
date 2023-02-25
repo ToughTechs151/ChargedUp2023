@@ -22,11 +22,17 @@ public class ArmDownCommand extends InstantCommand {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
     armSubsystem = arm;
+    armSubsystem.enable();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    armSubsystem.down();
+    armSubsystem.setGoal(0);
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    armSubsystem.disable();
   }
 }
