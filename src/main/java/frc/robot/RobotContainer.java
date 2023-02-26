@@ -6,7 +6,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -45,7 +44,8 @@ public class RobotContainer {
   private final ArmSubsystem armSystem = new ArmSubsystem();
 
   // The driver's controller
-  XboxController driverController = new XboxController(OIconstants.DRIVER_CONTROLLER_PORT);
+  private CommandXboxController driverController =
+      new CommandXboxController(OIconstants.DRIVER_CONTROLLER_PORT);
 
   private CommandXboxController codriverController =
       new CommandXboxController(Constants.OIconstants.CODRIVER_CONTROLLER_PORT);
@@ -81,20 +81,15 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Drive at half speed when the right bumper is held
-    new JoystickButton(this.driverController, Button.kRightBumper.value)
+    driverController
+        .rightBumper()
         .onTrue(new InstantCommand(() -> this.robotDrive.setMaxOutput(0.5)))
         .onFalse(new InstantCommand(() -> this.robotDrive.setMaxOutput(1)));
     codriverController.leftBumper().onTrue(new ClawOpenCommand(clawSubsystem));
     codriverController.rightBumper().onTrue(new ClawCloseCommand(clawSubsystem));
-        codriverController.leftTrigger().onTrue(new ArmExtendCommand(armSystem));
-        codriverController.rightTrigger().onTrue(new ArmRetractCommand(armSystem));
+    codriverController.a().onTrue(new ArmUpCommand(armSubsystem));
+    codriverController.b().onTrue(new ArmDownCommand(armSubsystem));
 
-
-    new JoystickButton(this.driverController, Button.kA.value)
-        .onTrue(new ArmUpCommand(armSubsystem));
-
-    new JoystickButton(this.driverController, Button.kB.value)
-        .onTrue(new ArmDownCommand(armSubsystem));
 
         
 
