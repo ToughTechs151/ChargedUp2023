@@ -127,7 +127,7 @@ public final class Constants {
     public static final double kVVoltSecondPerRad = 0.5;
     public static final double kAVoltSecondSquaredPerRad = 0.1;
 
-    public static final double kMaxVelocityRadPerSecond = 3;
+    public static final double kMaxVelocityRadPerSecond = 6;
     public static final double kMaxAccelerationRadPerSecSquared = 10;
 
     public static final int[] kEncoderPorts = new int[] {4, 5};

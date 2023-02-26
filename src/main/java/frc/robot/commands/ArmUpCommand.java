@@ -29,9 +29,4 @@ public class ArmUpCommand extends InstantCommand {
   public void initialize() {
     armSubsystem.setGoal(-21.0);
   }
-
-  @Override
-  public void end(boolean interrupted) {
-    armSubsystem.disable();
-  }
 }
