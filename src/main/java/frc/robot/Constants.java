@@ -53,7 +53,6 @@ public final class Constants {
     // public static final boolean FRONT_RIGHT_ENCODER_REVERSED = false
     // public static final boolean REAR_RIGHT_ENCODER_REVERSED = true
 
-    public static final double TRACK_WIDTH = 0.5;
     // Distance between centers of right and left wheels on robot
     public static final double WHEEL_BASE = 0.7;
     // Distance between centers of front and back wheels on robot
@@ -120,7 +119,6 @@ public final class Constants {
     public static final int kMotorPort = 5;
 
     public static final double kP = 1;
-    public static final double kI = 0;
     public static final double kI = 0;
 
     // These are fake gains; in actuality these must be determined individually for each robot
