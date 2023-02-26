@@ -10,7 +10,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ArmSubsystem extends SubsystemBase {
-  private final DoubleSolenoid doubleSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.ARM_SOLENOID_KFORWARD, Constants.ARM_SOLENOID_KREVERSE);
+  private final DoubleSolenoid doubleSolenoid =
+      new DoubleSolenoid(
+          PneumaticsModuleType.CTREPCM,
+          Constants.ARM_SOLENOID_KFORWARD,
+          Constants.ARM_SOLENOID_KREVERSE);
 
   /** Creates a new ArmSubsystem. */
   public ArmSubsystem() {}
@@ -20,12 +24,11 @@ public class ArmSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void back(){
+  public void back() {
     doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
   }
 
-  public void forward(){
+  public void forward() {
     doubleSolenoid.set(DoubleSolenoid.Value.kForward);
-    
   }
 }

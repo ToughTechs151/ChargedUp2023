@@ -14,6 +14,7 @@ import frc.robot.subsystems.ArmSubsystem;
 public class ArmExtendCommand extends InstantCommand {
 
   private ArmSubsystem armSystem;
+
   public ArmExtendCommand(ArmSubsystem arms) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arms);
@@ -23,5 +24,6 @@ public class ArmExtendCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    armSystem.forward();}
+    armSystem.forward();
+  }
 }
