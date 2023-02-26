@@ -15,8 +15,8 @@ public class ArmUpCommand extends InstantCommand {
   private ArmPidSubsystem armSubsystem;
   /**
    * @param arm
-   */
    * @param arm ArmPIDSubsystem
+   */
   public ArmUpCommand(ArmPidSubsystem arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
