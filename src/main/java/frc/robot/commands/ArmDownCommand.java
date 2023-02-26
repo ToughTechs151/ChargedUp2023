@@ -30,6 +30,7 @@ public class ArmDownCommand extends InstantCommand {
   public void initialize() {
     armSubsystem.enable();
     armSubsystem.setGoal(0);
+  }
 
   @Override
   public void end(boolean interrupted) {

@@ -89,10 +89,8 @@ public class RobotContainer {
     codriverController.rightBumper().onTrue(new ClawCloseCommand(clawSubsystem));
     codriverController.a().onTrue(new ArmUpCommand(armSubsystem));
     codriverController.b().onTrue(new ArmDownCommand(armSubsystem));
-
-
-        
-
+    codriverController.leftTrigger().onTrue(new ArmExtendCommand(armSystem));
+    codriverController.rightTrigger().onTrue(new ArmRetractCommand(armSystem));
   }
 
   /**

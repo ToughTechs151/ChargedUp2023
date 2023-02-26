@@ -9,14 +9,14 @@ import frc.robot.subsystems.ArmSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 
-
 public class ArmRetractCommand extends InstantCommand {
 
   private ArmSubsystem armSystem;
-  public ArmRetractCommand(ArmSubsystem arms) {
+
+  public ArmRetractCommand(ArmSubsystem arm) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(arms);
-    armSystem = arms;
+    addRequirements(arm);
+    armSystem = arm;
   }
 
   // Called when the command is initially scheduled.
