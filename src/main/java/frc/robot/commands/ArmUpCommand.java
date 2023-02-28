@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.Constants;
 import frc.robot.subsystems.ArmPidSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -27,6 +28,6 @@ public class ArmUpCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    armSubsystem.setGoal(-21.0);
+    armSubsystem.setGoal(Constants.ARM_UP_POSITION);
   }
 }

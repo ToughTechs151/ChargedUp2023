@@ -159,4 +159,13 @@ public final class Constants {
 
   // Set to true to log loop timing data. To false to disable.
   public static final boolean LOOP_TIMING_LOG = true;
+
+  // RevRobotics Blinkin
+  public static final int BLIKIN_SPARK_PORT = 0;
+  public static final double BLINKIN_RED = 0.61;
+  public static final double BLINKIN_DARK_GREEN = 0.75;
+  public static final double ARM_UP_POSITION = 0.0;
+  public static final double ARM_SCORE_LOW_POSITION = 17.0;
+  public static final double ARM_SCORE_HIGH_POSITION = 10.0;
+  public static final double ARM_DOWN_POSITION = 21.0;
 }

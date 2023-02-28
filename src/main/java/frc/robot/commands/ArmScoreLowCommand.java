@@ -11,25 +11,19 @@ import frc.robot.subsystems.ArmPidSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ArmDownCommand extends InstantCommand {
+public class ArmScoreLowCommand extends InstantCommand {
   private ArmPidSubsystem armSubsystem;
 
-  /**
-   * Command to move the Arm down.
-   *
-   * @param arm ArmPidSubsystem
-   */
-  public ArmDownCommand(ArmPidSubsystem arm) {
+  public ArmScoreLowCommand(ArmPidSubsystem arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
     armSubsystem = arm;
-    armSubsystem.enable();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     armSubsystem.enable();
-    armSubsystem.setGoal(Constants.ARM_DOWN_POSITION);
+    armSubsystem.setGoal(Constants.ARM_SCORE_LOW_POSITION);
   }
 }

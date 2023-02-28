@@ -11,9 +11,13 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
+import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.RobotContainer;
+import frc.robot.commands.ArmRetractCommand;
 
 /** A robot arm subsystem that moves with a motion profile. */
 public class ArmPidSubsystem extends ProfiledPIDSubsystem {
@@ -24,9 +28,13 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
       new ArmFeedforward(
           ArmConstants.kSVolts, ArmConstants.kGVolts,
           ArmConstants.kVVoltSecondPerRad, ArmConstants.kAVoltSecondSquaredPerRad);
+  private final Spark blinkinSpark = new Spark(Constants.BLIKIN_SPARK_PORT);
+  private double degreePerPosition = 0.0;
+  private double blinkinVoltage = Constants.BLINKIN_DARK_GREEN;
+  private RobotContainer robotContainer = null;
 
   /** Create a new ArmSubsystem. */
-  public ArmPidSubsystem() {
+  public ArmPidSubsystem(RobotContainer robotContainer) {
     super(
         new ProfiledPIDController(
             ArmConstants.kP,
@@ -36,9 +44,11 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
                 ArmConstants.kMaxVelocityRadPerSecond,
                 ArmConstants.kMaxAccelerationRadPerSecSquared)),
         0);
-
+    this.robotContainer = robotContainer;
+    this.disable();
     armMotor.setIdleMode(IdleMode.kBrake);
     armMotor.setVoltage(0.0);
+    blinkinSpark.set(blinkinVoltage);
     // Start arm at rest in neutral position
     // setGoal(ArmConstants.kArmOffsetRads);
   }
@@ -54,8 +64,31 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
 
   @Override
   public double getMeasurement() {
-    SmartDashboard.putNumber("armPosition", encoder.getPosition());
+    double position = encoder.getPosition();
+    SmartDashboard.putNumber("ARM Position", position);
     SmartDashboard.putNumber("ARM motor velocity", encoder.getVelocity());
-    return encoder.getPosition() + ArmConstants.kArmOffsetRads;
+    setBlinkin(position);
+    retractArm(position);
+    return position + ArmConstants.kArmOffsetRads;
+  }
+
+  /**
+   * This method set the RevRobotics Blinkin LED to flash based on the ARM angle
+   *
+   * @param position
+   */
+  private void setBlinkin(double position) {
+    // Calculate the angle of the ARM first
+
+    // Change the Blikin LED based on the angle of the arm
+    blinkinSpark.set(blinkinVoltage);
+  }
+
+  private void retractArm(double position) {
+    double angle = position * degreePerPosition;
+
+    if (angle < 25.0) {
+      (new ArmRetractCommand(this.robotContainer.getArmSubsystem())).schedule();
+    }
   }
 }
