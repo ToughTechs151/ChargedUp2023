@@ -16,6 +16,8 @@ import frc.robot.Constants.OIconstants;
 import frc.robot.commands.ArmDownCommand;
 import frc.robot.commands.ArmExtendCommand;
 import frc.robot.commands.ArmRetractCommand;
+import frc.robot.commands.ArmScoreHighCommand;
+import frc.robot.commands.ArmScoreLowCommand;
 import frc.robot.commands.ArmUpCommand;
 import frc.robot.commands.ClawCloseCommand;
 import frc.robot.commands.ClawOpenCommand;
@@ -36,12 +38,9 @@ public class RobotContainer {
 
   // The robot's subsystems
   private final DriveSubsystem robotDrive = new DriveSubsystem();
-
   private final ClawSubsystem clawSubsystem = new ClawSubsystem();
-
-  private final ArmPidSubsystem armSubsystem = new ArmPidSubsystem();
-
-  private final ArmSubsystem armSystem = new ArmSubsystem();
+  private final ArmPidSubsystem armPidSubsystem = new ArmPidSubsystem(this);
+  private final ArmSubsystem armSubsystem = new ArmSubsystem();
 
   // The driver's controller
   private CommandXboxController driverController =
@@ -69,7 +68,8 @@ public class RobotContainer {
                     this.driverController.getRightX(),
                     false),
             this.robotDrive));
-    SmartDashboard.putData("ArmSubsystem", armSubsystem);
+    SmartDashboard.putData("ArmSubsystem", armPidSubsystem);
+    armPidSubsystem.disable();
   }
 
   /**
@@ -86,10 +86,13 @@ public class RobotContainer {
         .onFalse(new InstantCommand(() -> this.robotDrive.setMaxOutput(1)));
     codriverController.leftBumper().onTrue(new ClawOpenCommand(clawSubsystem));
     codriverController.rightBumper().onTrue(new ClawCloseCommand(clawSubsystem));
-    codriverController.a().onTrue(new ArmUpCommand(armSubsystem));
-    codriverController.b().onTrue(new ArmDownCommand(armSubsystem));
-    codriverController.leftTrigger().onTrue(new ArmExtendCommand(armSystem));
-    codriverController.rightTrigger().onTrue(new ArmRetractCommand(armSystem));
+    codriverController.a().onTrue(new ArmUpCommand(armPidSubsystem));
+    codriverController.b().onTrue(new ArmDownCommand(armPidSubsystem));
+    codriverController.x().onTrue(new ArmScoreHighCommand(armPidSubsystem));
+    codriverController.y().onTrue(new ArmScoreLowCommand(armPidSubsystem));
+
+    codriverController.leftTrigger().onTrue(new ArmExtendCommand(armSubsystem));
+    codriverController.rightTrigger().onTrue(new ArmRetractCommand(armSubsystem));
   }
 
   /**
@@ -111,5 +114,14 @@ public class RobotContainer {
    */
   public PowerDistribution getPdp() {
     return this.pdp;
+  }
+
+  /**
+   * This method retrieves the instance of the ArmSubsystem
+   *
+   * @return the ArmSubsystem instance
+   */
+  public ArmSubsystem getArmSubsystem() {
+    return this.armSubsystem;
   }
 }
