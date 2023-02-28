@@ -137,6 +137,15 @@ public final class Constants {
     // The offset of the arm from the horizontal in its neutral position,
     // measured from the horizontal
     public static final double kArmOffsetRads = 0.5;
+
+    // ARM positions
+    public static final double ARM_VELOCITY = 2;
+    public static final int ARM_ROTATION = 64;
+    public static final double ARM_UP_POSITION = 0.0;
+    public static final double ARM_SCORE_LOW_POSITION = ARM_ROTATION * 70 / 360;
+    public static final double ARM_SCORE_HIGH_POSITION = ARM_ROTATION * 60 / 360;
+    public static final double ARM_DOWN_POSITION = ARM_ROTATION * 125 / 360;
+    public static final double DEGREE_RED_ZONE = 75;
   }
 
   // Camera ID
@@ -164,8 +173,4 @@ public final class Constants {
   public static final int BLIKIN_SPARK_PORT = 0;
   public static final double BLINKIN_RED = 0.61;
   public static final double BLINKIN_DARK_GREEN = 0.75;
-  public static final double ARM_UP_POSITION = 0.0;
-  public static final double ARM_SCORE_LOW_POSITION = 17.0;
-  public static final double ARM_SCORE_HIGH_POSITION = 10.0;
-  public static final double ARM_DOWN_POSITION = 21.0;
 }

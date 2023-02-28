@@ -86,8 +86,8 @@ public class RobotContainer {
         .onFalse(new InstantCommand(() -> this.robotDrive.setMaxOutput(1)));
     codriverController.leftBumper().onTrue(new ClawOpenCommand(clawSubsystem));
     codriverController.rightBumper().onTrue(new ClawCloseCommand(clawSubsystem));
-    codriverController.a().onTrue(new ArmUpCommand(armPidSubsystem));
-    codriverController.b().onTrue(new ArmDownCommand(armPidSubsystem));
+    codriverController.a().onTrue(new ArmDownCommand(armPidSubsystem));
+    codriverController.b().onTrue(new ArmUpCommand(armPidSubsystem));
     codriverController.x().onTrue(new ArmScoreHighCommand(armPidSubsystem));
     codriverController.y().onTrue(new ArmScoreLowCommand(armPidSubsystem));
 

@@ -4,8 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmPidSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -24,6 +25,7 @@ public class ArmScoreHighCommand extends InstantCommand {
   @Override
   public void initialize() {
     armSubsystem.enable();
-    armSubsystem.setGoal(Constants.ARM_SCORE_HIGH_POSITION);
+    armSubsystem.setGoal(
+        new State(ArmConstants.ARM_SCORE_HIGH_POSITION, ArmConstants.ARM_VELOCITY));
   }
 }

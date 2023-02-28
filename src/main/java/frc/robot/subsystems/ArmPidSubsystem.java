@@ -29,7 +29,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
           ArmConstants.kSVolts, ArmConstants.kGVolts,
           ArmConstants.kVVoltSecondPerRad, ArmConstants.kAVoltSecondSquaredPerRad);
   private final Spark blinkinSpark = new Spark(Constants.BLIKIN_SPARK_PORT);
-  private double degreePerPosition = 0.0;
+  private double degreePerPosition = ArmConstants.ARM_ROTATION * 1 / 360;
   private double blinkinVoltage = Constants.BLINKIN_DARK_GREEN;
   private RobotContainer robotContainer = null;
 
@@ -67,7 +67,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     double position = encoder.getPosition();
     SmartDashboard.putNumber("ARM Position", position);
     SmartDashboard.putNumber("ARM motor velocity", encoder.getVelocity());
-    setBlinkin(position);
+    setLED(position);
     retractArm(position);
     return position + ArmConstants.kArmOffsetRads;
   }
@@ -77,18 +77,36 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
    *
    * @param position
    */
-  private void setBlinkin(double position) {
-    // Calculate the angle of the ARM first
-
+  private void setLED(double position) {
     // Change the Blikin LED based on the angle of the arm
+    if (getAngle(position) >= ArmConstants.DEGREE_RED_ZONE) {
+      blinkinVoltage = Constants.BLINKIN_RED;
+    } else {
+      blinkinVoltage = Constants.BLINKIN_DARK_GREEN;
+    }
     blinkinSpark.set(blinkinVoltage);
   }
 
+  /**
+   * retract the ARM if it reaches the red zone
+   *
+   * @param position
+   */
   private void retractArm(double position) {
-    double angle = position * degreePerPosition;
+    double angle = getAngle(position);
 
-    if (angle < 25.0) {
+    if (angle >= ArmConstants.DEGREE_RED_ZONE) {
       (new ArmRetractCommand(this.robotContainer.getArmSubsystem())).schedule();
     }
+  }
+
+  /**
+   * return the angle of the ARM position
+   *
+   * @param position
+   * @return
+   */
+  private double getAngle(double position) {
+    return position * degreePerPosition;
   }
 }
