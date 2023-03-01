@@ -97,14 +97,4 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
       (new ArmRetractCommand(this.robotContainer.getArmSubsystem())).schedule();
     }
   }
-
-  /**
-   * return the angle of the ARM position
-   *
-   * @param position
-   * @return
-   */
-  private double getAngle(double position) {
-    return position * degreePerPosition;
-  }
 }
