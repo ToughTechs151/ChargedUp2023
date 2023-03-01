@@ -29,7 +29,6 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
           ArmConstants.kSVolts, ArmConstants.kGVolts,
           ArmConstants.kVVoltSecondPerRad, ArmConstants.kAVoltSecondSquaredPerRad);
   private final Spark blinkinSpark = new Spark(Constants.BLIKIN_SPARK_PORT);
-  private double degreePerPosition = ArmConstants.ARM_ROTATION * 1 / 360;
   private double blinkinVoltage = Constants.BLINKIN_DARK_GREEN;
   private RobotContainer robotContainer = null;
 
@@ -79,7 +78,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
    */
   private void setLED(double position) {
     // Change the Blikin LED based on the angle of the arm
-    if (getAngle(position) >= ArmConstants.DEGREE_RED_ZONE) {
+    if (position >= ArmConstants.ARM_RED_ZONE) {
       blinkinVoltage = Constants.BLINKIN_RED;
     } else {
       blinkinVoltage = Constants.BLINKIN_DARK_GREEN;
@@ -93,20 +92,9 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
    * @param position
    */
   private void retractArm(double position) {
-    double angle = getAngle(position);
 
-    if (angle >= ArmConstants.DEGREE_RED_ZONE) {
+    if (position >= ArmConstants.ARM_RED_ZONE) {
       (new ArmRetractCommand(this.robotContainer.getArmSubsystem())).schedule();
     }
-  }
-
-  /**
-   * return the angle of the ARM position
-   *
-   * @param position
-   * @return
-   */
-  private double getAngle(double position) {
-    return position * degreePerPosition;
   }
 }
