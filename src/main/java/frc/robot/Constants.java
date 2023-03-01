@@ -116,7 +116,7 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-    public static final int kMotorPort = 5;
+    public static final int kMotorPort = 6;
 
     public static final double kP = 1;
     public static final double kI = 0;
@@ -127,7 +127,7 @@ public final class Constants {
     public static final double kVVoltSecondPerRad = 0.5;
     public static final double kAVoltSecondSquaredPerRad = 0.1;
 
-    public static final double kMaxVelocityRadPerSecond = 6;
+    public static final double kMaxVelocityRadPerSecond = 10;
     public static final double kMaxAccelerationRadPerSecSquared = 10;
 
     public static final int[] kEncoderPorts = new int[] {4, 5};
@@ -139,13 +139,13 @@ public final class Constants {
     public static final double kArmOffsetRads = 0.5;
 
     // ARM positions
-    public static final double ARM_VELOCITY = 2;
-    public static final int ARM_ROTATION = 64;
+    public static final double ARM_VELOCITY = 4;
+    public static final double ARM_ROTATION = 64.0;
     public static final double ARM_UP_POSITION = 0.0;
     public static final double ARM_SCORE_LOW_POSITION = ARM_ROTATION * 70 / 360;
     public static final double ARM_SCORE_HIGH_POSITION = ARM_ROTATION * 60 / 360;
     public static final double ARM_DOWN_POSITION = ARM_ROTATION * 125 / 360;
-    public static final double DEGREE_RED_ZONE = 75;
+    public static final double ARM_RED_ZONE = ARM_ROTATION * 75 / 360;
   }
 
   // Camera ID
