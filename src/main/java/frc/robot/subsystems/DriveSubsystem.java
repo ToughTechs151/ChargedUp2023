@@ -51,7 +51,7 @@ public class DriveSubsystem extends SubsystemBase {
   // Odometry class for tracking robot pose
   MecanumDriveOdometry odometry =
       new MecanumDriveOdometry(
-          DriveConstants.DRIVE_KINEMATICS,
+          DriveConstants.kDriveKinematics,
           this.gyro.getRotation2d(),
           new MecanumDriveWheelPositions());
 

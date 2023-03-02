@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -19,6 +20,7 @@ import frc.robot.commands.ArmRetractCommand;
 import frc.robot.commands.ArmScoreHighCommand;
 import frc.robot.commands.ArmScoreLowCommand;
 import frc.robot.commands.ArmUpCommand;
+import frc.robot.commands.AutonomousTrajectory;
 import frc.robot.commands.ClawCloseCommand;
 import frc.robot.commands.ClawOpenCommand;
 import frc.robot.subsystems.ArmPidSubsystem;
@@ -33,6 +35,10 @@ import frc.robot.subsystems.DriveSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+
+  private SendableChooser<String> chooser = new SendableChooser<>();
+
+
 
   private PowerDistribution pdp = new PowerDistribution();
 
@@ -93,6 +99,13 @@ public class RobotContainer {
 
     codriverController.leftTrigger().onTrue(new ArmExtendCommand(armSubsystem));
     codriverController.rightTrigger().onTrue(new ArmRetractCommand(armSubsystem));
+
+    //Autonomous Chooser
+    chooser.setDefaultOption("Nothing", "Nothing" );
+    chooser.addOption("Path1", "Path1");
+    chooser.addOption("Test", "Test");
+    // Put the chooser on the dashboard
+    SmartDashboard.putData(chooser);
   }
 
   /**
@@ -123,5 +136,9 @@ public class RobotContainer {
    */
   public ArmSubsystem getArmSubsystem() {
     return this.armSubsystem;
+  }
+
+  public DriveSubsystem getDriveSubsystem() {
+    return this.robotDrive;
   }
 }
