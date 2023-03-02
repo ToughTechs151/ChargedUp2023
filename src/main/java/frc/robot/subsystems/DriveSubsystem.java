@@ -54,6 +54,7 @@ public class DriveSubsystem extends SubsystemBase {
   // Odometry class for tracking robot pose
   DifferentialDriveOdometry odometry =
       new DifferentialDriveOdometry(
+          DriveConstants.DRIVE_KINEMATICS,
           this.gyro.getRotation2d(),
           frontLeftEncoder.getPosition(), frontRightEncoder.getPosition());
 

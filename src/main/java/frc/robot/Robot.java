@@ -4,11 +4,20 @@
 
 package frc.robot;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.AutonomousNothing;
+import frc.robot.commands.AutonomousTrajectory;
 import frc.sim.RobotModel;
 
 /**
@@ -22,6 +31,8 @@ public class Robot extends TimedRobot {
 
   private RobotContainer robotContainer;
   private DataLogging datalog;
+
+  private AutonomousTrajectory autonomousTrajectory;
 
   /**
    * {@code robotInit} runs when the robot first starts up. It is used to create the robot
@@ -99,10 +110,46 @@ public class Robot extends TimedRobot {
       // Cancel any commands already running.
       CommandScheduler.getInstance().cancelAll();
 
-      this.autonomousCommand = this.robotContainer.getAutonomousCommand();
+     // this.autonomousCommand = this.robotContainer.getAutonomousCommand();
+     String trajectoryJSON;
+     Trajectory trajectory;
+
+     String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+     switch (autoSelected) {
+       case "Path1":
+         trajectoryJSON = "pathplanner/generatedJSON/Path1.wpilib.json";
+
+         try {
+           Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+           trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+           this.autonomousCommand = new AutonomousTrajectory(robotContainer, trajectory);
+         } catch (IOException ex) {
+           DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+         }
+         break;
+
+
+         case "Test":
+         trajectoryJSON = "pathplanner/generatedJSON/Test.wpilib.json";
+         try {
+           Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+           trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+           this.autonomousCommand = new AutonomousTrajectory(robotContainer, trajectory);
+         } catch (IOException ex) {
+           DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+         }
+         break;
+
+       case "Nothing":
+       default:
+         autonomousCommand = new AutonomousNothing(this.robotContainer);
+         break;
+
+     }
 
       // schedule the autonomous command
       if (this.autonomousCommand != null) {
+
         this.autonomousCommand.schedule();
       }
     }
