@@ -34,7 +34,7 @@ import frc.robot.subsystems.DriveSubsystem;
  */
 public class RobotContainer {
 
-  private PowerDistribution pdp = new PowerDistribution();
+  private PowerDistribution pdp = new PowerDistribution(1, PowerDistribution.ModuleType.kRev);
 
   // The robot's subsystems
   private final DriveSubsystem robotDrive = new DriveSubsystem();
