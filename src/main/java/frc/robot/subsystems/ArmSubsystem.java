@@ -17,7 +17,9 @@ public class ArmSubsystem extends SubsystemBase {
           Constants.ARM_SOLENOID_KREVERSE);
 
   /** Creates a new ArmSubsystem. */
-  public ArmSubsystem() {}
+  public ArmSubsystem() {
+    back();
+  }
 
   @Override
   public void periodic() {
