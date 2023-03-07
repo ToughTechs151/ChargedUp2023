@@ -58,25 +58,32 @@ class Splash {
       System.out.print((filename + ": ").replace(".txt", ""));
 
       try {
-        for (int length = 0; (length = statusfile.read(buffer)) != -1; ) {
-          String buf =
-              new String(buffer, StandardCharsets.UTF_8).replaceAll("\\s", " ").replace("\0", "");
-          String tfn = filename.replace(".txt", "");
-          String fn = tfn.substring(0, 1).toUpperCase(Locale.ENGLISH) + tfn.substring(1);
-          System.out.write(buffer, 0, length);
-          SmartDashboard.putString(fn, buf);
-          tab = Shuffleboard.getTab("Status");
-          field =
-              tab.add(fn, buf).withPosition(colIndex, rowIndex).withSize(widthIndex, 1).getEntry();
-          field.setString(buf);
+        if (statusfile == null) {
+          System.out.print("File not found.");
+        } else {
+          for (int length = 0; (length = statusfile.read(buffer)) != -1; ) {
+            String buf =
+                new String(buffer, StandardCharsets.UTF_8).replaceAll("\\s", " ").replace("\0", "");
+            String tfn = filename.replace(".txt", "");
+            String fn = tfn.substring(0, 1).toUpperCase(Locale.ENGLISH) + tfn.substring(1);
+            System.out.write(buffer, 0, length);
+            SmartDashboard.putString(fn, buf);
+            tab = Shuffleboard.getTab("Status");
+            field =
+                tab.add(fn, buf)
+                    .withPosition(colIndex, rowIndex)
+                    .withSize(widthIndex, 1)
+                    .getEntry();
+            field.setString(buf);
+          }
         }
       } finally {
         System.out.println();
       }
     } catch (RuntimeException e) {
-      throw e;
+      throw (e);
     } catch (Exception e) {
-      System.out.println("Unable to open file" + filename);
+      System.out.println("Unable to open file " + filename);
       System.out.println(e.getMessage());
     }
   }
