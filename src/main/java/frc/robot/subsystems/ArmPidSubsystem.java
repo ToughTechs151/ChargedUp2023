@@ -57,7 +57,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     // Calculate the feedforward from the setpoint
     // double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
     // Add the feedforward to the PID output to get the motor output
-    SmartDashboard.putNumber("voltage", output);
+    SmartDashboard.putNumber("Output voltage", output);
     armMotor.setVoltage(output);
   }
 
@@ -69,6 +69,14 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     setLED(position);
     retractArm(position);
     return position + ArmConstants.kArmOffsetRads;
+  }
+
+  /**
+   * Set voltage to the ARM motor
+   * @param voltage
+   */
+  public void setVoltage(double voltage) {
+    armMotor.setVoltage(voltage);
   }
 
   /**

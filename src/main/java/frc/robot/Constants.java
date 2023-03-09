@@ -146,6 +146,7 @@ public final class Constants {
     public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * 60 / 360);
     public static final double ARM_DOWN_POSITION = Math.round(ARM_ROTATION * 125 / 360);
     public static final double ARM_RED_ZONE = Math.round(ARM_ROTATION * 75 / 360);
+    public static final double ARM_BOTTOM_POSITION = Math.round(ARM_ROTATION * 150 / 360);
   }
 
   // Camera ID
