@@ -62,11 +62,9 @@ public class RobotContainer {
         // hand, and turning controlled by the right.
         new RunCommand(
             () ->
-                this.robotDrive.drive(
+                this.robotDrive.arcadeDrive(
                     -this.driverController.getLeftY(),
-                    this.driverController.getLeftX(),
-                    this.driverController.getRightX(),
-                    false),
+                    this.driverController.getRightX()),
             this.robotDrive));
     SmartDashboard.putData("ArmSubsystem", armPidSubsystem);
     armPidSubsystem.disable();
