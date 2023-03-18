@@ -12,9 +12,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -29,8 +29,12 @@ public class DriveSubsystem extends SubsystemBase {
   private final CANSparkMax rearRight =
       new CANSparkMax(DriveConstants.REAR_RIGHT_MOTOR_PORT, MotorType.kBrushless);
 
+  private final MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(frontLeft, frontRight);
+  private final MotorControllerGroup rightMotorControllerGroup = new MotorControllerGroup(frontRight, rearRight);
+
+
   private final DifferentialDrive drive =
-      new DifferentialDrive(this.frontLeft, this.frontRight);
+      new DifferentialDrive(leftMotorControllerGroup, rightMotorControllerGroup);
 
   // The front-left-side drive encoder
   private final RelativeEncoder frontLeftEncoder = this.frontLeft.getEncoder();
