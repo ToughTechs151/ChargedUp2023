@@ -71,6 +71,10 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     return position + ArmConstants.kArmOffsetRads;
   }
 
+  public void setVoltage(double voltage){
+    armMotor.setVoltage(voltage);
+  }
+
   /**
    * This method set the RevRobotics Blinkin LED to flash based on the ARM angle
    *
@@ -97,4 +101,5 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
       (new ArmRetractCommand(this.robotContainer.getArmSubsystem())).schedule();
     }
   }
+  
 }

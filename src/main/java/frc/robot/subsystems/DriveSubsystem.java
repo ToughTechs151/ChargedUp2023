@@ -57,6 +57,16 @@ public class DriveSubsystem extends SubsystemBase {
           this.gyro.getRotation2d(),
           frontLeftEncoder.getPosition(), frontRightEncoder.getPosition());
 
+  // drive constants
+  /** The scaling factor between the joystick value and the speed controller. */
+  private double speedMultiplier = 0.5;
+
+  /** The scale factor for normal mode. */
+  private static final double NORMAL = 1.0;
+
+  /** The scale factor for crawl mode. */
+  private static final double CRAWL = 0.3;
+
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
 
@@ -94,11 +104,12 @@ public class DriveSubsystem extends SubsystemBase {
   /**
    * Drives the robot using arcade controls.
    *
-   * @param fwd the commanded forward movement
-   * @param rot the commanded rotation
+   * @param leftSpeed The left joystick controller spped -1 to 1
+   * @param rightSpeed The right joystick controller speed -1 to 1
    */
-  public void arcadeDrive(double fwd, double rot) {
-    drive.arcadeDrive(fwd, rot);
+  public void tankDrive(double leftSpeed, double rightSpeed, boolean isCrawl) {
+    speedMultiplier = isCrawl ? CRAWL : NORMAL;
+    drive.tankDrive(leftSpeed * speedMultiplier, rightSpeed * speedMultiplier, true);
   }
 
   /**
