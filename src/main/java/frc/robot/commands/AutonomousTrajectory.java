@@ -17,7 +17,6 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.wpilibj2.command.MecanumControllerCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
@@ -45,36 +44,27 @@ public class AutonomousTrajectory extends SequentialCommandGroup {
                 // Add kinematics to ensure max speed is actually obeyed
                 .setKinematics(DriveConstants.kDriveKinematics);
 
-    
-
-        MecanumControllerCommand mecanumControllerCommand = new MecanumControllerCommand(
+        RamseteCommand ramseteCommand =
+        new RamseteCommand(
                 trajectory,
                 m_robotDrive::getPose,
-                DriveConstants.kFeedforward,
+                new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
+                new SimpleMotorFeedforward(
+                DriveConstants.ksVolts,
+                DriveConstants.kvVoltSecondsPerMeter,
+                DriveConstants.kaVoltSecondsSquaredPerMeter),
                 DriveConstants.kDriveKinematics,
-
-                // Position contollers
-                new PIDController(AutoConstants.kPXController, 0, 0),
-                new PIDController(AutoConstants.kPYController, 0, 0),
-                new ProfiledPIDController(
-                        AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints),
-
-                // Needed for normalizing wheel speeds
-                AutoConstants.kMaxSpeedMetersPerSecond,
-
-                // Velocity PID's
-                new PIDController(DriveConstants.kPFrontLeftVel, 0, 0),
-                new PIDController(DriveConstants.kPRearLeftVel, 0, 0),
-                new PIDController(DriveConstants.kPFrontRightVel, 0, 0),
-                new PIDController(DriveConstants.kPRearRightVel, 0, 0),
-                m_robotDrive::getCurrentWheelSpeeds,
-                m_robotDrive::setDriveMotorControllersVolts, // Consumer for the output motor voltages
+                m_robotDrive::getWheelSpeeds,
+                new PIDController(DriveConstants.kPDriveVel, 0, 0),
+                new PIDController(DriveConstants.kPDriveVel, 0, 0),
+                // RamseteCommand passes volts to the callback
+                m_robotDrive::tankDriveVolts,
                 m_robotDrive);
 
         // Reset odometry to the starting pose of the trajectory.
         m_robotDrive.resetOdometry(trajectory.getInitialPose());
 
         // Run path following command, then stop at the end.
-        addCommands(mecanumControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false)));
+        addCommands(ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0)));
     }
 }

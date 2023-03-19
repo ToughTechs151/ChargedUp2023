@@ -114,7 +114,8 @@ public class Robot extends TimedRobot {
      String trajectoryJSON;
      Trajectory trajectory;
 
-     String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+    String autoSelected = robotContainer.getAutomousString();
+    //String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
      switch (autoSelected) {
        case "Path1":
          trajectoryJSON = "pathplanner/generatedJSON/Path1.wpilib.json";

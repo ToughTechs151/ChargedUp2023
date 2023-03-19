@@ -6,8 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -58,13 +60,10 @@ public final class Constants {
     public static final double WHEEL_BASE = 0.7;
     // Distance between centers of front and back wheels on robot
 
-    public static final MecanumDriveKinematics kDriveKinematics =
-        new MecanumDriveKinematics(
-            new Translation2d(WHEEL_BASE / 2, TRACK_WIDTH / 2),
-            new Translation2d(WHEEL_BASE / 2, -TRACK_WIDTH / 2),
-            new Translation2d(-WHEEL_BASE / 2, TRACK_WIDTH / 2),
-            new Translation2d(-WHEEL_BASE / 2, -TRACK_WIDTH / 2));
-
+    public static final double kTrackwidthMeters = Units.inchesToMeters(22);
+    public static final DifferentialDriveKinematics kDriveKinematics =
+    new DifferentialDriveKinematics(kTrackwidthMeters);
+    
     public static final int ENCODER_CPR = 1024;
     public static final double WHEEL_DIAMETER_METERS = 0.15;
     public static final double ENCODER_DISTANCE_PER_PULSE =
@@ -83,6 +82,18 @@ public final class Constants {
     public static final double kPRearLeftVel = 0.5;
     public static final double kPFrontRightVel = 0.5;
     public static final double kPRearRightVel = 0.5;
+
+    // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
+    // These characterization values MUST be determined either experimentally or theoretically
+    // for *your* robot's drive.
+    // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
+    // values for your robot.
+    public static final double ksVolts = 0.13923;
+    public static final double kvVoltSecondsPerMeter = 2.244;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.23774;
+
+    // Example value only - as above, this must be tuned for your drive!
+    public static final double kPDriveVel = 0.12795;
   }
 
   public static final class OIconstants {
@@ -109,6 +120,10 @@ public final class Constants {
     public static final double kPXController = 0.5;
     public static final double kPYController = 0.5;
     public static final double kPThetaController = 0.5;
+
+    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+    public static final double kRamseteB = 2;
+    public static final double kRamseteZeta = 0.7;
 
     // Constraint for the motion profiled robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

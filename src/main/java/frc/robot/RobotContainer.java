@@ -112,6 +112,10 @@ public class RobotContainer {
     SmartDashboard.putData(chooser);
   }
 
+  public String getAutomousString() {
+    return chooser.getSelected();
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

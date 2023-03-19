@@ -54,7 +54,6 @@ public class DriveSubsystem extends SubsystemBase {
   // Odometry class for tracking robot pose
   DifferentialDriveOdometry odometry =
       new DifferentialDriveOdometry(
-          DriveConstants.DRIVE_KINEMATICS,
           this.gyro.getRotation2d(),
           frontLeftEncoder.getPosition(), frontRightEncoder.getPosition());
 
@@ -81,8 +80,8 @@ public class DriveSubsystem extends SubsystemBase {
     this.rearLeft.setIdleMode(IdleMode.kCoast);
     this.rearRight.setIdleMode(IdleMode.kCoast);
 
-    rearLeft.follow(frontLeft);
-    rearRight.follow(frontRight);
+    //rearLeft.follow(frontLeft);
+    //rearRight.follow(frontRight);
 
     // Sets the distance per pulse for the encoders
     this.frontLeftEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
@@ -120,6 +119,29 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public Pose2d getPose() {
     return this.odometry.getPoseMeters();
+  }
+
+  /**
+   * Returns the current wheel speeds of the robot.
+   *
+   * @return The current wheel speeds.
+   */
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(frontLeftEncoder.getVelocity(), frontRightEncoder.getVelocity());
+  }
+
+  /**
+   * Controls the left and right sides of the drive directly with voltages.
+   *
+   * @param leftVolts the commanded left output
+   * @param rightVolts the commanded right output
+   */
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    leftMotorControllerGroup.setVoltage(leftVolts);
+    rightMotorControllerGroup.setVoltage(rightVolts);
+    //frontLeft.setVoltage(leftVolts);
+    //frontRight.setVoltage(rightVolts);
+    drive.feed();
   }
 
   /**
