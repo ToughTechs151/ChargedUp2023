@@ -65,8 +65,8 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 this.robotDrive.tankDrive(
-                    this.driverController.getLeftY(),
-                    this.driverController.getRightY(),
+                    -this.driverController.getLeftY(),
+                    -this.driverController.getRightY(),
                     this.driverController.rightBumper().getAsBoolean()),
             this.robotDrive));
     SmartDashboard.putData("ArmSubsystem", armPidSubsystem);
