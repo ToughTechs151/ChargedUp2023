@@ -88,6 +88,10 @@ public class DriveSubsystem extends SubsystemBase {
     this.rearLeftEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
     this.frontRightEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
     this.rearRightEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
+    this.frontLeftEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOVITY_CONVERSION);
+    this.rearLeftEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOVITY_CONVERSION);
+    this.frontRightEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOVITY_CONVERSION);
+    this.rearRightEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOVITY_CONVERSION);
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.

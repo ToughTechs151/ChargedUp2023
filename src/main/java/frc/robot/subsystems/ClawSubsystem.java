@@ -19,8 +19,8 @@ public class ClawSubsystem extends SubsystemBase {
           Constants.CLAW_SOLENOID_KFORWARD,
           Constants.CLAW_SOLENOID_KREVERSE);
 
-  //private final WPI_TalonSRX clawMotor =
-      //new WPI_TalonSRX(Constants.CLAW_MOTOR);
+  private final WPI_TalonSRX clawMotor =
+      new WPI_TalonSRX(Constants.CLAW_MOTOR);
 
   /** Creates a new ClawSubsystem. */
   public ClawSubsystem() {
@@ -41,6 +41,6 @@ public class ClawSubsystem extends SubsystemBase {
   }
 
   public void runClaw(double direction) {
-    //clawMotor.set(ControlMode.PercentOutput,direction);
+    clawMotor.set(ControlMode.PercentOutput,direction);
   }
 }

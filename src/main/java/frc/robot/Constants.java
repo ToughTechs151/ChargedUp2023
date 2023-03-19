@@ -64,11 +64,13 @@ public final class Constants {
     public static final DifferentialDriveKinematics kDriveKinematics =
     new DifferentialDriveKinematics(kTrackwidthMeters);
     
-    public static final int ENCODER_CPR = 1024;
+    public static final double GEAR_RATIO = 10.71;
     public static final double WHEEL_DIAMETER_METERS = 0.15;
     public static final double ENCODER_DISTANCE_PER_PULSE =
         // Assumes the encoders are directly mounted on the wheel shafts
-        (WHEEL_DIAMETER_METERS * Math.PI) / ENCODER_CPR;
+        (WHEEL_DIAMETER_METERS * Math.PI) / GEAR_RATIO;
+        public static final double ENCODER_VELOVITY_CONVERSION =
+        (WHEEL_DIAMETER_METERS * Math.PI) / (GEAR_RATIO*60);
 
     // // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
     // // These characterization values MUST be determined either experimentally or theoretically
@@ -132,7 +134,7 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-    public static final int kMotorPort = 6;
+    public static final int kMotorPort = 5;
 
     public static final double kP = 1;
     public static final double kI = 0;
