@@ -24,7 +24,9 @@ import frc.robot.commands.ArmScoreLowCommand;
 import frc.robot.commands.ArmUpCommand;
 import frc.robot.commands.AutonomousTrajectory;
 import frc.robot.commands.ClawCloseCommand;
+import frc.robot.commands.ClawInCommand;
 import frc.robot.commands.ClawOpenCommand;
+import frc.robot.commands.ClawOutCommand;
 import frc.robot.subsystems.ArmPidSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
@@ -94,6 +96,8 @@ public class RobotContainer {
         .onFalse(new InstantCommand(() -> this.robotDrive.setMaxOutput(1)));
     codriverController.leftBumper().onTrue(new ClawOpenCommand(clawSubsystem));
     codriverController.rightBumper().onTrue(new ClawCloseCommand(clawSubsystem));
+    codriverController.leftBumper().whileTrue(new ClawInCommand(clawSubsystem));
+    codriverController.rightBumper().whileTrue(new ClawOutCommand(clawSubsystem));
     codriverController.a().onTrue(new ArmDownCommand(armPidSubsystem));
     codriverController.b().onTrue(new ArmUpCommand(armPidSubsystem));
     codriverController.x().onTrue(new ArmScoreHighCommand(armPidSubsystem));
@@ -105,7 +109,7 @@ public class RobotContainer {
     codriverController.rightTrigger().onTrue(new ArmRetractCommand(armSubsystem));
 
     //Autonomous Chooser
-    chooser.setDefaultOption("Nothing", "Nothing" );
+    chooser.setDefaultOption("Nothing", "Nothing");
     chooser.addOption("Path1", "Path1");
     chooser.addOption("Test", "Test");
     // Put the chooser on the dashboard
