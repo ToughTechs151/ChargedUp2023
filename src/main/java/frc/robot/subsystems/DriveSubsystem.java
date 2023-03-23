@@ -29,9 +29,8 @@ public class DriveSubsystem extends SubsystemBase {
   private final CANSparkMax rearRight =
       new CANSparkMax(DriveConstants.REAR_RIGHT_MOTOR_PORT, MotorType.kBrushless);
 
-  private final MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(frontLeft, frontRight);
+  private final MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(frontLeft, rearLeft);
   private final MotorControllerGroup rightMotorControllerGroup = new MotorControllerGroup(frontRight, rearRight);
-
 
   private final DifferentialDrive drive =
       new DifferentialDrive(leftMotorControllerGroup, rightMotorControllerGroup);
@@ -80,8 +79,8 @@ public class DriveSubsystem extends SubsystemBase {
     this.rearLeft.setIdleMode(IdleMode.kCoast);
     this.rearRight.setIdleMode(IdleMode.kCoast);
 
-    //rearLeft.follow(frontLeft);
-    //rearRight.follow(frontRight);
+    rearLeft.follow(frontLeft);
+    rearRight.follow(frontRight);
 
     // Sets the distance per pulse for the encoders
     this.frontLeftEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
@@ -143,8 +142,6 @@ public class DriveSubsystem extends SubsystemBase {
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     leftMotorControllerGroup.setVoltage(leftVolts);
     rightMotorControllerGroup.setVoltage(rightVolts);
-    //frontLeft.setVoltage(leftVolts);
-    //frontRight.setVoltage(rightVolts);
     drive.feed();
   }
 
