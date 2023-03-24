@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmPidSubsystem;
 
 public class ArmMoveDownCommand extends CommandBase{
@@ -26,7 +27,7 @@ public class ArmMoveDownCommand extends CommandBase{
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (armPidSubsystem.getMeasurement() <= 0.0) {
+    if (armPidSubsystem.getMeasurement() >= ArmConstants.ARM_BOTTOM_POSITION) {
       armPidSubsystem.setVoltage(0.0);
     } else {
       armPidSubsystem.setVoltage(1);
@@ -42,6 +43,7 @@ public class ArmMoveDownCommand extends CommandBase{
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    armPidSubsystem.setGoal(armPidSubsystem.getMeasurement());
     armPidSubsystem.enable();
     return false;
   }

@@ -102,8 +102,8 @@ public class RobotContainer {
     codriverController.b().onTrue(new ArmUpCommand(armPidSubsystem));
     codriverController.x().onTrue(new ArmScoreHighCommand(armPidSubsystem));
     codriverController.y().onTrue(new ArmScoreLowCommand(armPidSubsystem));
-    codriverController.povDown().whileTrue(new ArmMoveUpCommand(armPidSubsystem));
-    codriverController.povUp().whileTrue(new ArmMoveDownCommand(armPidSubsystem));
+    codriverController.povUp().whileTrue(new ArmMoveUpCommand(armPidSubsystem));
+    codriverController.povDown().whileTrue(new ArmMoveDownCommand(armPidSubsystem));
 
     codriverController.leftTrigger().onTrue(new ArmExtendCommand(armSubsystem));
     codriverController.rightTrigger().onTrue(new ArmRetractCommand(armSubsystem));

@@ -5,9 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
@@ -160,10 +158,11 @@ public final class Constants {
     public static final double ARM_VELOCITY = 1;
     public static final double ARM_ROTATION = 64.0;
     public static final double ARM_UP_POSITION = 0.0;
-    public static final double ARM_SCORE_LOW_POSITION = Math.round(ARM_ROTATION * 70 / 360);
-    public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * 60 / 360);
+    public static final double ARM_SCORE_LOW_POSITION = Math.round(ARM_ROTATION * 60 / 360);
+    public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * 73 / 360);
     public static final double ARM_DOWN_POSITION = Math.round(ARM_ROTATION * 125 / 360);
     public static final double ARM_RED_ZONE = Math.round(ARM_ROTATION * 75 / 360);
+    public static final double ARM_BOTTOM_POSITION = Math.round(ARM_ROTATION * 135 / 360);
   }
 
   // Camera ID

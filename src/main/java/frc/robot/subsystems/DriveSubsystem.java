@@ -69,6 +69,8 @@ public class DriveSubsystem extends SubsystemBase {
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
 
+    SmartDashboard.putData("DriveSubsystem", this);
+
     this.frontLeft.restoreFactoryDefaults();
     this.frontRight.restoreFactoryDefaults();
     this.rearLeft.restoreFactoryDefaults();

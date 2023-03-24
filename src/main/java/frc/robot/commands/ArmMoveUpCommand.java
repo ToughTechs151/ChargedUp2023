@@ -42,6 +42,7 @@ public class ArmMoveUpCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    armPidSubsystem.setGoal(armPidSubsystem.getMeasurement());
     armPidSubsystem.enable();
     return false;
   }
