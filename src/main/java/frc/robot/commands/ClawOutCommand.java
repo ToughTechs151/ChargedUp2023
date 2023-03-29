@@ -24,7 +24,7 @@ public class ClawOutCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    clawSubsystem.runClaw(-0.75);
+    clawSubsystem.runClaw(-0.4);
   }
 
   // Called once the command ends or is interrupted.

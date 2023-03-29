@@ -5,7 +5,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -25,6 +27,7 @@ public class ClawSubsystem extends SubsystemBase {
   /** Creates a new ClawSubsystem. */
   public ClawSubsystem() {
     /* Default constructor */
+    this.clawMotor.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override

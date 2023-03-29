@@ -143,7 +143,7 @@ public final class Constants {
     public static final double kVVoltSecondPerRad = 0.5;
     public static final double kAVoltSecondSquaredPerRad = 0.1;
 
-    public static final double kMaxVelocityRadPerSecond = 8;
+    public static final double kMaxVelocityRadPerSecond = 16;
     public static final double kMaxAccelerationRadPerSecSquared = 10;
 
     public static final int[] kEncoderPorts = new int[] {4, 5};
@@ -158,11 +158,11 @@ public final class Constants {
     public static final double ARM_VELOCITY = 1;
     public static final double ARM_ROTATION = 64.0;
     public static final double ARM_UP_POSITION = 0.0;
-    public static final double ARM_SCORE_LOW_POSITION = Math.round(ARM_ROTATION * 60 / 360);
-    public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * 73 / 360);
-    public static final double ARM_DOWN_POSITION = Math.round(ARM_ROTATION * 125 / 360);
-    public static final double ARM_RED_ZONE = Math.round(ARM_ROTATION * 75 / 360);
-    public static final double ARM_BOTTOM_POSITION = Math.round(ARM_ROTATION * 135 / 360);
+    public static final double ARM_SCORE_LOW_POSITION = Math.round(ARM_ROTATION * 45 / 360);
+    public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * 57 / 360);
+    public static final double ARM_DOWN_POSITION = Math.round(ARM_ROTATION * 115 / 360);
+    public static final double ARM_RED_ZONE = Math.round(ARM_ROTATION * 85 / 360);
+    public static final double ARM_BOTTOM_POSITION = Math.round(ARM_ROTATION * 115 / 360);
   }
 
   // Camera ID

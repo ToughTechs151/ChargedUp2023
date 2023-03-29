@@ -117,8 +117,8 @@ public class Robot extends TimedRobot {
     String autoSelected = robotContainer.getAutomousString();
     //String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
      switch (autoSelected) {
-       case "Path1":
-         trajectoryJSON = "pathplanner/generatedJSON/Path1.wpilib.json";
+       case "Score1":
+         trajectoryJSON = "pathplanner/generatedJSON/Score1.wpilib.json";
 
          try {
            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
