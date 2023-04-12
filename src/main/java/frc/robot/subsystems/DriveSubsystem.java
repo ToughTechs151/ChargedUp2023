@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -102,6 +103,23 @@ public class DriveSubsystem extends SubsystemBase {
   public void periodic() {
     // Update the odometry in the periodic block
     this.odometry.update(this.gyro.getRotation2d(), frontLeftEncoder.getPosition(), frontRightEncoder.getPosition());
+
+    SmartDashboard.putNumber("FL-Voltage", frontLeft.getBusVoltage());
+    SmartDashboard.putNumber("FL-Current", frontLeft.getOutputCurrent());
+    SmartDashboard.putNumber("FL-Temp", frontLeft.getMotorTemperature());
+
+    SmartDashboard.putNumber("RL-Voltage", rearLeft.getBusVoltage());
+    SmartDashboard.putNumber("RL-Current", rearLeft.getOutputCurrent());
+    SmartDashboard.putNumber("RL-Temp", rearLeft.getMotorTemperature());
+
+    SmartDashboard.putNumber("FR-Voltage", frontRight.getBusVoltage());
+    SmartDashboard.putNumber("FR-Current", frontRight.getOutputCurrent());
+    SmartDashboard.putNumber("FR-Temp", frontRight.getMotorTemperature());
+
+    SmartDashboard.putNumber("RR-Voltage", rearRight.getBusVoltage());
+    SmartDashboard.putNumber("RR-Current", rearRight.getOutputCurrent());
+    SmartDashboard.putNumber("RR-Temp", rearRight.getMotorTemperature());
+
   }
 
   /**

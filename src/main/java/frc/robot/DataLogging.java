@@ -145,24 +145,27 @@ public class DataLogging {
    */
   public void dataLogRobotContainerInit(RobotContainer robotContainer) {
 
-    PowerDistribution pdp;
-    //  pdp = robotContainer.getPdp();
+  //   PowerDistribution pdp;
+  //   pdp = robotContainer.getPdp();
 
-    // // Add hardware sendables here
-    // // sbRobotTab.add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution)
-    // pdpWidget.add("PDP", pdp);
+  //   // Add hardware sendables here
+  //   // sbRobotTab.add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution)
+  //   pdpWidget.add("PDP", pdp);
 
-    // // Log configuration info here
-    // DataLogManager.log(String.format("PDP Can ID: %d", pdp.getModule()));
+  //   // Log configuration info here
+  //   DataLogManager.log(String.format("PDP Can ID: %d", pdp.getModule()));
 
-    // // Add values with supplier functions here.
-    // pdpWidget
-    //     .addNumber("PDP Temp", pdp::getTemperature)
-    //     .withWidget(BuiltInWidgets.kDial)
-    //     .withProperties(Map.of("min", 15, "max", 50));
-    // pdpWidget.addNumber("PDP Current", pdp::getTotalCurrent);
-    // pdpWidget.addNumber("PDP Energy", pdp::getTotalEnergy);
-    // pdpWidget.addNumber("PDP Power", pdp::getTotalPower);
+  //    // Add values with supplier functions here.
+  //   pdpWidget
+  //        .addNumber("PDP Temp", pdp::getTemperature)
+  //        .withWidget(BuiltInWidgets.kDial)
+  //        .withProperties(Map.of("min", 15, "max", 50));
+  //  // double totalCurrent = pdp.getTotalCurrent();
+  //   pdpWidget.addNumber("PDP Current", pdp::getTotalCurrent);
+  //  // double totalEnergy = pdp.getTotalEnergy();
+  //   pdpWidget.addNumber("PDP Energy", pdp::getTotalEnergy);
+  //  // double totalPower = pdp.getTotalPower();
+  //   pdpWidget.addNumber("PDP Power", pdp::getTotalPower);
   }
 
   /**
