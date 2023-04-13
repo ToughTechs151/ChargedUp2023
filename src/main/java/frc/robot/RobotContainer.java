@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.OIconstants;
 import frc.robot.commands.ArmDownCommand;
 import frc.robot.commands.ArmExtendCommand;
@@ -43,8 +44,27 @@ public class RobotContainer {
   private SendableChooser<String> chooser = new SendableChooser<>();
   private PowerDistribution pdp = new PowerDistribution(1, PowerDistribution.ModuleType.kRev);
 
+  private static double armHigh = ArmConstants.ARM_UP_POSITION;
 
+  public static double getArmHigh() {
+    return armHigh;
+  }
 
+  private static double armLow = ArmConstants.ARM_DOWN_POSITION;
+
+  public static double getArmLow() {
+    return armLow;
+  }
+
+  public static void setArmHigh(double armHigh) {
+    RobotContainer.armHigh = armHigh;
+    SmartDashboard.putNumber("setArmHigh", armHigh);
+  }
+
+  public static void setArmLow(double armLow) {
+    RobotContainer.armLow = armLow;
+    SmartDashboard.putNumber("setArmLow", armLow);
+  }
 
   // The robot's subsystems
   private final DriveSubsystem robotDrive = new DriveSubsystem();
@@ -102,8 +122,22 @@ public class RobotContainer {
     codriverController.b().onTrue(new ArmUpCommand(armPidSubsystem));
     codriverController.x().onTrue(new ArmScoreHighCommand(armPidSubsystem));
     codriverController.y().onTrue(new ArmScoreLowCommand(armPidSubsystem));
-    codriverController.povDown().whileTrue(new ArmMoveUpCommand(armPidSubsystem));
-    codriverController.povUp().whileTrue(new ArmMoveDownCommand(armPidSubsystem));
+    codriverController
+        .povDown()
+        .onTrue(new InstantCommand(() 
+            -> RobotContainer.setArmLow(RobotContainer.getArmLow() + 0.2)));
+    codriverController
+        .povUp()
+        .onTrue(new InstantCommand(() 
+            -> RobotContainer.setArmLow(RobotContainer.getArmLow() - 0.2)));
+    codriverController
+        .povRight()
+        .onTrue(new InstantCommand(() 
+            -> RobotContainer.setArmHigh(RobotContainer.getArmHigh() - 0.2)));
+    codriverController
+        .povLeft()
+        .onTrue(new InstantCommand(() 
+            -> RobotContainer.setArmHigh(RobotContainer.getArmHigh() + 0.2)));
 
     codriverController.leftTrigger().onTrue(new ArmExtendCommand(armSubsystem));
     codriverController.rightTrigger().onTrue(new ArmRetractCommand(armSubsystem));

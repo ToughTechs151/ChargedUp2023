@@ -5,7 +5,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmPidSubsystem;
 
@@ -19,6 +21,9 @@ public class ArmUpCommand extends InstantCommand {
    * @param arm
    * @param arm ArmPIDSubsystem
    */
+
+  private double lastarmHigh;
+
   public ArmUpCommand(ArmPidSubsystem arm) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
@@ -29,6 +34,16 @@ public class ArmUpCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    armSubsystem.setGoal(new State(ArmConstants.ARM_UP_POSITION, ArmConstants.ARM_VELOCITY));
+    lastarmHigh = RobotContainer.getArmHigh();
+    armSubsystem.setGoal(new State(lastarmHigh, ArmConstants.ARM_VELOCITY));
+  }
+  
+  @Override
+  public void execute() {
+    if (lastarmHigh != RobotContainer.getArmHigh()) {
+      lastarmHigh = RobotContainer.getArmHigh();
+      SmartDashboard.putString("ArmUpCommand", "setGoal");
+      armSubsystem.setGoal(new State(lastarmHigh, ArmConstants.ARM_VELOCITY));
+    }
   }
 }

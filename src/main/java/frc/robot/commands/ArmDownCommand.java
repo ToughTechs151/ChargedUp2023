@@ -5,7 +5,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmPidSubsystem;
 
@@ -14,6 +16,8 @@ import frc.robot.subsystems.ArmPidSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ArmDownCommand extends InstantCommand {
   private ArmPidSubsystem armSubsystem;
+
+  private double lastarmLow;
 
   /**
    * Command to move the Arm down.
@@ -31,6 +35,17 @@ public class ArmDownCommand extends InstantCommand {
   @Override
   public void initialize() {
     armSubsystem.enable();
-    armSubsystem.setGoal(new State(ArmConstants.ARM_DOWN_POSITION, ArmConstants.ARM_VELOCITY));
+    lastarmLow = RobotContainer.getArmLow();
+    armSubsystem.setGoal(new State(lastarmLow, ArmConstants.ARM_VELOCITY));
   }
+
+  @Override
+  public void execute() {
+    if (lastarmLow != RobotContainer.getArmLow()) {
+      lastarmLow = RobotContainer.getArmLow();
+      SmartDashboard.putString("ArmDownCommand", "setGoal");
+      armSubsystem.setGoal(new State(lastarmLow, ArmConstants.ARM_VELOCITY));
+    }
+  }
+
 }

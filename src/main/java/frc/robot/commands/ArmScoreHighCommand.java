@@ -9,10 +9,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmPidSubsystem;
 
+
+
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ArmScoreHighCommand extends InstantCommand {
+
+  static double armHigh = ArmConstants.ARM_SCORE_HIGH_POSITION;
   private ArmPidSubsystem armSubsystem;
 
   public ArmScoreHighCommand(ArmPidSubsystem arm) {
@@ -26,6 +30,6 @@ public class ArmScoreHighCommand extends InstantCommand {
   public void initialize() {
     armSubsystem.enable();
     armSubsystem.setGoal(
-        new State(ArmConstants.ARM_SCORE_HIGH_POSITION, ArmConstants.ARM_VELOCITY));
+        new State(armHigh, ArmConstants.ARM_VELOCITY));
   }
 }
