@@ -157,12 +157,15 @@ public final class Constants {
     public static final double kArmOffsetRads = 0.5;
 
     // ARM positions
+    public static final double ARM_SCORE_LOW_ANGLE = 70.0;
+    public static final double ARM_SCORE_HIGH_ANGLE = 60.;
+    public static final double ARM_DOWN_ANGLE = 97.0;
     public static final double ARM_VELOCITY = 1;
     public static final double ARM_ROTATION = 64.0;
     public static final double ARM_UP_POSITION = 0.0;
-    public static final double ARM_SCORE_LOW_POSITION = Math.round(ARM_ROTATION * 70 / 360);
-    public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * 60 / 360);
-    public static final double ARM_DOWN_POSITION = Math.round(ARM_ROTATION * 125 / 360);
+    public static final double ARM_SCORE_LOW_POSITION = Math.round(ARM_ROTATION * ARM_SCORE_LOW_ANGLE / 360);
+    public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * ARM_SCORE_HIGH_ANGLE / 360);
+    public static final double ARM_DOWN_POSITION = Math.round(ARM_ROTATION * ARM_DOWN_ANGLE / 360);
     public static final double ARM_RED_ZONE = Math.round(ARM_ROTATION * 75 / 360);
   }
 
@@ -192,8 +195,4 @@ public final class Constants {
   public static final int BLIKIN_SPARK_PORT = 0;
   public static final double BLINKIN_RED = 0.61;
   public static final double BLINKIN_DARK_GREEN = 0.75;
-  public static final double ARM_UP_POSITION = 0.0;
-  public static final double ARM_SCORE_LOW_POSITION = 17.0;
-  public static final double ARM_SCORE_HIGH_POSITION = 10.0;
-  public static final double ARM_DOWN_POSITION = 21.0;
 }

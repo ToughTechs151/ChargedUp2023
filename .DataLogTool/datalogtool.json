@@ -1,6 +1,10 @@
 {
   "download": {
-    "remoteDir": "/home/lvuser/frc/test_mode_deps",
+    "deleteAfter": false,
+    "localDir": "C:\\Users\\Administrator\\Desktop\\RIOLogs",
     "serverTeam": "151"
+  },
+  "output": {
+    "outputFolder": "C:\\Users\\Administrator\\Desktop\\RIOLogs"
   }
 }
