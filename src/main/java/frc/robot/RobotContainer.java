@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.OIconstants;
+import frc.robot.commands.ArmDPadDownCommand;
+import frc.robot.commands.ArmDPadUpCommand;
 import frc.robot.commands.ArmDownCommand;
 import frc.robot.commands.ArmExtendCommand;
 import frc.robot.commands.ArmMoveDownCommand;
@@ -102,8 +104,8 @@ public class RobotContainer {
     codriverController.b().onTrue(new ArmUpCommand(armPidSubsystem));
     codriverController.x().onTrue(new ArmScoreHighCommand(armPidSubsystem));
     codriverController.y().onTrue(new ArmScoreLowCommand(armPidSubsystem));
-    codriverController.povDown().whileTrue(new ArmMoveUpCommand(armPidSubsystem));
-    codriverController.povUp().whileTrue(new ArmMoveDownCommand(armPidSubsystem));
+    codriverController.povDown().whileTrue(new ArmDPadDownCommand(armPidSubsystem));
+    codriverController.povUp().whileTrue(new ArmDPadUpCommand(armPidSubsystem));
 
     codriverController.leftTrigger().onTrue(new ArmExtendCommand(armSubsystem));
     codriverController.rightTrigger().onTrue(new ArmRetractCommand(armSubsystem));

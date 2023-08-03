@@ -31,6 +31,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   private final Spark blinkinSpark = new Spark(Constants.BLIKIN_SPARK_PORT);
   private double blinkinVoltage = Constants.BLINKIN_DARK_GREEN;
   private RobotContainer robotContainer = null;
+  private static TrapezoidProfile.State lastGoal;
 
   /** Create a new ArmSubsystem. */
   public ArmPidSubsystem(RobotContainer robotContainer) {
@@ -100,6 +101,16 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     if (position >= ArmConstants.ARM_RED_ZONE) {
       (new ArmRetractCommand(this.robotContainer.getArmSubsystem())).schedule();
     }
+  }
+
+  @Override
+  public void setGoal(TrapezoidProfile.State goal) {
+    lastGoal = goal;
+    super.setGoal(goal);
+  }
+
+  public TrapezoidProfile.State getGoal() {
+    return lastGoal;
   }
   
 }
