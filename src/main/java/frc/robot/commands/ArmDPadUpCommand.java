@@ -15,9 +15,10 @@ import frc.robot.subsystems.ArmPidSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ArmDPadUpCommand extends InstantCommand {
   private ArmPidSubsystem armSubsystem;
+  private TrapezoidProfile.State oldGoal;
 
   /**
-   * Command to move the Arm down.
+   * Command to move the Arm up.
    *
    * @param arm ArmPidSubsystem
    */
@@ -31,11 +32,20 @@ public class ArmDPadUpCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    TrapezoidProfile.State oldGoal = armSubsystem.getGoal();
-    armSubsystem.enable();
+    oldGoal = armSubsystem.getGoal();
+
     if (oldGoal == null) {
       return;
     }
-    armSubsystem.setGoal(new State(oldGoal.position - 0.02, oldGoal.velocity));
+    armSubsystem.enable();
+  }
+  // Called for each quantum while scheduled.
+  @Override
+  public void execute() {
+    if (oldGoal == null) {
+      return;
+    }
+    oldGoal.position -= 0.02;
+    armSubsystem.setGoal(oldGoal);
   }
 }

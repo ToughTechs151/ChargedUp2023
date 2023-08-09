@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -59,7 +60,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     // double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
     // Add the feedforward to the PID output to get the motor output
     SmartDashboard.putNumber("voltage", output);
-    armMotor.setVoltage(output);
+    setVoltage(output);
   }
 
   @Override
@@ -73,7 +74,8 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   }
 
   public void setVoltage(double voltage){
-    armMotor.setVoltage(voltage);
+    armMotor.setVoltage(MathUtil.clamp(voltage, -ArmConstants.kMaxArmVoltage,
+        ArmConstants.kMaxArmVoltage));
   }
 
   /**

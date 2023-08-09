@@ -151,6 +151,7 @@ public final class Constants {
     public static final int[] kEncoderPorts = new int[] {4, 5};
     public static final int kEncoderPPR = 256;
     public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
+    public static final double kMaxArmVoltage = 0.5;
 
     // The offset of the arm from the horizontal in its neutral position,
     // measured from the horizontal
