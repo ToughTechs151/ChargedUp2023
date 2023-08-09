@@ -18,8 +18,6 @@ import frc.robot.commands.ArmDPadDownCommand;
 import frc.robot.commands.ArmDPadUpCommand;
 import frc.robot.commands.ArmDownCommand;
 import frc.robot.commands.ArmExtendCommand;
-import frc.robot.commands.ArmMoveDownCommand;
-import frc.robot.commands.ArmMoveUpCommand;
 import frc.robot.commands.ArmRetractCommand;
 import frc.robot.commands.ArmScoreHighCommand;
 import frc.robot.commands.ArmScoreLowCommand;
