@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -32,7 +31,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   private final Spark blinkinSpark = new Spark(Constants.BLIKIN_SPARK_PORT);
   private double blinkinVoltage = Constants.BLINKIN_DARK_GREEN;
   private RobotContainer robotContainer = null;
-  private static TrapezoidProfile.State lastGoal;
+  private TrapezoidProfile.State lastGoal;
 
   /** Create a new ArmSubsystem. */
   public ArmPidSubsystem(RobotContainer robotContainer) {
@@ -74,8 +73,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   }
 
   public void setVoltage(double voltage){
-    armMotor.setVoltage(MathUtil.clamp(voltage, -ArmConstants.kMaxArmVoltage,
-        ArmConstants.kMaxArmVoltage));
+    armMotor.setVoltage(voltage);
   }
 
   /**
@@ -108,7 +106,11 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   @Override
   public void setGoal(TrapezoidProfile.State goal) {
     lastGoal = goal;
-    super.setGoal(goal);
+    super.setGoal(goal);    
+    SmartDashboard.putNumber("ARM goal Pos", goal.position);
+    SmartDashboard.putNumber("ARM goal Vel", goal.velocity);
+
+
   }
 
   public TrapezoidProfile.State getGoal() {
