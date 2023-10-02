@@ -162,8 +162,8 @@ public final class Constants {
     public static final double ARM_ROTATION = 64.0;
     public static final double ARM_UP_POSITION = 0.0;
     public static final double ARM_SCORE_LOW_POSITION = Math.round(ARM_ROTATION * 70 / 360);
-    public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * 60 / 360);
-    public static final double ARM_DOWN_POSITION = Math.round(ARM_ROTATION * 97 / 360);
+    public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * 50 / 360);
+    public static final double ARM_DOWN_POSITION = Math.round(ARM_ROTATION * 110 / 360);
     public static final double ARM_RED_ZONE = Math.round(ARM_ROTATION * 75 / 360);
   }
 
