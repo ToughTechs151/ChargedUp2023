@@ -45,7 +45,7 @@ public class ArmDPadUpCommand extends InstantCommand {
     if (oldGoal == null) {
       return;
     }
-    oldGoal.position -= 0.02;
+    oldGoal.position -= 0.2;
     armSubsystem.setGoal(oldGoal);
   }
 }
