@@ -26,7 +26,6 @@ public class ArmDPadUpCommand extends InstantCommand {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(arm);
     armSubsystem = arm;
-    armSubsystem.enable();
   }
 
   // Called when the command is initially scheduled.
@@ -37,15 +36,9 @@ public class ArmDPadUpCommand extends InstantCommand {
     if (oldGoal == null) {
       return;
     }
-    armSubsystem.enable();
-  }
-  // Called for each quantum while scheduled.
-  @Override
-  public void execute() {
-    if (oldGoal == null) {
-      return;
-    }
     oldGoal.position -= 0.2;
     armSubsystem.setGoal(oldGoal);
+    armSubsystem.enable();
   }
+
 }
