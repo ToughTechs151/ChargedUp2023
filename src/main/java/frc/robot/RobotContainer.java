@@ -153,4 +153,9 @@ public class RobotContainer {
   public DriveSubsystem getDriveSubsystem() {
     return this.robotDrive;
   }
+
+  /* Disable PID subsystems to prevent integral windup.  */
+  public void disablePIDSubsystems() {
+    armPidSubsystem.disable();
+  }
 }

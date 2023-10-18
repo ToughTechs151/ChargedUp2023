@@ -88,6 +88,7 @@ public class Robot extends TimedRobot {
 
     // Add code for entering disabled mode.
     CommandScheduler.getInstance().cancelAll();
+    robotContainer.disablePIDSubsystems();
   }
 
   @Override

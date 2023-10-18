@@ -24,8 +24,8 @@ public class ArmScoreHighCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    armSubsystem.enable();
     armSubsystem.setGoal(
         new State(ArmConstants.ARM_SCORE_HIGH_POSITION, ArmConstants.ARM_VELOCITY));
+    armSubsystem.enable();
   }
 }
