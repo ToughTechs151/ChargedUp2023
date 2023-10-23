@@ -56,6 +56,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
     // Calculate the feedforward from the setpoint
+    // https://github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/math/controller/ArmFeedforward.html
     // double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
     // Add the feedforward to the PID output to get the motor output
     SmartDashboard.putNumber("voltage", output);
