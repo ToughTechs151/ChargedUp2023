@@ -75,10 +75,10 @@ public class DriveSubsystem extends SubsystemBase {
     this.rearLeft.restoreFactoryDefaults();
     this.rearRight.restoreFactoryDefaults();
 
-    this.frontLeft.setIdleMode(IdleMode.kCoast);
-    this.frontRight.setIdleMode(IdleMode.kCoast);
-    this.rearLeft.setIdleMode(IdleMode.kCoast);
-    this.rearRight.setIdleMode(IdleMode.kCoast);
+    this.frontLeft.setIdleMode(IdleMode.kBrake);
+    this.frontRight.setIdleMode(IdleMode.kBrake);
+    this.rearLeft.setIdleMode(IdleMode.kBrake);
+    this.rearRight.setIdleMode(IdleMode.kBrake);
 
     rearLeft.follow(frontLeft);
     rearRight.follow(frontRight);

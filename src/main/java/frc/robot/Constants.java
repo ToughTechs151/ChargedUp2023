@@ -64,7 +64,7 @@ public final class Constants {
     public static final DifferentialDriveKinematics kDriveKinematics =
     new DifferentialDriveKinematics(kTrackwidthMeters);
     
-    public static final double GEAR_RATIO = 10.71;
+    public static final double GEAR_RATIO = 43;
     public static final double WHEEL_DIAMETER_METERS = 0.15;
     public static final double ENCODER_DISTANCE_PER_PULSE =
         // Assumes the encoders are directly mounted on the wheel shafts
