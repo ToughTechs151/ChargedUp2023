@@ -111,7 +111,7 @@ public class RobotContainer {
     //Autonomous Chooser
     chooser.setDefaultOption("Nothing", "Nothing");
     chooser.addOption("Path1", "Path1");
-    chooser.addOption("Test", "Test");
+    chooser.addOption("Taxi", "Taxi");
     // Put the chooser on the dashboard
     SmartDashboard.putData(chooser);
   }

@@ -130,8 +130,8 @@ public class Robot extends TimedRobot {
          break;
 
 
-         case "Test":
-         trajectoryJSON = "pathplanner/generatedJSON/Test.wpilib.json";
+         case "Taxi":
+         trajectoryJSON = "pathplanner/generatedJSON/Taxi.wpilib.json";
          try {
            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
            trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
