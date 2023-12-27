@@ -40,7 +40,9 @@ import frc.robot.subsystems.DriveSubsystem;
  */
 public class RobotContainer {
 
-  private SendableChooser<String> chooser = new SendableChooser<>();
+  private SendableChooser<String> autoChooser = new SendableChooser<>();
+  private SendableChooser<String> driveChooser = new SendableChooser<>();
+
   private PowerDistribution pdp = new PowerDistribution(1, PowerDistribution.ModuleType.kRev);
 
 
@@ -66,17 +68,9 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Configure default commands
-    // Set the default drive command to split-stick arcade drive
-    this.robotDrive.setDefaultCommand(
-        // A split-stick arcade command, with forward/backward controlled by the left
-        // hand, and turning controlled by the right.
-        new RunCommand(
-            () ->
-                this.robotDrive.tankDrive(
-                    -this.driverController.getLeftY(),
-                    -this.driverController.getRightY(),
-                    this.driverController.rightBumper().getAsBoolean()),
-            this.robotDrive));
+    // Set the default drive command
+    this.robotDrive.setDefaultCommand(getDriveCommand());
+
     SmartDashboard.putData("ArmSubsystem", armPidSubsystem);
     armPidSubsystem.disable();
 
@@ -109,15 +103,87 @@ public class RobotContainer {
     codriverController.rightTrigger().onTrue(new ArmRetractCommand(armSubsystem));
 
     //Autonomous Chooser
-    chooser.setDefaultOption("Nothing", "Nothing");
-    chooser.addOption("Path1", "Path1");
-    chooser.addOption("Taxi", "Taxi");
-    // Put the chooser on the dashboard
-    SmartDashboard.putData(chooser);
+    autoChooser.setDefaultOption("Nothing", "Nothing");
+    autoChooser.addOption("Path1", "Path1");
+    autoChooser.addOption("Taxi", "Taxi");
+
+    // Setup chooser for selecting drive mode
+    driveChooser.setDefaultOption("Drive Mode - Tank", "tank");
+    driveChooser.addOption("Drive Mode - Arcade", "arcade");
+    driveChooser.addOption("Drive Mode - Curvature", "curve");
+
+    // Put the choosers on the dashboard
+    SmartDashboard.putData(autoChooser);
+    SmartDashboard.putData(driveChooser);
+    SmartDashboard.putBoolean("Square Inputs", true);
+    SmartDashboard.putNumber("Deadband", 0.02);
+
+  }
+
+  /**
+   * Use this to pass the teleop command to the main {@link Robot} class.
+   *
+   * @return the command to run in teleop
+   */
+  public RunCommand getDriveCommand() {
+
+    boolean squareInputs = SmartDashboard.getBoolean("Square Inputs", true);
+
+    switch (driveChooser.getSelected()) {
+
+      case "arcade":
+        // A split-stick arcade command, with forward/backward controlled by the left
+        // hand, and turn rate controlled by the right. Right bumper enables
+        // crawl speed.
+        return new RunCommand(
+            () ->
+                this.robotDrive.arcadeDrive(
+                    -this.driverController.getLeftY(),
+                    -this.driverController.getRightX(),
+                    this.driverController.rightBumper().getAsBoolean(),
+                    squareInputs),
+            this.robotDrive);
+
+      case "curve":
+        // A split-stick arcade command, with forward/backward controlled by the left
+        // hand, and turn curvature controlled by the right. Right bumper enables
+        // crawl speed. Left bumper enables turning in place.
+        return new RunCommand(
+            () ->
+                this.robotDrive.curvatureDrive(
+                    -this.driverController.getLeftY(),
+                    -this.driverController.getRightX(),
+                    this.driverController.rightBumper().getAsBoolean(),
+                    this.driverController.leftBumper().getAsBoolean()),
+            this.robotDrive);
+
+      case "tank":
+      default:
+        // A tank drive command with left side speed controlled by the left
+        // hand, and right speed controlled by the right. Right bumper enables
+        // crawl speed.
+        return new RunCommand(
+            () ->
+                this.robotDrive.tankDrive(
+                    -this.driverController.getLeftY(),
+                    -this.driverController.getRightY(),
+                    this.driverController.rightBumper().getAsBoolean(),
+                    squareInputs),
+            this.robotDrive);
+    }
+  }
+
+  /**
+   * Set the deadband in the drive from the dashboard.
+   *
+   */
+  public void setDeadband() {  
+    double deadband = SmartDashboard.getNumber("Deadband", 0.02);
+    this.robotDrive.setDriveDeadband(deadband);
   }
 
   public String getAutomousString() {
-    return chooser.getSelected();
+    return autoChooser.getSelected();
   }
 
   /**

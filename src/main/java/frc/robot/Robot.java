@@ -28,6 +28,7 @@ import frc.sim.RobotModel;
  */
 public class Robot extends TimedRobot {
   private Command autonomousCommand;
+  private Command driveCommand;
 
   private RobotContainer robotContainer;
   private DataLogging datalog;
@@ -172,6 +173,16 @@ public class Robot extends TimedRobot {
     if (this.autonomousCommand != null) {
       this.autonomousCommand.cancel();
     }
+
+    // Get selected drive mode and deadband from the SmartDashboard
+    driveCommand = robotContainer.getDriveCommand();
+    robotContainer.setDeadband();
+
+    // schedule the drive command
+    if (driveCommand != null) {
+      driveCommand.schedule();
+    }
+
   }
 
   /** This function is called periodically during operator control. */

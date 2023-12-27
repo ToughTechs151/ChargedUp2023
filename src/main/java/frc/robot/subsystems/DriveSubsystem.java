@@ -123,14 +123,46 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   /**
+   * Drives the robot using tank controls.
+   *
+   * @param leftSpeed The left side drive speed -1 to 1
+   * @param rightSpeed The right side drive speed -1 to 1
+   * @param isCrawl Enable slow crawl speed
+   * @param squareInputs Enable squaring of the inputs
+   */
+  public void tankDrive(double leftSpeed, double rightSpeed, boolean isCrawl,
+        boolean squareInputs) {
+    speedMultiplier = isCrawl ? CRAWL : NORMAL;
+    drive.tankDrive(leftSpeed * speedMultiplier, rightSpeed * speedMultiplier, squareInputs);
+  }
+
+  /**
    * Drives the robot using arcade controls.
    *
-   * @param leftSpeed The left joystick controller spped -1 to 1
-   * @param rightSpeed The right joystick controller speed -1 to 1
+   * @param xaxisSpeed The forward/reverse speed -1 to 1
+   * @param zaxisRotate The turning rate -1 to 1
+   * @param isCrawl Enable slow crawl speed
+   * @param squareInputs Enable squaring of the inputs
    */
-  public void tankDrive(double leftSpeed, double rightSpeed, boolean isCrawl) {
+  public void arcadeDrive(double xaxisSpeed, double zaxisRotate, boolean isCrawl, 
+        boolean squareInputs) {
     speedMultiplier = isCrawl ? CRAWL : NORMAL;
-    drive.tankDrive(leftSpeed * speedMultiplier, rightSpeed * speedMultiplier, true);
+    drive.arcadeDrive(speedMultiplier * xaxisSpeed, speedMultiplier * zaxisRotate, squareInputs);
+  }
+
+  /**
+   * Drives the robot using curvature controls.
+   *
+   * @param xaxisSpeed The forward/reverse speed -1 to 1
+   * @param zaxisRotate The normalized curvature -1 (CW) to 1 (CCW)
+   * @param isCrawl Enable slow crawl speed
+   * @param allowTurnInPlace Enable turning in place
+   */
+  public void curvatureDrive(double xaxisSpeed, double zaxisRotate, boolean isCrawl,
+        boolean allowTurnInPlace) {
+    speedMultiplier = isCrawl ? CRAWL : NORMAL;
+    drive.curvatureDrive(speedMultiplier * xaxisSpeed, speedMultiplier * zaxisRotate, 
+        allowTurnInPlace);
   }
 
   /**
@@ -232,5 +264,9 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getTurnRate() {
     return -this.gyro.getRate();
+  }
+
+  public void setDriveDeadband(double deadband) {
+    drive.setDeadband(deadband);
   }
 }
