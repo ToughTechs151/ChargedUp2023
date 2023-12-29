@@ -58,14 +58,6 @@ public class DriveSubsystem extends SubsystemBase {
           frontLeftEncoder.getPosition(), frontRightEncoder.getPosition());
 
   // drive constants
-  /** The scaling factor between the joystick value and the speed controller. */
-  private double speedMultiplier = 0.5;
-
-  /** The scale factor for normal mode. */
-  private static final double NORMAL = 1.0;
-
-  /** The scale factor for crawl mode. */
-  private static final double CRAWL = 0.3;
 
   /** Creates a new DriveSubsystem. */
   public DriveSubsystem() {
@@ -96,6 +88,7 @@ public class DriveSubsystem extends SubsystemBase {
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
     rightMotorControllerGroup.setInverted(true);
+
     SmartDashboard.putData(this.drive);
   }
 
@@ -127,13 +120,10 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @param leftSpeed The left side drive speed -1 to 1
    * @param rightSpeed The right side drive speed -1 to 1
-   * @param isCrawl Enable slow crawl speed
    * @param squareInputs Enable squaring of the inputs
    */
-  public void tankDrive(double leftSpeed, double rightSpeed, boolean isCrawl,
-        boolean squareInputs) {
-    speedMultiplier = isCrawl ? CRAWL : NORMAL;
-    drive.tankDrive(leftSpeed * speedMultiplier, rightSpeed * speedMultiplier, squareInputs);
+  public void tankDrive(double leftSpeed, double rightSpeed, boolean squareInputs) {
+    drive.tankDrive(leftSpeed, rightSpeed, squareInputs);
   }
 
   /**
@@ -141,13 +131,10 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @param xaxisSpeed The forward/reverse speed -1 to 1
    * @param zaxisRotate The turning rate -1 to 1
-   * @param isCrawl Enable slow crawl speed
    * @param squareInputs Enable squaring of the inputs
    */
-  public void arcadeDrive(double xaxisSpeed, double zaxisRotate, boolean isCrawl, 
-        boolean squareInputs) {
-    speedMultiplier = isCrawl ? CRAWL : NORMAL;
-    drive.arcadeDrive(speedMultiplier * xaxisSpeed, speedMultiplier * zaxisRotate, squareInputs);
+  public void arcadeDrive(double xaxisSpeed, double zaxisRotate, boolean squareInputs) {
+    drive.arcadeDrive(xaxisSpeed, zaxisRotate, squareInputs);
   }
 
   /**
@@ -155,14 +142,10 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @param xaxisSpeed The forward/reverse speed -1 to 1
    * @param zaxisRotate The normalized curvature -1 (CW) to 1 (CCW)
-   * @param isCrawl Enable slow crawl speed
    * @param allowTurnInPlace Enable turning in place
    */
-  public void curvatureDrive(double xaxisSpeed, double zaxisRotate, boolean isCrawl,
-        boolean allowTurnInPlace) {
-    speedMultiplier = isCrawl ? CRAWL : NORMAL;
-    drive.curvatureDrive(speedMultiplier * xaxisSpeed, speedMultiplier * zaxisRotate, 
-        allowTurnInPlace);
+  public void curvatureDrive(double xaxisSpeed, double zaxisRotate, boolean allowTurnInPlace) {
+    drive.curvatureDrive(xaxisSpeed, zaxisRotate, allowTurnInPlace);
   }
 
   /**

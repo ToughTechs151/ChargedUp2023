@@ -176,7 +176,6 @@ public class Robot extends TimedRobot {
 
     // Get selected drive mode and deadband from the SmartDashboard
     driveCommand = robotContainer.getDriveCommand();
-    robotContainer.setDeadband();
 
     // schedule the drive command
     if (driveCommand != null) {

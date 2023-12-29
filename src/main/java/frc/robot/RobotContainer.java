@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -43,6 +45,11 @@ public class RobotContainer {
   private SendableChooser<String> autoChooser = new SendableChooser<>();
   private SendableChooser<String> driveChooser = new SendableChooser<>();
 
+  // Slew rate limiters for joystick inputs (units/sec)
+  private SlewRateLimiter leftLimiter;
+  private SlewRateLimiter rightLimiter;
+  private SlewRateLimiter turnLimiter;
+
   private PowerDistribution pdp = new PowerDistribution(1, PowerDistribution.ModuleType.kRev);
 
 
@@ -61,6 +68,9 @@ public class RobotContainer {
   private CommandXboxController codriverController =
       new CommandXboxController(Constants.OIconstants.CODRIVER_CONTROLLER_PORT);
 
+  private double fullSpeedMax = 1.0;
+  private double crawlSpeedMax = 0.5;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
@@ -70,6 +80,10 @@ public class RobotContainer {
     // Configure default commands
     // Set the default drive command
     this.robotDrive.setDefaultCommand(getDriveCommand());
+
+    // Disable the internal drive deadband so it can be applied directly to the joystick 
+    this.robotDrive.setDriveDeadband(0.0);
+    this.robotDrive.setMaxOutput(fullSpeedMax);
 
     SmartDashboard.putData("ArmSubsystem", armPidSubsystem);
     armPidSubsystem.disable();
@@ -83,11 +97,12 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Drive at half speed when the right bumper is held
+    // Drive at low speed when the right bumper is held
     driverController
         .rightBumper()
-        .onTrue(new InstantCommand(() -> this.robotDrive.setMaxOutput(0.5)))
-        .onFalse(new InstantCommand(() -> this.robotDrive.setMaxOutput(1)));
+        .onTrue(new InstantCommand(() -> this.robotDrive.setMaxOutput(crawlSpeedMax)))
+        .onFalse(new InstantCommand(() -> this.robotDrive.setMaxOutput(fullSpeedMax)));
+
     codriverController.leftBumper().onTrue(new ClawOpenCommand(clawSubsystem));
     codriverController.rightBumper().onTrue(new ClawCloseCommand(clawSubsystem));
     codriverController.leftBumper().whileTrue(new ClawInCommand(clawSubsystem));
@@ -116,7 +131,12 @@ public class RobotContainer {
     SmartDashboard.putData(autoChooser);
     SmartDashboard.putData(driveChooser);
     SmartDashboard.putBoolean("Square Inputs", true);
-    SmartDashboard.putNumber("Deadband", 0.02);
+    SmartDashboard.putNumber("Deadband", 0.05);
+    SmartDashboard.putNumber("Turning Factor", 1.0);
+    SmartDashboard.putNumber("Slew Limit Speed", 100.0);
+    SmartDashboard.putNumber("Slew Limit Turn", 100.0);
+    SmartDashboard.putNumber("Full Speed", 1.0);
+    SmartDashboard.putNumber("Crawl Speed", 0.5);
 
   }
 
@@ -125,9 +145,19 @@ public class RobotContainer {
    *
    * @return the command to run in teleop
    */
-  public RunCommand getDriveCommand() {
+  public Command getDriveCommand() {
 
     boolean squareInputs = SmartDashboard.getBoolean("Square Inputs", true);
+    double deadband = SmartDashboard.getNumber("Deadband", 0.05);
+    double turnFactor = SmartDashboard.getNumber("Turning Factor", 1.0);
+    double slewLimitSpeed = SmartDashboard.getNumber("Slew Limit Speed", 100.0);
+    double slewLimitTurn = SmartDashboard.getNumber("Slew Limit Turn", 100.0);
+    fullSpeedMax = SmartDashboard.getNumber("Full Speed", 1.0);
+    crawlSpeedMax = SmartDashboard.getNumber("Crawl Speed", 0.5);
+
+    leftLimiter = new SlewRateLimiter(slewLimitSpeed);
+    rightLimiter = new SlewRateLimiter(slewLimitSpeed);
+    turnLimiter = new SlewRateLimiter(slewLimitTurn);
 
     switch (driveChooser.getSelected()) {
 
@@ -138,11 +168,12 @@ public class RobotContainer {
         return new RunCommand(
             () ->
                 this.robotDrive.arcadeDrive(
-                    -this.driverController.getLeftY(),
-                    -this.driverController.getRightX(),
-                    this.driverController.rightBumper().getAsBoolean(),
+                    -leftLimiter.calculate(MathUtil.applyDeadband(
+                        this.driverController.getLeftY(), deadband)),
+                    -turnFactor * turnLimiter.calculate(MathUtil.applyDeadband(
+                        this.driverController.getRightX(), deadband)),
                     squareInputs),
-            this.robotDrive);
+            this.robotDrive).withName("Arcade");
 
       case "curve":
         // A split-stick arcade command, with forward/backward controlled by the left
@@ -151,11 +182,12 @@ public class RobotContainer {
         return new RunCommand(
             () ->
                 this.robotDrive.curvatureDrive(
-                    -this.driverController.getLeftY(),
-                    -this.driverController.getRightX(),
-                    this.driverController.rightBumper().getAsBoolean(),
+                    -leftLimiter.calculate(MathUtil.applyDeadband(
+                        this.driverController.getLeftY(), deadband)),
+                    -turnFactor * turnLimiter.calculate(MathUtil.applyDeadband(
+                        this.driverController.getRightX(), deadband)),
                     this.driverController.leftBumper().getAsBoolean()),
-            this.robotDrive);
+            this.robotDrive).withName("Curvature");
 
       case "tank":
       default:
@@ -165,21 +197,13 @@ public class RobotContainer {
         return new RunCommand(
             () ->
                 this.robotDrive.tankDrive(
-                    -this.driverController.getLeftY(),
-                    -this.driverController.getRightY(),
-                    this.driverController.rightBumper().getAsBoolean(),
+                    -leftLimiter.calculate(MathUtil.applyDeadband(
+                        this.driverController.getLeftY(), deadband)),
+                    -rightLimiter.calculate(MathUtil.applyDeadband(
+                        this.driverController.getRightY(), deadband)),
                     squareInputs),
-            this.robotDrive);
+            this.robotDrive).withName("Tank");
     }
-  }
-
-  /**
-   * Set the deadband in the drive from the dashboard.
-   *
-   */
-  public void setDeadband() {  
-    double deadband = SmartDashboard.getNumber("Deadband", 0.02);
-    this.robotDrive.setDriveDeadband(deadband);
   }
 
   public String getAutomousString() {
