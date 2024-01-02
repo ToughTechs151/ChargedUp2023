@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -130,6 +131,7 @@ public class RobotContainer {
     // Put the choosers on the dashboard
     SmartDashboard.putData(autoChooser);
     SmartDashboard.putData(driveChooser);
+    SmartDashboard.putBoolean("Enable Brake", true);
     SmartDashboard.putBoolean("Square Inputs", true);
     SmartDashboard.putNumber("Deadband", 0.05);
     SmartDashboard.putNumber("Turning Factor", 1.0);
@@ -148,6 +150,7 @@ public class RobotContainer {
   public Command getDriveCommand() {
 
     boolean squareInputs = SmartDashboard.getBoolean("Square Inputs", true);
+    boolean enableBrake = SmartDashboard.getBoolean("Enable Brake", true);
     double deadband = SmartDashboard.getNumber("Deadband", 0.05);
     double turnFactor = SmartDashboard.getNumber("Turning Factor", 1.0);
     double slewLimitSpeed = SmartDashboard.getNumber("Slew Limit Speed", 100.0);
@@ -165,43 +168,52 @@ public class RobotContainer {
         // A split-stick arcade command, with forward/backward controlled by the left
         // hand, and turn rate controlled by the right. Right bumper enables
         // crawl speed.
-        return new RunCommand(
-            () ->
-                this.robotDrive.arcadeDrive(
+        return new FunctionalCommand(
+            () -> this.robotDrive.setBrakeMode(enableBrake),
+            () -> this.robotDrive.arcadeDrive(
                     -leftLimiter.calculate(MathUtil.applyDeadband(
                         this.driverController.getLeftY(), deadband)),
                     -turnFactor * turnLimiter.calculate(MathUtil.applyDeadband(
                         this.driverController.getRightX(), deadband)),
                     squareInputs),
+            interrupted -> {},
+            () -> false,
             this.robotDrive).withName("Arcade");
 
       case "curve":
         // A split-stick arcade command, with forward/backward controlled by the left
         // hand, and turn curvature controlled by the right. Right bumper enables
         // crawl speed. Left bumper enables turning in place.
-        return new RunCommand(
-            () ->
-                this.robotDrive.curvatureDrive(
+        return new FunctionalCommand(
+            () -> this.robotDrive.setBrakeMode(enableBrake),
+            () -> this.robotDrive.curvatureDrive(
                     -leftLimiter.calculate(MathUtil.applyDeadband(
                         this.driverController.getLeftY(), deadband)),
                     -turnFactor * turnLimiter.calculate(MathUtil.applyDeadband(
                         this.driverController.getRightX(), deadband)),
                     this.driverController.leftBumper().getAsBoolean()),
+            interrupted -> {},
+            () -> false,
             this.robotDrive).withName("Curvature");
+
+        //     runOnce(() -> setGoalPosition(goal))
+        // .andThen(run(this::useOutput))
 
       case "tank":
       default:
         // A tank drive command with left side speed controlled by the left
         // hand, and right speed controlled by the right. Right bumper enables
         // crawl speed.
-        return new RunCommand(
-            () ->
-                this.robotDrive.tankDrive(
+        return new FunctionalCommand(
+            () -> this.robotDrive.setBrakeMode(enableBrake),
+            () -> this.robotDrive.tankDrive(
                     -leftLimiter.calculate(MathUtil.applyDeadband(
                         this.driverController.getLeftY(), deadband)),
                     -rightLimiter.calculate(MathUtil.applyDeadband(
                         this.driverController.getRightY(), deadband)),
                     squareInputs),
+            interrupted -> {},
+            () -> false,
             this.robotDrive).withName("Tank");
     }
   }
