@@ -11,6 +11,8 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
@@ -109,8 +111,39 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     super.setGoal(goal);    
     SmartDashboard.putNumber("ARM goal Pos", goal.position);
     SmartDashboard.putNumber("ARM goal Vel", goal.velocity);
+  }
 
+  /** Enables the PID control. Resets the controller. */
+  @Override
+  public void enable() {
 
+    // Don't enable if already enabled since this may cause control transients
+    if (!m_enabled) {
+      m_enabled = true;
+      m_controller.reset(getMeasurement());
+      DataLogManager.log(
+          "Arm Enabled - kP="
+              + m_controller.getP()
+              + " kI="
+              + m_controller.getI()
+              + " kD="
+              + m_controller.getD()
+              + " PosGoal="
+              + m_controller.getGoal()
+              + " CurPos="
+              + getMeasurement());
+    }
+  }
+
+  /** Disables the PID control. Sets output to zero. */
+  @Override
+  public void disable() {
+
+    // Set goal to current position to minimize movement on re-enable and reset output
+    m_enabled = false;
+    setGoal(getMeasurement());
+    useOutput(0, new State());
+    DataLogManager.log("Arm Disabled");
   }
 
   public TrapezoidProfile.State getGoal() {
