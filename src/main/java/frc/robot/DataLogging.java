@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DriveSubsystem;
+
 import java.util.Map;
 
 public class DataLogging {
@@ -32,6 +34,7 @@ public class DataLogging {
   private boolean prevDsConnectState;
   private ShuffleboardTab sbDriverTab;
   private Field2d sbField;
+  private DriveSubsystem drive;
 
   private DataLogging() {
     // Starts recording to data log
@@ -133,6 +136,10 @@ public class DataLogging {
           EventImportance.kHigh);
       prevDsConnectState = newDsConnectState;
     }
+
+    // Get the pose from the drivetrain subsystem and update the field display
+    sbField.setRobotPose(drive.getPose());
+
     if (Constants.LOOP_TIMING_LOG) {
       loopTime.append(Timer.getFPGATimestamp() - startTime);
     }
@@ -144,6 +151,8 @@ public class DataLogging {
    * @param robotContainer The robotContainer just constructed.
    */
   public void dataLogRobotContainerInit(RobotContainer robotContainer) {
+
+    drive = robotContainer.getDriveSubsystem();
 
   //   PowerDistribution pdp;
   //   pdp = robotContainer.getPdp();

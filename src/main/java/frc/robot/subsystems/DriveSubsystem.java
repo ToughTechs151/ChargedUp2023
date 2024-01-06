@@ -67,23 +67,23 @@ public class DriveSubsystem extends SubsystemBase {
     this.rearLeft.restoreFactoryDefaults();
     this.rearRight.restoreFactoryDefaults();
 
-    this.frontLeft.setIdleMode(IdleMode.kBrake);
-    this.frontRight.setIdleMode(IdleMode.kBrake);
-    this.rearLeft.setIdleMode(IdleMode.kBrake);
-    this.rearRight.setIdleMode(IdleMode.kBrake);
+    this.frontLeft.setIdleMode(IdleMode.kCoast);
+    this.frontRight.setIdleMode(IdleMode.kCoast);
+    this.rearLeft.setIdleMode(IdleMode.kCoast);
+    this.rearRight.setIdleMode(IdleMode.kCoast);
 
     rearLeft.follow(frontLeft);
     rearRight.follow(frontRight);
 
     // Sets the distance per pulse for the encoders
-    this.frontLeftEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
-    this.rearLeftEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
-    this.frontRightEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
-    this.rearRightEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_PULSE);
-    this.frontLeftEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOVITY_CONVERSION);
-    this.rearLeftEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOVITY_CONVERSION);
-    this.frontRightEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOVITY_CONVERSION);
-    this.rearRightEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOVITY_CONVERSION);
+    this.frontLeftEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
+    this.rearLeftEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
+    this.frontRightEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
+    this.rearRightEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
+    this.frontLeftEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOCITY_CONVERSION);
+    this.rearLeftEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOCITY_CONVERSION);
+    this.frontRightEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOCITY_CONVERSION);
+    this.rearRightEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOCITY_CONVERSION);
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
@@ -95,7 +95,15 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    this.odometry.update(this.gyro.getRotation2d(), frontLeftEncoder.getPosition(), frontRightEncoder.getPosition());
+    this.odometry.update(this.gyro.getRotation2d(), frontLeftEncoder.getPosition(), 
+        frontRightEncoder.getPosition());
+  
+    SmartDashboard.putNumber("Left Position", frontLeftEncoder.getPosition());
+    SmartDashboard.putNumber("Right Position", frontRightEncoder.getPosition());
+    SmartDashboard.putNumber("Heading", getHeading());
+    SmartDashboard.putNumber("Turn Rate", getTurnRate());
+    SmartDashboard.putNumber("Left Velocity", frontLeftEncoder.getVelocity());
+    SmartDashboard.putNumber("Right Velocity", frontRightEncoder.getVelocity());
 
     SmartDashboard.putNumber("FL-Voltage", frontLeft.getBusVoltage());
     SmartDashboard.putNumber("FL-Current", frontLeft.getOutputCurrent());
@@ -167,7 +175,6 @@ public class DriveSubsystem extends SubsystemBase {
       this.rearRight.setIdleMode(IdleMode.kCoast);
     }
   }
-
 
   /**
    * Returns the currently-estimated pose of the robot.
