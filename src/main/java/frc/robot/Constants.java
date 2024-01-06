@@ -64,7 +64,7 @@ public final class Constants {
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
     
-    public static final double GEAR_RATIO = 43;
+    public static final double GEAR_RATIO = 10.71;
     public static final double WHEEL_DIAMETER_METERS = 0.15;
     public static final double ENCODER_DISTANCE_PER_REVOLUTION = 
         (WHEEL_DIAMETER_METERS * Math.PI) / GEAR_RATIO;
@@ -88,12 +88,12 @@ public final class Constants {
     // for *your* robot's drive.
     // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
     // values for your robot.
-    public static final double ksVolts = 0.15238;
-    public static final double kvVoltSecondsPerMeter = 2.6614;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.6035;
+    public static final double ksVolts = 0.13923;
+    public static final double kvVoltSecondsPerMeter = 2.244;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.23774;
 
     // Example value only - as above, this must be tuned for your drive!
-    public static final double kPDriveVel = 0.42546;
+    public static final double kPDriveVel = 0.12795;
   }
 
   public static final class OIconstants {
@@ -143,13 +143,12 @@ public final class Constants {
     public static final double kVVoltSecondPerRad = 0.5;
     public static final double kAVoltSecondSquaredPerRad = 0.1;
 
-    public static final double kMaxVelocityRadPerSecond = 8;
+    public static final double kMaxVelocityRadPerSecond = 16;
     public static final double kMaxAccelerationRadPerSecSquared = 10;
 
     public static final int[] kEncoderPorts = new int[] {4, 5};
     public static final int kEncoderPPR = 256;
     public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
-    public static final double kMaxArmVoltage = 1.0;
 
     // The offset of the arm from the horizontal in its neutral position,
     // measured from the horizontal
@@ -159,10 +158,11 @@ public final class Constants {
     public static final double ARM_VELOCITY = 1;
     public static final double ARM_ROTATION = 64.0;
     public static final double ARM_UP_POSITION = 0.0;
-    public static final double ARM_SCORE_LOW_POSITION = Math.round(ARM_ROTATION * 70 / 360);
-    public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * 50 / 360);
-    public static final double ARM_DOWN_POSITION = Math.round(ARM_ROTATION * 110 / 360);
-    public static final double ARM_RED_ZONE = Math.round(ARM_ROTATION * 75 / 360);
+    public static final double ARM_SCORE_LOW_POSITION = Math.round(ARM_ROTATION * 45 / 360);
+    public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * 57 / 360);
+    public static final double ARM_DOWN_POSITION = Math.round(ARM_ROTATION * 115 / 360);
+    public static final double ARM_RED_ZONE = Math.round(ARM_ROTATION * 85 / 360);
+    public static final double ARM_BOTTOM_POSITION = Math.round(ARM_ROTATION * 115 / 360);
   }
 
   // Camera ID

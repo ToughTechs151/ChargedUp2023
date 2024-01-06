@@ -60,15 +60,21 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     // Calculate the feedforward from the setpoint
     // double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
     // Add the feedforward to the PID output to get the motor output
-    SmartDashboard.putNumber("voltage", output);
     setVoltage(output);
+    // SmartDashboard.putNumber("Arm Command Voltage", voltageCommand);
+    // SmartDashboard.putNumber("Arm Feedforward", newFeedforward);
+    SmartDashboard.putNumber("Arm PID output", output);
+    SmartDashboard.putNumber("Arm SetPt Pos", setpoint.position);
+    SmartDashboard.putNumber("Arm SetPt Vel", setpoint.velocity);
+    // SmartDashboard.putNumber("Arm SetPt Pos", Units.radiansToDegrees(setpoint.position));
+    // SmartDashboard.putNumber("Arm SetPt Vel", Units.radiansToDegrees(setpoint.velocity));
   }
 
   @Override
   public double getMeasurement() {
     double position = encoder.getPosition();
     SmartDashboard.putNumber("ARM Position", position);
-    SmartDashboard.putNumber("ARM motor velocity", encoder.getVelocity());
+    SmartDashboard.putNumber("ARM Motor Velocity", encoder.getVelocity());
     setLED(position);
     retractArm(position);
     return position + ArmConstants.kArmOffsetRads;
@@ -109,8 +115,8 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   public void setGoal(TrapezoidProfile.State goal) {
     lastGoal = goal;
     super.setGoal(goal);    
-    SmartDashboard.putNumber("ARM goal Pos", goal.position);
-    SmartDashboard.putNumber("ARM goal Vel", goal.velocity);
+    SmartDashboard.putNumber("ARM Goal Pos", goal.position);
+    SmartDashboard.putNumber("ARM Goal Vel", goal.velocity);
   }
 
   /** Enables the PID control. Resets the controller. */
