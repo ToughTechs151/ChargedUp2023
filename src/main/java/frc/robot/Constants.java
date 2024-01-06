@@ -5,9 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 
@@ -70,10 +68,10 @@ public final class Constants {
         (WHEEL_DIAMETER_METERS * Math.PI) / GEAR_RATIO;
     public static final double ENCODER_VELOCITY_CONVERSION = ENCODER_DISTANCE_PER_REVOLUTION / 60;
 
-    // // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-    // // These characterization values MUST be determined either experimentally or theoretically
-    // // for *your* robot's drive.
-    // // The SysId tool provides a convenient method for obtaining these values for your robot.
+    // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
+    // These characterization values MUST be determined either experimentally or theoretically
+    // for *your* robot's drive.
+    // The SysId tool provides a convenient method for obtaining these values for your robot.
     public static final SimpleMotorFeedforward kFeedforward =
         new SimpleMotorFeedforward(1, 0.8, 0.15);
 
@@ -143,26 +141,30 @@ public final class Constants {
     public static final double kVVoltSecondPerRad = 0.5;
     public static final double kAVoltSecondSquaredPerRad = 0.1;
 
-    public static final double kMaxVelocityRadPerSecond = 16;
-    public static final double kMaxAccelerationRadPerSecSquared = 10;
+    public static final double kMaxVelocityRadPerSecond = Units.degreesToRadians(90);
+    public static final double kMaxAccelerationRadPerSecSquared = Units.degreesToRadians(56.25);
 
     public static final int[] kEncoderPorts = new int[] {4, 5};
     public static final int kEncoderPPR = 256;
     public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
 
-    // The offset of the arm from the horizontal in its neutral position,
-    // measured from the horizontal
-    public static final double kArmOffsetRads = 0.5;
+    // ARM conversions 
+    public static final double ARM_GEAR_RATIO = 1.0d / 64;
+    public static final double ARM_RAD_PER_ENCODER_ROTATION = 2.0 * Math.PI * ARM_GEAR_RATIO;
+    public static final double RPM_TO_RAD_PER_SEC = ARM_RAD_PER_ENCODER_ROTATION / 60;
 
-    // ARM positions
-    public static final double ARM_VELOCITY = 1;
-    public static final double ARM_ROTATION = 64.0;
-    public static final double ARM_UP_POSITION = 0.0;
-    public static final double ARM_SCORE_LOW_POSITION = Math.round(ARM_ROTATION * 45 / 360);
-    public static final double ARM_SCORE_HIGH_POSITION = Math.round(ARM_ROTATION * 57 / 360);
-    public static final double ARM_DOWN_POSITION = Math.round(ARM_ROTATION * 115 / 360);
-    public static final double ARM_RED_ZONE = Math.round(ARM_ROTATION * 85 / 360);
-    public static final double ARM_BOTTOM_POSITION = Math.round(ARM_ROTATION * 115 / 360);
+    // These positions are all in the PID controller reference: units are radians, positive is up
+    // and horizontal is 0.0.  Values are displayed to the operator in degrees.
+
+    // The offset of the arm from horizontal to its neutral start position
+    public static final double ARM_OFFSET_RADS = Units.degreesToRadians(110.0);
+
+    public static final double ARM_UP_POSITION_RADS = Units.degreesToRadians(110.0);
+    public static final double ARM_SCORE_LOW_POSITION_RADS = Units.degreesToRadians(45.0);
+    public static final double ARM_SCORE_HIGH_POSITION_RADS = Units.degreesToRadians(55.0);
+    public static final double ARM_DOWN_POSITION_RADS = Units.degreesToRadians(-5.0);
+    public static final double ARM_RED_ZONE_RADS = Units.degreesToRadians(25.0);
+    public static final double ARM_BOTTOM_POSITION_RADS = Units.degreesToRadians(-5.0);
   }
 
   // Camera ID

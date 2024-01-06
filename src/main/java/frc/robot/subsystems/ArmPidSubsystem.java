@@ -12,6 +12,7 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -48,38 +49,60 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
         0);
     this.robotContainer = robotContainer;
     this.disable();
+
     armMotor.setIdleMode(IdleMode.kBrake);
     armMotor.setVoltage(0.0);
+
     blinkinSpark.set(blinkinVoltage);
-    // Start arm at rest in neutral position
-    // setGoal(ArmConstants.kArmOffsetRads);
+
+    encoder.setPositionConversionFactor(ArmConstants.ARM_RAD_PER_ENCODER_ROTATION);
+    encoder.setVelocityConversionFactor(ArmConstants.RPM_TO_RAD_PER_SEC);
+    encoder.setPosition(0);
+  }
+
+  @Override
+  public void periodic() {
+
+    SmartDashboard.putBoolean("Arm Enabled", m_enabled);
+    SmartDashboard.putNumber("Arm Angle", Units.radiansToDegrees(getMeasurement()));
+    SmartDashboard.putNumber("Arm Velocity", Units.radiansToDegrees(encoder.getVelocity()));
+    SmartDashboard.putNumber("Arm Current", armMotor.getOutputCurrent());
   }
 
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
     // Calculate the feedforward from the setpoint
-    // double feedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
+    // double newFeedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
+
     // Add the feedforward to the PID output to get the motor output
+    // voltageCommand = output + newFeedforward;
+    // setVoltage(voltageCommand);
     setVoltage(output);
-    // SmartDashboard.putNumber("Arm Command Voltage", voltageCommand);
+
+    SmartDashboard.putNumber("Arm SetPt Pos", Units.radiansToDegrees(setpoint.position));
+    SmartDashboard.putNumber("Arm SetPt Vel", Units.radiansToDegrees(setpoint.velocity));
     // SmartDashboard.putNumber("Arm Feedforward", newFeedforward);
     SmartDashboard.putNumber("Arm PID output", output);
-    SmartDashboard.putNumber("Arm SetPt Pos", setpoint.position);
-    SmartDashboard.putNumber("Arm SetPt Vel", setpoint.velocity);
-    // SmartDashboard.putNumber("Arm SetPt Pos", Units.radiansToDegrees(setpoint.position));
-    // SmartDashboard.putNumber("Arm SetPt Vel", Units.radiansToDegrees(setpoint.velocity));
+    // SmartDashboard.putNumber("Arm Command Voltage", voltageCommand);
+
   }
 
+  // This function is used for feedback in the PID controller.
+  // Units must be radians with positive oriented up and 0.0 at horizontal position.
   @Override
   public double getMeasurement() {
-    double position = encoder.getPosition();
-    SmartDashboard.putNumber("ARM Position", position);
-    SmartDashboard.putNumber("ARM Motor Velocity", encoder.getVelocity());
+    double position = -encoder.getPosition() + ArmConstants.ARM_OFFSET_RADS;
     setLED(position);
     retractArm(position);
-    return position + ArmConstants.kArmOffsetRads;
+    return position;
   }
 
+  // Convert the measured position to arm angle relative to the up position.
+  // Positive is down.
+  public double getAngle(double position) {
+
+    return position;
+  }
   public void setVoltage(double voltage){
     armMotor.setVoltage(voltage);
   }
@@ -91,7 +114,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
    */
   private void setLED(double position) {
     // Change the Blikin LED based on the angle of the arm
-    if (position >= ArmConstants.ARM_RED_ZONE) {
+    if (position >= ArmConstants.ARM_RED_ZONE_RADS) {
       blinkinVoltage = Constants.BLINKIN_RED;
     } else {
       blinkinVoltage = Constants.BLINKIN_DARK_GREEN;
@@ -106,7 +129,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
    */
   private void retractArm(double position) {
 
-    if (position >= ArmConstants.ARM_RED_ZONE) {
+    if (position >= ArmConstants.ARM_RED_ZONE_RADS) {
       (new ArmRetractCommand(this.robotContainer.getArmSubsystem())).schedule();
     }
   }

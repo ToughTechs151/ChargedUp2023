@@ -28,7 +28,7 @@ public class ArmUpCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    armSubsystem.setGoal(new State(ArmConstants.ARM_UP_POSITION, ArmConstants.ARM_VELOCITY));
+    armSubsystem.setGoal(new State(ArmConstants.ARM_UP_POSITION_RADS, 0));
     armSubsystem.enable();
   }
 }

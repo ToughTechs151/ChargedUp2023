@@ -25,7 +25,7 @@ public class ArmScoreHighCommand extends InstantCommand {
   @Override
   public void initialize() {
     armSubsystem.setGoal(
-        new State(ArmConstants.ARM_SCORE_HIGH_POSITION, ArmConstants.ARM_VELOCITY));
+        new State(ArmConstants.ARM_SCORE_HIGH_POSITION_RADS, 0));
     armSubsystem.enable();
   }
 }
