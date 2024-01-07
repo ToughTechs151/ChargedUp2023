@@ -132,15 +132,21 @@ public final class Constants {
   public static final class ArmConstants {
     public static final int kMotorPort = 5;
 
-    public static final double kP = 1;
-    public static final double kI = 0;
+    // Constants tunable through preferences
+    public static final String ARM_KP_KEY = "ArmKP"; // The P gain for the PID controller
+    public static final String ARM_KS_KEY = "ArmKS"; // Static motor gain
+    public static final String ARM_KG_KEY = "ArmKG"; // Gravity gain
+    public static final String ARM_KV_KEY = "ArmKV"; // Velocity gain
+    public static final String ARM_VELOCITY_MAX_KEY = "ArmVelocityMax";
+    public static final String ARM_ACCELERATION_MAX_KEY = "ArmAccelerationMax";
 
     // These are fake gains; in actuality these must be determined individually for each robot
+    public static final double kP = 1;
+    public static final double kI = 0;
     public static final double kSVolts = 1;
     public static final double kGVolts = 1;
     public static final double kVVoltSecondPerRad = 0.5;
     public static final double kAVoltSecondSquaredPerRad = 0.1;
-
     public static final double kMaxVelocityRadPerSecond = Units.degreesToRadians(90);
     public static final double kMaxAccelerationRadPerSecSquared = Units.degreesToRadians(56.25);
 
