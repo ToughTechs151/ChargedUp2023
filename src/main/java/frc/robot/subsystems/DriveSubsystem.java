@@ -4,17 +4,15 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -29,13 +27,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final CANSparkMax rearRight =
       new CANSparkMax(DriveConstants.REAR_RIGHT_MOTOR_PORT, MotorType.kBrushless);
 
-  private final MotorControllerGroup leftMotorControllerGroup =
-      new MotorControllerGroup(frontLeft, rearLeft);
-  private final MotorControllerGroup rightMotorControllerGroup =
-      new MotorControllerGroup(frontRight, rearRight);
-
-  private final DifferentialDrive drive =
-      new DifferentialDrive(leftMotorControllerGroup, rightMotorControllerGroup);
+  private final DifferentialDrive drive = new DifferentialDrive(frontLeft, frontRight);
 
   // The front-left-side drive encoder
   private final RelativeEncoder frontLeftEncoder = this.frontLeft.getEncoder();
@@ -50,7 +42,7 @@ public class DriveSubsystem extends SubsystemBase {
   private final RelativeEncoder rearRightEncoder = this.rearRight.getEncoder();
 
   // The gyro sensor
-  private final Gyro gyro = new ADXRS450_Gyro();
+  private final ADXRS450_Gyro gyro = new ADXRS450_Gyro();
 
   // Odometry class for tracking robot pose
   DifferentialDriveOdometry odometry =
@@ -93,7 +85,7 @@ public class DriveSubsystem extends SubsystemBase {
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
-    rightMotorControllerGroup.setInverted(true);
+    frontRight.setInverted(true);
 
     SmartDashboard.putData(this.drive);
   }
@@ -206,8 +198,8 @@ public class DriveSubsystem extends SubsystemBase {
    * @param rightVolts the commanded right output
    */
   public void tankDriveVolts(double leftVolts, double rightVolts) {
-    leftMotorControllerGroup.setVoltage(leftVolts);
-    rightMotorControllerGroup.setVoltage(rightVolts);
+    frontLeft.setVoltage(leftVolts);
+    frontRight.setVoltage(rightVolts);
     drive.feed();
   }
 

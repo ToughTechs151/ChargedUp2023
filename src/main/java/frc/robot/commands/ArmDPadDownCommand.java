@@ -35,7 +35,7 @@ public class ArmDPadDownCommand extends InstantCommand {
       return;
     }
     oldGoal.position += 0.1;
-    armSubsystem.setGoal(oldGoal);
+    armSubsystem.setGoalPosition(oldGoal);
     armSubsystem.enable();
   }
 }

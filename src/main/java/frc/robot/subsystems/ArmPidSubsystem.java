@@ -4,9 +4,9 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -143,8 +143,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     }
   }
 
-  @Override
-  public void setGoal(TrapezoidProfile.State goal) {
+  public void setGoalPosition(TrapezoidProfile.State goal) {
     lastGoal = goal;
     super.setGoal(goal);
     SmartDashboard.putNumber("ARM Goal Pos", Units.radiansToDegrees(goal.position));
@@ -179,10 +178,10 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   @Override
   public void disable() {
 
-    // Set goal to current position to minimize movement on re-enable and reset output
+    // Clear the enabled flag and call useOutput to zero the motor command
     m_enabled = false;
-    setGoal(getMeasurement());
     useOutput(0, new State());
+
     DataLogManager.log(
         "Arm Disabled CurPos="
             + Units.radiansToDegrees(getMeasurement())

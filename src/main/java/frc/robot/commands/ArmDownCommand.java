@@ -29,7 +29,7 @@ public class ArmDownCommand extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    armSubsystem.setGoal(new State(ArmConstants.ARM_DOWN_POSITION_RADS, 0));
+    armSubsystem.setGoalPosition(new State(ArmConstants.ARM_DOWN_POSITION_RADS, 0));
     armSubsystem.enable();
   }
 }
