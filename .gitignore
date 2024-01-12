@@ -160,11 +160,28 @@ gradle-app.setting
 .settings/
 bin/
 
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+
+# Fleet
+.fleet
+
 # Simulation GUI and other tools window save file
 *-window.json
+# Simulation data log directory
+logs/
+# Folder that has CTRE Phoenix Sim Device config storage
+ctre_sim/
+
+glass.json
 
 # Ignore Splash Screen txt files
 src/main/resources/*.txt
+!src/main/resources/placeholder.txt
 
 # Robot deploy txt files
 src/main/deploy/*.txt

@@ -1,12 +1,17 @@
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2023.4.3"
-    // id 'com.diffplug.spotless' version '6.12.0'
-    id "com.github.spotbugs" version "5.0.13"
+    id "edu.wpi.first.GradleRIO" version "2024.1.1"
+    id 'com.diffplug.spotless' version '6.16.0'
+    id "com.github.spotbugs" version "5.2.3"
+    id "jacoco"
+    id "org.sonarqube" version "4.4.1.3373"
 }
+// Find latest plugin versions at https://plugins.gradle.org/
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
@@ -44,14 +49,14 @@ def deployArtifact = deploy.targets.roborio.artifacts.frcJava
 
 // test
 apply from: ".ttgradle/splash.gradle"
-// apply from: ".ttgradle/deploytag.gradle"
+apply from: ".ttgradle/deploytag.gradle"
 apply from: ".ttgradle/oidiagram.gradle"
 
 // Set to true to use debug for JNI.
 wpi.java.debugJni = false
 
 // Set this to true to enable desktop support.
-def includeDesktopSupport = false
+def includeDesktopSupport = true
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
 // Also defines JUnit 5.
@@ -73,12 +78,14 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+    testImplementation 'org.mockito:mockito-core:3.+'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.1'
     compileOnly 'net.jcip:jcip-annotations:1.0'
     compileOnly 'com.github.spotbugs:spotbugs-annotations:4.7.3'
+
+    spotbugsPlugins('com.mebigfatguy.sb-contrib:sb-contrib:7.6.0') { transitive = false }
 }
 
 test {
@@ -87,6 +94,14 @@ test {
     //     events "passed", "skipped", "failed"
     // }
     systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+    }
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -98,6 +113,7 @@ wpi.sim.addDriverstation()
 // knows where to look for our Robot Class.
 jar {
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    from sourceSets.main.allSource
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
@@ -118,12 +134,65 @@ tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
 }
 
+sonarqube {
+    properties {
+        property "sonar.projectKey", "ToughTechs151_robot-template"
+        property "sonar.organization", "toughtechs151"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.java.spotbugs.reportPaths", "${buildDir}/reports/spotbugs/main.xml"
+    }
+}
+
+spotless {
+    java {
+        target fileTree('.') {
+            include '**/*.java'
+            exclude '**/build/**', '**/build-*/**'
+        }
+        toggleOffOn()
+        googleJavaFormat()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    groovyGradle {
+        target fileTree('.') {
+            include '**/*.gradle'
+            exclude '**/build/**', '**/build-*/**'
+        }
+        greclipse()
+        indentWithSpaces(4)
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    format 'xml', {
+        target fileTree('.') {
+            include '**/*.xml'
+            exclude '**/build/**', '**/build-*/**'
+        }
+        eclipseWtp('xml')
+        trimTrailingWhitespace()
+        indentWithSpaces(2)
+        endWithNewline()
+    }
+    format 'misc', {
+        target fileTree('.') {
+            include '**/*.md', '**/.gitignore'
+            exclude '**/build/**', '**/build-*/**'
+        }
+        trimTrailingWhitespace()
+        indentWithSpaces(2)
+        endWithNewline()
+    }
+}
+
 spotbugs {
     ignoreFailures = true
     excludeFilter = file("config/spotbugs/excludeFilter.xml")
     reportsDir = file("$project.buildDir/reports/spotbugs")
     effort = "max"
     reportLevel = 'low'
+    onlyAnalyze = ['frc.robot']
 }
 
 spotbugsMain {
@@ -144,7 +213,11 @@ spotbugsTest {
             enabled = true
             stylesheet = 'fancy-hist.xsl'
         }
+        xml {
+            enabled = true
+        }
     }
 }
 
-// compileJava.dependsOn 'spotlessApply'
+// Run spotlessApply before compiling to fix style errors.
+compileJava.dependsOn 'spotlessApply'

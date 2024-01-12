@@ -70,7 +70,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     if (m_enabled) {
       useOutput(m_controller.calculate(getMeasurement()), m_controller.getSetpoint());
     }
-    
+
     SmartDashboard.putBoolean("Arm Enabled", m_enabled);
     SmartDashboard.putNumber("Arm Angle", Units.radiansToDegrees(getMeasurement()));
     SmartDashboard.putNumber("Arm Velocity", Units.radiansToDegrees(encoder.getVelocity()));
@@ -111,7 +111,8 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
 
     return position;
   }
-  public void setVoltage(double voltage){
+
+  public void setVoltage(double voltage) {
     armMotor.setVoltage(voltage);
   }
 
@@ -145,7 +146,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   @Override
   public void setGoal(TrapezoidProfile.State goal) {
     lastGoal = goal;
-    super.setGoal(goal);    
+    super.setGoal(goal);
     SmartDashboard.putNumber("ARM Goal Pos", Units.radiansToDegrees(goal.position));
     SmartDashboard.putNumber("ARM Goal Vel", Units.radiansToDegrees(goal.velocity));
   }
@@ -183,25 +184,24 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     setGoal(getMeasurement());
     useOutput(0, new State());
     DataLogManager.log(
-      "Arm Disabled CurPos="
-          + Units.radiansToDegrees(getMeasurement())
-          + " CurVel="
-          + Units.radiansToDegrees(encoder.getVelocity()));
-}
+        "Arm Disabled CurPos="
+            + Units.radiansToDegrees(getMeasurement())
+            + " CurVel="
+            + Units.radiansToDegrees(encoder.getVelocity()));
+  }
 
   public TrapezoidProfile.State getGoal() {
     return lastGoal;
   }
-  
-/**
+
+  /**
    * Put tunable values in the Preferences table using default values, if the keys don't already
    * exist.
    */
   private void initPreferences() {
 
     // Preferences for PID controller
-    Preferences.initDouble(
-        Constants.ArmConstants.ARM_KP_KEY, Constants.ArmConstants.kP);
+    Preferences.initDouble(Constants.ArmConstants.ARM_KP_KEY, Constants.ArmConstants.kP);
 
     // Preferences for Trapezoid Profile
     Preferences.initDouble(
@@ -212,10 +212,8 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
         Constants.ArmConstants.kMaxAccelerationRadPerSecSquared);
 
     // Preferences for Feedforward
-    Preferences.initDouble(
-        Constants.ArmConstants.ARM_KS_KEY, Constants.ArmConstants.kSVolts);
-    Preferences.initDouble(
-        Constants.ArmConstants.ARM_KG_KEY, Constants.ArmConstants.kGVolts);
+    Preferences.initDouble(Constants.ArmConstants.ARM_KS_KEY, Constants.ArmConstants.kSVolts);
+    Preferences.initDouble(Constants.ArmConstants.ARM_KG_KEY, Constants.ArmConstants.kGVolts);
     Preferences.initDouble(
         Constants.ArmConstants.ARM_KV_KEY, Constants.ArmConstants.kVVoltSecondPerRad);
   }
@@ -228,8 +226,7 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
 
     // Read Preferences for PID controller
     m_controller.setP(
-        Preferences.getDouble(
-            Constants.ArmConstants.ARM_KP_KEY, Constants.ArmConstants.kP));
+        Preferences.getDouble(Constants.ArmConstants.ARM_KP_KEY, Constants.ArmConstants.kP));
 
     // Read Preferences for Trapezoid Profile and update
     double velocityMax =
@@ -244,15 +241,12 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
 
     // Read Preferences for Feedforward and create a new instance
     double staticGain =
-        Preferences.getDouble(
-            Constants.ArmConstants.ARM_KS_KEY, Constants.ArmConstants.kSVolts);
+        Preferences.getDouble(Constants.ArmConstants.ARM_KS_KEY, Constants.ArmConstants.kSVolts);
     double gravityGain =
-        Preferences.getDouble(
-            Constants.ArmConstants.ARM_KG_KEY, Constants.ArmConstants.kGVolts);
+        Preferences.getDouble(Constants.ArmConstants.ARM_KG_KEY, Constants.ArmConstants.kGVolts);
     double velocityGain =
         Preferences.getDouble(
-            Constants.ArmConstants.ARM_KV_KEY,
-            Constants.ArmConstants.kVVoltSecondPerRad);
+            Constants.ArmConstants.ARM_KV_KEY, Constants.ArmConstants.kVVoltSecondPerRad);
 
     feedforward = new ArmFeedforward(staticGain, gravityGain, velocityGain, 0);
   }

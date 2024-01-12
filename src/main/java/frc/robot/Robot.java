@@ -4,21 +4,19 @@
 
 package frc.robot;
 
-import java.io.IOException;
-import java.nio.file.Path;
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.AutonomousNothing;
 import frc.robot.commands.AutonomousTrajectory;
 import frc.sim.RobotModel;
+import java.io.IOException;
+import java.nio.file.Path;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -54,7 +52,7 @@ public class Robot extends TimedRobot {
     this.robotContainer = new RobotContainer();
     // Start the Camera server
     CameraServer.startAutomaticCapture(Constants.CAMERA_0);
-    
+
     datalog.dataLogRobotContainerInit(this.robotContainer);
   }
 
@@ -112,43 +110,43 @@ public class Robot extends TimedRobot {
       // Cancel any commands already running.
       CommandScheduler.getInstance().cancelAll();
 
-     // this.autonomousCommand = this.robotContainer.getAutonomousCommand();
-     String trajectoryJSON;
-     Trajectory trajectory;
+      // this.autonomousCommand = this.robotContainer.getAutonomousCommand();
+      String trajectoryJSON;
+      Trajectory trajectory;
 
-    String autoSelected = robotContainer.getAutomousString();
-    //String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-     switch (autoSelected) {
-       case "Path1":
-         trajectoryJSON = "pathplanner/generatedJSON/Path1.wpilib.json";
+      String autoSelected = robotContainer.getAutomousString();
+      // String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
+      switch (autoSelected) {
+        case "Path1":
+          trajectoryJSON = "pathplanner/generatedJSON/Path1.wpilib.json";
 
-         try {
-           Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-           trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-           this.autonomousCommand = new AutonomousTrajectory(robotContainer, trajectory);
-         } catch (IOException ex) {
-           DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-         }
-         break;
+          try {
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+            trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+            this.autonomousCommand = new AutonomousTrajectory(robotContainer, trajectory);
+          } catch (IOException ex) {
+            DriverStation.reportError(
+                "Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+          }
+          break;
 
+        case "Taxi":
+          trajectoryJSON = "pathplanner/generatedJSON/Taxi.wpilib.json";
+          try {
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+            trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+            this.autonomousCommand = new AutonomousTrajectory(robotContainer, trajectory);
+          } catch (IOException ex) {
+            DriverStation.reportError(
+                "Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+          }
+          break;
 
-         case "Taxi":
-         trajectoryJSON = "pathplanner/generatedJSON/Taxi.wpilib.json";
-         try {
-           Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-           trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-           this.autonomousCommand = new AutonomousTrajectory(robotContainer, trajectory);
-         } catch (IOException ex) {
-           DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-         }
-         break;
-
-       case "Nothing":
-       default:
-         autonomousCommand = new AutonomousNothing(this.robotContainer);
-         break;
-
-     }
+        case "Nothing":
+        default:
+          autonomousCommand = new AutonomousNothing(this.robotContainer);
+          break;
+      }
 
       // schedule the autonomous command
       if (this.autonomousCommand != null) {
@@ -182,7 +180,6 @@ public class Robot extends TimedRobot {
     if (driveCommand != null) {
       driveCommand.schedule();
     }
-
   }
 
   /** This function is called periodically during operator control. */

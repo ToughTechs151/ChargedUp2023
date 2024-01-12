@@ -8,7 +8,6 @@ import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -21,7 +20,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DriveSubsystem;
-
 import java.util.Map;
 
 public class DataLogging {
@@ -154,27 +152,27 @@ public class DataLogging {
 
     drive = robotContainer.getDriveSubsystem();
 
-  //   PowerDistribution pdp;
-  //   pdp = robotContainer.getPdp();
+    //   PowerDistribution pdp;
+    //   pdp = robotContainer.getPdp();
 
-  //   // Add hardware sendables here
-  //   // sbRobotTab.add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution)
-  //   pdpWidget.add("PDP", pdp);
+    //   // Add hardware sendables here
+    //   // sbRobotTab.add("PDP", pdp).withWidget(BuiltInWidgets.kPowerDistribution)
+    //   pdpWidget.add("PDP", pdp);
 
-  //   // Log configuration info here
-  //   DataLogManager.log(String.format("PDP Can ID: %d", pdp.getModule()));
+    //   // Log configuration info here
+    //   DataLogManager.log(String.format("PDP Can ID: %d", pdp.getModule()));
 
-  //    // Add values with supplier functions here.
-  //   pdpWidget
-  //        .addNumber("PDP Temp", pdp::getTemperature)
-  //        .withWidget(BuiltInWidgets.kDial)
-  //        .withProperties(Map.of("min", 15, "max", 50));
-  //  // double totalCurrent = pdp.getTotalCurrent();
-  //   pdpWidget.addNumber("PDP Current", pdp::getTotalCurrent);
-  //  // double totalEnergy = pdp.getTotalEnergy();
-  //   pdpWidget.addNumber("PDP Energy", pdp::getTotalEnergy);
-  //  // double totalPower = pdp.getTotalPower();
-  //   pdpWidget.addNumber("PDP Power", pdp::getTotalPower);
+    //    // Add values with supplier functions here.
+    //   pdpWidget
+    //        .addNumber("PDP Temp", pdp::getTemperature)
+    //        .withWidget(BuiltInWidgets.kDial)
+    //        .withProperties(Map.of("min", 15, "max", 50));
+    //  // double totalCurrent = pdp.getTotalCurrent();
+    //   pdpWidget.addNumber("PDP Current", pdp::getTotalCurrent);
+    //  // double totalEnergy = pdp.getTotalEnergy();
+    //   pdpWidget.addNumber("PDP Energy", pdp::getTotalEnergy);
+    //  // double totalPower = pdp.getTotalPower();
+    //   pdpWidget.addNumber("PDP Power", pdp::getTotalPower);
   }
 
   /**

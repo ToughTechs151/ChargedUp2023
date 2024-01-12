@@ -10,12 +10,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -30,8 +29,10 @@ public class DriveSubsystem extends SubsystemBase {
   private final CANSparkMax rearRight =
       new CANSparkMax(DriveConstants.REAR_RIGHT_MOTOR_PORT, MotorType.kBrushless);
 
-  private final MotorControllerGroup leftMotorControllerGroup = new MotorControllerGroup(frontLeft, rearLeft);
-  private final MotorControllerGroup rightMotorControllerGroup = new MotorControllerGroup(frontRight, rearRight);
+  private final MotorControllerGroup leftMotorControllerGroup =
+      new MotorControllerGroup(frontLeft, rearLeft);
+  private final MotorControllerGroup rightMotorControllerGroup =
+      new MotorControllerGroup(frontRight, rearRight);
 
   private final DifferentialDrive drive =
       new DifferentialDrive(leftMotorControllerGroup, rightMotorControllerGroup);
@@ -55,7 +56,8 @@ public class DriveSubsystem extends SubsystemBase {
   DifferentialDriveOdometry odometry =
       new DifferentialDriveOdometry(
           this.gyro.getRotation2d(),
-          frontLeftEncoder.getPosition(), frontRightEncoder.getPosition());
+          frontLeftEncoder.getPosition(),
+          frontRightEncoder.getPosition());
 
   // drive constants
 
@@ -76,10 +78,14 @@ public class DriveSubsystem extends SubsystemBase {
     rearRight.follow(frontRight);
 
     // Sets the distance per pulse for the encoders
-    this.frontLeftEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
-    this.rearLeftEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
-    this.frontRightEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
-    this.rearRightEncoder.setPositionConversionFactor(DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
+    this.frontLeftEncoder.setPositionConversionFactor(
+        DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
+    this.rearLeftEncoder.setPositionConversionFactor(
+        DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
+    this.frontRightEncoder.setPositionConversionFactor(
+        DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
+    this.rearRightEncoder.setPositionConversionFactor(
+        DriveConstants.ENCODER_DISTANCE_PER_REVOLUTION);
     this.frontLeftEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOCITY_CONVERSION);
     this.rearLeftEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOCITY_CONVERSION);
     this.frontRightEncoder.setVelocityConversionFactor(DriveConstants.ENCODER_VELOCITY_CONVERSION);
@@ -95,9 +101,9 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    this.odometry.update(this.gyro.getRotation2d(), frontLeftEncoder.getPosition(), 
-        frontRightEncoder.getPosition());
-  
+    this.odometry.update(
+        this.gyro.getRotation2d(), frontLeftEncoder.getPosition(), frontRightEncoder.getPosition());
+
     SmartDashboard.putNumber("Left Position", frontLeftEncoder.getPosition());
     SmartDashboard.putNumber("Right Position", frontRightEncoder.getPosition());
     SmartDashboard.putNumber("Heading", getHeading());
@@ -120,7 +126,6 @@ public class DriveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("RR-Voltage", rearRight.getBusVoltage());
     SmartDashboard.putNumber("RR-Current", rearRight.getOutputCurrent());
     SmartDashboard.putNumber("RR-Temp", rearRight.getMotorTemperature());
-
   }
 
   /**
@@ -160,7 +165,6 @@ public class DriveSubsystem extends SubsystemBase {
    * Set the motor idle mode to brake or coast.
    *
    * @param enableBrake Enable motor braking when idle
-
    */
   public void setBrakeMode(boolean enableBrake) {
     if (enableBrake) {
@@ -191,7 +195,8 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The current wheel speeds.
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(frontLeftEncoder.getVelocity(), frontRightEncoder.getVelocity());
+    return new DifferentialDriveWheelSpeeds(
+        frontLeftEncoder.getVelocity(), frontRightEncoder.getVelocity());
   }
 
   /**
@@ -212,7 +217,11 @@ public class DriveSubsystem extends SubsystemBase {
    * @param pose The pose to which to set the odometry.
    */
   public void resetOdometry(Pose2d pose) {
-    this.odometry.resetPosition(this.gyro.getRotation2d(), frontLeftEncoder.getPosition(), frontRightEncoder.getPosition(), pose);
+    this.odometry.resetPosition(
+        this.gyro.getRotation2d(),
+        frontLeftEncoder.getPosition(),
+        frontRightEncoder.getPosition(),
+        pose);
   }
 
   /**
@@ -224,7 +233,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @param rot Angular rate of the robot.
    * @param fieldRelative Whether the provided x and y speeds are relative to the field.
    */
- // public void drive(double xaxisSpeed, double yaxisSpeed, double rot, boolean fieldRelative)
+  // public void drive(double xaxisSpeed, double yaxisSpeed, double rot, boolean fieldRelative)
 
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
@@ -241,8 +250,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public DifferentialDriveWheelSpeeds getCurrentWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(
-        this.frontLeftEncoder.getVelocity(),
-        this.frontRightEncoder.getVelocity());
+        this.frontLeftEncoder.getVelocity(), this.frontRightEncoder.getVelocity());
   }
 
   /**

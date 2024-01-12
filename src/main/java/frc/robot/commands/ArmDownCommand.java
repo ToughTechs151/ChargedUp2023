@@ -31,6 +31,5 @@ public class ArmDownCommand extends InstantCommand {
   public void initialize() {
     armSubsystem.setGoal(new State(ArmConstants.ARM_DOWN_POSITION_RADS, 0));
     armSubsystem.enable();
-
   }
 }

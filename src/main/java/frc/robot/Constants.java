@@ -61,10 +61,10 @@ public final class Constants {
     public static final double kTrackwidthMeters = Units.inchesToMeters(22);
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
-    
+
     public static final double GEAR_RATIO = 10.71;
     public static final double WHEEL_DIAMETER_METERS = 0.15;
-    public static final double ENCODER_DISTANCE_PER_REVOLUTION = 
+    public static final double ENCODER_DISTANCE_PER_REVOLUTION =
         (WHEEL_DIAMETER_METERS * Math.PI) / GEAR_RATIO;
     public static final double ENCODER_VELOCITY_CONVERSION = ENCODER_DISTANCE_PER_REVOLUTION / 60;
 
@@ -154,7 +154,7 @@ public final class Constants {
     public static final int kEncoderPPR = 256;
     public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
 
-    // ARM conversions 
+    // ARM conversions
     public static final double ARM_GEAR_RATIO = 1.0d / 64;
     public static final double ARM_RAD_PER_ENCODER_ROTATION = 2.0 * Math.PI * ARM_GEAR_RATIO;
     public static final double RPM_TO_RAD_PER_SEC = ARM_RAD_PER_ENCODER_ROTATION / 60;

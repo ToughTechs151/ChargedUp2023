@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,8 +18,7 @@ public class ClawSubsystem extends SubsystemBase {
           Constants.CLAW_SOLENOID_KFORWARD,
           Constants.CLAW_SOLENOID_KREVERSE);
 
-  private final WPI_TalonSRX clawMotor =
-      new WPI_TalonSRX(Constants.CLAW_MOTOR);
+  private final WPI_TalonSRX clawMotor = new WPI_TalonSRX(Constants.CLAW_MOTOR);
 
   /** Creates a new ClawSubsystem. */
   public ClawSubsystem() {
@@ -41,6 +39,6 @@ public class ClawSubsystem extends SubsystemBase {
   }
 
   public void runClaw(double direction) {
-    clawMotor.set(ControlMode.PercentOutput,direction);
+    clawMotor.set(ControlMode.PercentOutput, direction);
   }
 }
