@@ -49,7 +49,7 @@ public class RobotContainer {
   private SlewRateLimiter rightLimiter;
   private SlewRateLimiter turnLimiter;
 
-  private PowerDistribution pdp = new PowerDistribution(1, PowerDistribution.ModuleType.kRev);
+  private PowerDistribution pdp = new PowerDistribution();
 
   // The robot's subsystems
   private final DriveSubsystem robotDrive = new DriveSubsystem();

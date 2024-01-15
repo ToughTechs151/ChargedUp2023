@@ -63,6 +63,10 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
     initPreferences();
 
     SmartDashboard.putData(m_controller);
+
+    // Dummy values so they are available for telemetry before goal is set
+    SmartDashboard.putNumber("ARM Goal Pos", 0);
+    SmartDashboard.putNumber("ARM Goal Vel", 0);
   }
 
   @Override
