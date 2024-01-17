@@ -84,19 +84,18 @@ public class ArmPidSubsystem extends ProfiledPIDSubsystem {
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
     // Calculate the feedforward from the setpoint
-    // double newFeedforward = m_feedforward.calculate(setpoint.position, setpoint.velocity);
+    double feedforwardCommand = feedforward.calculate(setpoint.position, setpoint.velocity);
 
-    // Add the feedforward to the PID output to get the motor output
-    // voltageCommand = output + newFeedforward;
-    // setVoltage(voltageCommand);
-    setVoltage(output);
+    // Add the feedforward to the PID output to get the total command. Need to invert since
+    // +voltage drives motor down, but + is up in the control loop.
+    double voltageCommand = -(output + feedforwardCommand);
+    setVoltage(voltageCommand);
 
     SmartDashboard.putNumber("Arm SetPt Pos", Units.radiansToDegrees(setpoint.position));
     SmartDashboard.putNumber("Arm SetPt Vel", Units.radiansToDegrees(setpoint.velocity));
-    // SmartDashboard.putNumber("Arm Feedforward", newFeedforward);
+    SmartDashboard.putNumber("Arm Feedforward", feedforwardCommand);
     SmartDashboard.putNumber("Arm PID output", output);
-    // SmartDashboard.putNumber("Arm Command Voltage", voltageCommand);
-
+    SmartDashboard.putNumber("Arm Command Voltage", voltageCommand);
   }
 
   // This function is used for feedback in the PID controller.

@@ -143,16 +143,12 @@ public final class Constants {
     // These are fake gains; in actuality these must be determined individually for each robot
     public static final double kP = 1;
     public static final double kI = 0;
-    public static final double kSVolts = 1;
-    public static final double kGVolts = 1;
-    public static final double kVVoltSecondPerRad = 0.5;
-    public static final double kAVoltSecondSquaredPerRad = 0.1;
+    public static final double kSVolts = 0;
+    public static final double kGVolts = 0;
+    public static final double kVVoltSecondPerRad = 0;
+    public static final double kAVoltSecondSquaredPerRad = 0;
     public static final double kMaxVelocityRadPerSecond = Units.degreesToRadians(90);
     public static final double kMaxAccelerationRadPerSecSquared = Units.degreesToRadians(56.25);
-
-    public static final int[] kEncoderPorts = new int[] {4, 5};
-    public static final int kEncoderPPR = 256;
-    public static final double kEncoderDistancePerPulse = 2.0 * Math.PI / kEncoderPPR;
 
     // ARM conversions
     public static final double ARM_GEAR_RATIO = 1.0d / 64;
@@ -163,14 +159,13 @@ public final class Constants {
     // and horizontal is 0.0.  Values are displayed to the operator in degrees.
 
     // The offset of the arm from horizontal to its neutral start position
-    public static final double ARM_OFFSET_RADS = Units.degreesToRadians(110.0);
+    public static final double ARM_OFFSET_RADS = Units.degreesToRadians(100.0);
 
-    public static final double ARM_UP_POSITION_RADS = Units.degreesToRadians(110.0);
-    public static final double ARM_SCORE_LOW_POSITION_RADS = Units.degreesToRadians(45.0);
-    public static final double ARM_SCORE_HIGH_POSITION_RADS = Units.degreesToRadians(55.0);
-    public static final double ARM_DOWN_POSITION_RADS = Units.degreesToRadians(-5.0);
+    public static final double ARM_UP_POSITION_RADS = Units.degreesToRadians(100.0);
+    public static final double ARM_SCORE_HIGH_POSITION_RADS = Units.degreesToRadians(50.0);
+    public static final double ARM_SCORE_LOW_POSITION_RADS = Units.degreesToRadians(30.0);
     public static final double ARM_RED_ZONE_RADS = Units.degreesToRadians(25.0);
-    public static final double ARM_BOTTOM_POSITION_RADS = Units.degreesToRadians(-5.0);
+    public static final double ARM_DOWN_POSITION_RADS = Units.degreesToRadians(-10.0);
   }
 
   // Camera ID
@@ -193,7 +188,10 @@ public final class Constants {
   public static final boolean LW_TELEMETRY_ENABLE = false;
 
   // Set to true to log loop timing data. To false to disable.
-  public static final boolean LOOP_TIMING_LOG = true;
+  public static final boolean LOOP_TIMING_LOG = false;
+
+  // Set to true to log command scheduling data. To false to disable.
+  public static final boolean COMMAND_LOG = false;
 
   // RevRobotics Blinkin
   public static final int BLIKIN_SPARK_PORT = 0;
