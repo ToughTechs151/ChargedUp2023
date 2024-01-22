@@ -141,7 +141,7 @@ public final class Constants {
     public static final String ARM_ACCELERATION_MAX_KEY = "ArmAccelerationMax";
 
     // These are fake gains; in actuality these must be determined individually for each robot
-    public static final double kP = 1;
+    public static final double kP = 10.2; // 64.0 / (2 * PI) to match old Kp=1.0
     public static final double kI = 0;
     public static final double kSVolts = 0;
     public static final double kGVolts = 0;
