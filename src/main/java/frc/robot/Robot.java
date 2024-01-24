@@ -33,6 +33,8 @@ public class Robot extends TimedRobot {
 
   private AutonomousTrajectory autonomousTrajectory;
 
+  Thread m_visionThread;
+
   /**
    * {@code robotInit} runs when the robot first starts up. It is used to create the robot
    * container, and can optionally be used for any initialization code.
@@ -47,13 +49,19 @@ public class Robot extends TimedRobot {
     Splash.printAllStatusFiles();
 
     // Instantiate our RobotContainer. This will perform all our button bindings,
-    // and put our
-    // autonomous chooser on the dashboard.
+    // and put our autonomous chooser on the dashboard.
     this.robotContainer = new RobotContainer();
-    // Start the Camera server
-    CameraServer.startAutomaticCapture(Constants.CAMERA_0);
 
     datalog.dataLogRobotContainerInit(this.robotContainer);
+
+    m_visionThread =
+        new Thread(
+            () -> {
+              // Start the Camera server
+              CameraServer.startAutomaticCapture(Constants.CAMERA_0);
+            });
+    m_visionThread.setDaemon(true);
+    m_visionThread.start();
   }
 
   /**
